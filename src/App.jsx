@@ -4,7 +4,6 @@ import { DefaultLayout } from "~/layouts/Index";
 import NotFound from "~/pages/notfound/Index";
 function App() {
   let isLogin = false;
-  let demo = false;
   return (
     <>
       <Router>
