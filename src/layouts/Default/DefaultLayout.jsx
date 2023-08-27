@@ -1,8 +1,11 @@
+import Header from "../components/Header/Header";
+import Footer from '../components/Footer';
+
 function DefaultLayout({children}) {
     return ( <>
-        <h1>Header</h1>
+        <Header />
         {children}
-        <h1>Footer</h1>
+        <Footer />
     </> );
 }
 
