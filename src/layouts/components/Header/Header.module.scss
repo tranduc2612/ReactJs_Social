@@ -4,7 +4,7 @@
     height: 55px;
     background-color:var(--white-color);
     box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
-    .header__left{
+    &__left{
         &-logo{
             cursor: pointer;
         }
@@ -14,4 +14,12 @@
         }
     }
     
+    &__middle{
+        height: 100%;
+        ul{
+            height:100%;
+            display:flex;
+            justify-content: center;
+        }
+    }
 }
