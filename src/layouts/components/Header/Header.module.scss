@@ -1,18 +1,8 @@
 .header{
-    padding-left: 20px;
-    padding-right: 20px;
     height: 55px;
     background-color:var(--white-color);
     box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
-    &__left{
-        &-logo{
-            cursor: pointer;
-        }
-
-        &-search{
-            width:240px;
-        }
-    }
+    
     
     &__middle{
         height: 100%;
@@ -21,5 +11,13 @@
             display:flex;
             justify-content: center;
         }
+    }
+
+    &__right{
+        width: 220px;
+        height: 100%;
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
     }
 }

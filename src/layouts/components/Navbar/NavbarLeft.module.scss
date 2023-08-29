@@ -1,0 +1,33 @@
+.header__left{
+    $left-spacing: 15px;
+
+    margin-left: $left-spacing;
+    position: relative;
+    &-logo{
+        cursor: pointer;
+    }
+
+    &-search{
+        width:240px;
+    }
+
+    &-result-search{
+        position: absolute;
+        left: 0px - $left-spacing;
+        top: 0;
+        width:110%;
+        height: 300px;
+        background-color: var(--white-color);
+        border-radius:5px;
+        padding: 5px 10px;
+        box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+
+        &-head{
+            height: 60px; // sau tối ưu sau
+        }
+
+        &-content{
+            color: #333;
+        }
+    }
+}

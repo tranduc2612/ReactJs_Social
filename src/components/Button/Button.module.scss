@@ -1,0 +1,24 @@
+.button{
+    border-radius: 100%;
+    width: 45px;
+    height: 45px;
+    transition: all .3s linear;
+    margin-left:10px;
+
+    .icon{
+        width:80%; 
+        height:80%;
+        &.full{
+            top: 0;
+            left: 0;
+            overflow: hidden;
+        }
+    }
+
+
+    &:hover{
+        background-color: #E4E6EB;
+    }
+
+
+}

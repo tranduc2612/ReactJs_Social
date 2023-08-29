@@ -1,9 +1,10 @@
 import classNames from "classnames/bind";
 import styles from "./Header.module.scss";
 import images from "~/assets/images/index";
-import Input from "~/components/Input/Input";
 import NavbarItem from "~/components/NavbarItem/NavbarItem";
 import { useState } from "react";
+import Button from "~/components/Button/Button";
+import NavbarLeft from "../Navbar/NavbarLeft";
 const cx = classNames.bind(styles);
 
 const ListNav = [
@@ -39,18 +40,34 @@ const ListNav = [
     }
 ]
 
+const InfoButton =[
+    {
+        id: 1,
+        icon:images.icon.menu_dot_icon,
+        full_icon: false 
+    },
+    {
+        id: 2,
+        icon: images.icon.messenger_dark_icon,
+        full_icon: false
+    },
+    {
+        id: 3,
+        icon: images.icon.bell_icon,
+        full_icon: false
+    },
+    {
+        id: 4,
+        icon: images.icon.avatar_demo,
+        full_icon: true
+    }
+]
+
 function Header() {
     const [listNav,setListNav] = useState(ListNav);
     return ( <div className={cx("header","d-flex align-items-center justify-content-between")}>
             {/* Left */}
-            <div className={cx("header__left","d-flex align-items-center justify-content-between")}>
-                <div className={cx("header__left-logo")}>
-                    <img src={images.logo} />
-                </div>
-                <div className={cx("header__left-search","ms-2")}>
-                    <Input icon={images.icon.search_icon} />
-                </div>
-            </div>
+            <NavbarLeft />
             {/* Middle */}
             <div className={cx("header__middle")}>
                 <ul className={cx("header__navbar","m-0 p-0")}>
@@ -60,8 +77,11 @@ function Header() {
                 </ul>
             </div>
             {/* Right */}
-            <div className={cx("header__right")} style={{width: "220px"}}>
-                right
+            <div className={cx("header__right")}>
+                {InfoButton.map(e=>{
+                    return (
+                    <Button key={e.id} icon={e.icon} full_icon={e.full_icon} />)
+                })}
             </div>
         </div> );
 }
