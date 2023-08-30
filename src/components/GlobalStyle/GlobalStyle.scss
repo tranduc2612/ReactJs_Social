@@ -1,10 +1,15 @@
 @import 'normalize.css';
 
+*{
+    box-sizing: border-box;
+}
+
 h1{
     color: red;
 }
 
 :root{
+    --spacing-header: 15px;
     --white-color: #fff;
     --gray-color: #f0f2f5;
     --blue-primary: #1b74e4;

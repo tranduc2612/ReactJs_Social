@@ -3,13 +3,16 @@ import { Link } from "react-router-dom";
 import styles from "./Button.module.scss";
 
 const cx = classNames.bind(styles);
-function Button({to, content, icon, full_icon}) {
+function Button({to, content, icon, full_icon,no_background ,size, onClick, className}) {
     let props = {
-        
+        onClick
     }
     let Comp = "button";
     if(to){
         props.to = to;
+        props.style = {
+            padding: "6px 1px",
+        }
         Comp = Link
     }
     if(full_icon){
@@ -19,11 +22,15 @@ function Button({to, content, icon, full_icon}) {
             backgroundSize: "cover"
         }
     }
-    console.log(full_icon)
+
     return ( 
-        <Comp className={cx("button")} {...props}>
+        <Comp className={cx("button",{
+            [size]: true,
+            [className]: true,
+            no_background: no_background
+        })} {...props}>
             {!full_icon ? <img className={cx("icon",{
-                full: full_icon
+                full: full_icon,
             })} src={icon} /> : null}
             {content}
         </Comp> 

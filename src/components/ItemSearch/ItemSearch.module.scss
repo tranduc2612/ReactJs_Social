@@ -1,0 +1,41 @@
+.item{
+    display: flex;
+    align-items: center;
+    flex-direction: flex-start;
+    border-radius: 5px;
+    padding: 4px;
+    cursor: pointer;
+    background-color: transparent;
+    transition: all 0.3 linear;
+
+    &:hover{
+        background-color:var(--color-hover);
+    }
+
+    .avatar{
+        img{
+            width:50px;
+            height: 50px;
+        }
+    }
+    
+    .info{
+        margin-left: 5px;
+        .name{
+            span{
+                color: #333;
+                font-size:1.6rem;
+                font-weight:bold;
+                list-style: 1.6rem;
+            }
+        }
+
+        .relative{
+            span{
+                color: #333;
+                font-size:1.4rem;
+                list-style: 1.6rem;
+            }
+        }
+    }
+}

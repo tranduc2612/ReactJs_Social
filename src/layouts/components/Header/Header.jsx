@@ -5,6 +5,7 @@ import NavbarItem from "~/components/NavbarItem/NavbarItem";
 import { useState } from "react";
 import Button from "~/components/Button/Button";
 import NavbarLeft from "../Navbar/NavbarLeft";
+import NavbarRight from "../Navbar/NavbarRight";
 const cx = classNames.bind(styles);
 
 const ListNav = [
@@ -78,10 +79,7 @@ function Header() {
             </div>
             {/* Right */}
             <div className={cx("header__right")}>
-                {InfoButton.map(e=>{
-                    return (
-                    <Button key={e.id} icon={e.icon} full_icon={e.full_icon} />)
-                })}
+                <NavbarRight listItem={InfoButton} />
             </div>
         </div> );
 }

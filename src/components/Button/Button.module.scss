@@ -1,9 +1,16 @@
 .button{
     border-radius: 100%;
-    width: 45px;
-    height: 45px;
+    width: 40px;
+    height: 40px;
     transition: all .3s linear;
     margin-left:10px;
+    display: flex;
+    align-items:center;
+    justify-content:center;
+
+    &:is(a){
+        background-color: rgb(240, 240, 240);
+    }
 
     .icon{
         width:80%; 
@@ -14,11 +21,16 @@
             overflow: hidden;
         }
     }
-
+    
+    &.sm{
+        width: 36px;
+        height: 36px;
+    }
+    &.no_background{
+        background-color: transparent
+    }
 
     &:hover{
         background-color: #E4E6EB;
     }
-
-
 }
