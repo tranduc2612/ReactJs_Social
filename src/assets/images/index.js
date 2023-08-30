@@ -12,6 +12,7 @@ import menu_dot_icon from "./icon/menu-dot-icon.svg"
 import bell_icon from "./icon/bell-icon.svg"
 import back_left_icon from "./icon/back-left-icon.svg"
 import avatar_demo from "./icon/317950785_3423963351171814_2305823669101113253_n.jpg"
+import three_dot_icon from "./icon/three-dot-icon.svg"
 
 
 const images = {
@@ -29,7 +30,8 @@ const images = {
     menu_dot_icon,
     avatar_demo,
     bell_icon,
-    back_left_icon
+    back_left_icon,
+    three_dot_icon
   }
 };
 

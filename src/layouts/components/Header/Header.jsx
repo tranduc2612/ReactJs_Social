@@ -41,29 +41,6 @@ const ListNav = [
     }
 ]
 
-const InfoButton =[
-    {
-        id: 1,
-        icon:images.icon.menu_dot_icon,
-        full_icon: false 
-    },
-    {
-        id: 2,
-        icon: images.icon.messenger_dark_icon,
-        full_icon: false
-    },
-    {
-        id: 3,
-        icon: images.icon.bell_icon,
-        full_icon: false
-    },
-    {
-        id: 4,
-        icon: images.icon.avatar_demo,
-        full_icon: true
-    }
-]
-
 function Header() {
     const [listNav,setListNav] = useState(ListNav);
     return ( <div className={cx("header","d-flex align-items-center justify-content-between")}>
@@ -79,7 +56,7 @@ function Header() {
             </div>
             {/* Right */}
             <div className={cx("header__right")}>
-                <NavbarRight listItem={InfoButton} />
+                <NavbarRight />
             </div>
         </div> );
 }

@@ -1,0 +1,43 @@
+.wrapper{
+    position: absolute;
+    top: 80%;
+    right: 0;
+    width: 300px;
+    padding: 10px;
+
+    .header{
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 15px;
+    }
+
+    .filter{
+        display:flex;
+
+        .button__filter{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 0px 12px;
+            border-radius: 999px;
+            margin-right: 10px;
+            height: 30px;
+            background-color: transparent;
+            transition: all .3s linear;
+
+            &:hover{
+                background-color: var(--color-hover)
+            }
+
+            &.active{
+                background-color: var(--light-blue);
+                color: var(--blue-primary);
+            }
+            
+            span{
+                font-size: 1.4rem;
+                font-weight: bold;
+            }
+        }
+    }
+}

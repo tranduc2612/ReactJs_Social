@@ -14,6 +14,7 @@
     }
 
     &__right{
+        position: relative;
         margin-right: var(--spacing-header);
         width: 220px;
         height: 100%;

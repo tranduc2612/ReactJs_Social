@@ -1,0 +1,5 @@
+.wrapper{
+    & ~ &{
+        margin-left: 10px;
+    }
+}
