@@ -1,0 +1,46 @@
+.item{
+    .head{
+        .sub_icon{
+            height: 28px;
+            width: 28px;
+            background-size: 30px 2370px;
+            background-repeat: no-repeat;
+            display: inline-block;
+        }
+    }
+    
+    .body{
+        .content{
+
+        }
+        .time{
+
+        }
+        .co_friend{
+
+        }
+        .add_friend_btn{
+            display: flex;
+            justify-content:center;
+            .custom__btn{
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                font-size: 1.3rem;
+                font-weight: bold;
+                width:100px;
+                height: 30px;
+                border-radius: 5px;
+                margin-right: 8px;
+
+                &.accept{
+                    color: #fff;
+                }
+                &.deny{
+                    color: #333;
+                }
+            }
+        }
+    }
+}
+

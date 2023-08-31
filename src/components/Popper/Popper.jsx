@@ -21,7 +21,7 @@ function Popper({item, PopperRender}) {
         // setShowBox(false);
     }
     return ( <div className={cx("wrapper")}>
-            <Button active={showBox} icon={item.icon} full_icon={item.full_icon} size={"xl"} onBlur={handleBlur} onClick={handleClick} />
+            <Button shape="circle" active={showBox} icon={item.icon} full_icon={item.full_icon} size={"xl"} onBlur={handleBlur} onClick={handleClick} />
             {
                 showBox && <Comp />
             }

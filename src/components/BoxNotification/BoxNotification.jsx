@@ -4,6 +4,7 @@ import Box from "~/components/Box/Box"
 import Button from "~/components/Button/Button"
 import images from "~/assets/images/index";
 import { useState } from "react";
+import NotiItem from "./component/NotiItem";
 
 const cx = classNames.bind(styles)
 
@@ -36,7 +37,7 @@ function BoxNotification() {
             <div className={cx("notify")}>
                 <div className={cx("header","d-flex")}>
                     <h2>Thông báo</h2>
-                    <Button icon={images.icon.three_dot_icon} size={"sm"} />
+                    <Button icon={images.icon.three_dot_icon} size={"sm"} shape="circle"/>
                 </div>
                 <div className={cx("body")}>
                     <div className={cx("filter")}>
@@ -47,8 +48,14 @@ function BoxNotification() {
                             active: filterNotify.unRead
                         })} onClick={handleBtnFilter}><span value={"unread"}>Chưa được</span></button>
                     </div>
+                    <div className={cx("title")}>
+                        Mới
+                    </div>
                     <ul className={cx("list")}>
-                        
+                        <NotiItem />
+                        <NotiItem />
+                        <NotiItem />
+
                     </ul>
                 </div>
             </div>

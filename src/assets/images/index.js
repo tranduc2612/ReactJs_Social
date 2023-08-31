@@ -13,7 +13,7 @@ import bell_icon from "./icon/bell-icon.svg"
 import back_left_icon from "./icon/back-left-icon.svg"
 import avatar_demo from "./icon/317950785_3423963351171814_2305823669101113253_n.jpg"
 import three_dot_icon from "./icon/three-dot-icon.svg"
-
+import list_icon from "./icon/list-icon.png"
 
 const images = {
   logo: img_logo,
@@ -31,7 +31,8 @@ const images = {
     avatar_demo,
     bell_icon,
     back_left_icon,
-    three_dot_icon
+    three_dot_icon,
+    list_icon
   }
 };
 

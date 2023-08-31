@@ -4,7 +4,7 @@ import styles from "./Button.module.scss";
 import { forwardRef } from "react";
 
 const cx = classNames.bind(styles);
-function Button({to, content, icon, full_icon,no_background ,size, onClick, onBlur, className, active},ref) {
+function Button({to, children, icon, full_icon,no_background ,size, onClick, onBlur, className, active, shape = "default"},ref) {
     let props = {
         onClick,
         onBlur
@@ -31,13 +31,14 @@ function Button({to, content, icon, full_icon,no_background ,size, onClick, onBl
                 [size]: size ? true : false,
                 [className]: className ? true : false,
                 active: active,
-                no_background: no_background
+                no_background: no_background,
+                [shape]: true
             })} {...props}>
-                {!full_icon ? <img className={cx("icon",{
+                {!full_icon && icon ? <img className={cx("icon",{
                     full: full_icon,
-                    active: active
+                    active: active,
                 })} src={icon} /> : null}
-                {content}
+                {children}
             </Comp> 
     );
 }

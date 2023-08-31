@@ -54,7 +54,7 @@ function NavbarLeft() {
     </div>
     <div className={cx("box__search","d-none")} ref={searchRef}>
         <div className={cx("search__back")}>
-            <Button icon={images.icon.back_left_icon} size={"xl"} no_background={true} onClick={handleBackBox} />
+            <Button shape="circle" icon={images.icon.back_left_icon} size={"xl"} no_background={true} onClick={handleBackBox} />
         </div>
         <div className={cx("list__result")}>
             {/* inputValue render biến này ở đây */}
