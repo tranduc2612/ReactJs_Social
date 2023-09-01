@@ -1,6 +1,24 @@
 .item{
+    display:flex;
+    align-items:flex-start;
+    transition: all .2s linear;
+    padding: 10px 9px 8px 7px;
+    border-radius: 10px;
+    margin-left: -10px;
+    margin-right: -10px;
+    cursor: pointer;
+
+    &:hover{
+        background-color: var(--color-hover);   
+    }
+
     .head{
+        position: relative;
+        margin-right: 10px;
         .sub_icon{
+            position: absolute;
+            right: 0;
+            bottom: 0;
             height: 28px;
             width: 28px;
             background-size: 30px 2370px;
@@ -8,20 +26,34 @@
             display: inline-block;
         }
     }
+
+
     
     .body{
+        display: flex;
+        flex-direction: column;
         .content{
-
+            line-height: 1.8rem;
+            font-size: 1.4rem;
         }
         .time{
-
+            margin-top: 4px;
+            line-height: 1.5rem;
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: var(--blue-primary);
         }
         .co_friend{
-
+            font-weight: 500;
+            color: #333;
+            opacity: .6;
+            margin: 5px 0;
+            font-size: 1.2rem;
         }
         .add_friend_btn{
             display: flex;
             justify-content:center;
+            position: relative;
             .custom__btn{
                 display: flex;
                 justify-content: center;
@@ -29,9 +61,10 @@
                 font-size: 1.3rem;
                 font-weight: bold;
                 width:100px;
-                height: 30px;
+                height: 33px;
                 border-radius: 5px;
                 margin-right: 8px;
+
 
                 &.accept{
                     color: #fff;
@@ -43,4 +76,5 @@
         }
     }
 }
+
 

@@ -1,0 +1,17 @@
+.wrapper{
+    position: absolute;
+    top: 80%;
+    right: 0;
+    width: 360px;
+    padding: 10px;
+    .header{
+        h2{
+            font-size:2rem;
+            font-weight: 700;
+        }
+    }
+
+    .search__chat{
+        margin-top: 15px;
+    }
+}

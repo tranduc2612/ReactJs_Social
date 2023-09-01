@@ -17,13 +17,17 @@ function Input({icon, placeholder, onChange, onBlur, onFocus},ref) {
 
     const handleFocus = (e)=>{
        refIcon.current.style.width = "0px";
-       onFocus(e)
+       if(onFocus){
+           onFocus(e)
+       }
     }
 
     const handleBlur = (e)=>{
         const valueInput = e.target.value;
         refIcon.current.style.width = "3rem";
-        onBlur(e)
+        if(onBlur){
+            onBlur(e)
+        }
     }
 
     return ( <div className={cx("wrapper")}>

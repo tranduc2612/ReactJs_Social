@@ -1,14 +1,28 @@
 import classNames from "classnames/bind"; // import headless sẽ mất hiệu ứng hover tồn tại
 import { Link } from "react-router-dom";
 import styles from "./Button.module.scss";
-import { forwardRef } from "react";
+import { forwardRef,useImperativeHandle, useRef } from "react";
 
 const cx = classNames.bind(styles);
-function Button({to, children, icon, full_icon,no_background ,size, onClick, onBlur, className, active, shape = "default"},ref) {
+function Button({to, children, icon, full_icon,no_background ,size, onClick, onBlur, className, active, shape = "default",id},ref) {
+    const btnRef = useRef();
+    const layoutRef = useRef();
     let props = {
         onClick,
-        onBlur
+        onBlur,
+        ref: btnRef
     }
+
+    useImperativeHandle(ref,()=>(
+        {
+            getParentButton(){
+                return btnRef.current    
+            },
+            getLayoutClick(){
+                return layoutRef.current    
+            }
+        }
+    ))
    
     let Comp = "button";
     if(to){
@@ -25,6 +39,7 @@ function Button({to, children, icon, full_icon,no_background ,size, onClick, onB
             backgroundSize: "cover"
         }
     }
+    
 
     return (
             <Comp className={cx("button",{
@@ -39,6 +54,7 @@ function Button({to, children, icon, full_icon,no_background ,size, onClick, onB
                     active: active,
                 })} src={icon} /> : null}
                 {children}
+                <div className={cx("layout")} ref={layoutRef}></div>
             </Comp> 
     );
 }

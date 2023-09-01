@@ -3,6 +3,7 @@ import styles from "./NavbarRIght.module.scss";
 import Popper from "~/components/Popper/Popper";
 import images from "~/assets/images/index";
 import BoxNotification from "~/components/BoxNotification/BoxNotification";
+import BoxMessenger from "~/components/BoxMessenger/BoxMessenger";
 
 const cx = classNames.bind(styles);
 
@@ -17,12 +18,13 @@ const InfoButton =[
         id: 2,
         icon: images.icon.messenger_dark_icon,
         full_icon: false,
-        box_popper: null
+        box_popper: BoxMessenger
     },
     {
         id: 3,
         icon: images.icon.bell_icon,
         full_icon: false,
+        // box_popper: null
         box_popper: BoxNotification
     },
     {
@@ -34,10 +36,13 @@ const InfoButton =[
 ]
 
 function NavbarRight({listItem}) {
-
     return ( <>
             {InfoButton.map(e=>{
                 let Comp = e.box_popper;
+                // let props ={}
+                // if(Comp != null){
+                //     props.
+                // }
                 return (
                     <Popper key={e.id} item={e} PopperRender={Comp} />
                 )

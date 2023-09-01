@@ -16,9 +16,9 @@ function NotiItem() {
             <ButtonCustom shape="circle" size="xxl" full_icon={true} icon={"https://scontent.fhan17-1.fna.fbcdn.net/v/t1.6435-1/169976456_307817477370018_4461305293324667115_n.jpg?stp=dst-jpg_p130x130&_nc_cat=109&ccb=1-7&_nc_sid=dbb9e7&_nc_ohc=UJ1mXEtwIwMAX-27wKk&_nc_ht=scontent.fhan17-1.fna&oh=00_AfD5ToYpfbsArzyTVSDkUQZsg3iL5-M1YvQdy40QU6oZqA&oe=65175F37"} />
             <i className={cx("sub_icon")} style={{backgroundImage: `url("${images.icon.list_icon}")`,backgroundPosition: "0px -2310px"}}></i>
         </div>
-        <div className={cx("body")}>
+        <div className={cx("body","fw-normal")}>
             <div className={cx("content")}>
-                Tuấn Tiền Tỉ đã đăng 3 video mới, trong đó có "Thanh niên mới vào nghề săn sale"                
+                <span className={cx("author","fw-bold")}>Tuấn Tiền Tỉ</span> đã gửi lời mời kết bạn kết bạn                
             </div>
             <div className={cx("time")}>
                 Khoảng 1 phút trước

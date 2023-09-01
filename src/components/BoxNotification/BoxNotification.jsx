@@ -3,19 +3,16 @@ import styles from "./BoxNotification.module.scss";
 import Box from "~/components/Box/Box"
 import Button from "~/components/Button/Button"
 import images from "~/assets/images/index";
-import { useState } from "react";
+import { forwardRef, useState } from "react";
 import NotiItem from "./component/NotiItem";
 
 const cx = classNames.bind(styles)
-
-
-
 
 const BASE_BTN = {
     all: false,
     unRead: false
  }
-function BoxNotification() {
+function BoxNotification(props,ref) {
     
     const [filterNotify, setFilterNotify] = useState(BASE_BTN);
 
@@ -32,7 +29,7 @@ function BoxNotification() {
         setFilterNotify(newFilter)
     }
 
-    return ( <div className={cx("wrapper")}>
+    return ( <div className={cx("wrapper")} ref={ref}>
         <Box>
             <div className={cx("notify")}>
                 <div className={cx("header","d-flex")}>
@@ -53,9 +50,6 @@ function BoxNotification() {
                     </div>
                     <ul className={cx("list")}>
                         <NotiItem />
-                        <NotiItem />
-                        <NotiItem />
-
                     </ul>
                 </div>
             </div>
@@ -63,4 +57,4 @@ function BoxNotification() {
     </div> );
 }
 
-export default BoxNotification;
+export default forwardRef(BoxNotification);
