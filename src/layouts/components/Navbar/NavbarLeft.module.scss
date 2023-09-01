@@ -1,0 +1,68 @@
+.header__left{
+    margin-left: var(--spacing-header);
+    position: relative;
+    .logo{
+        cursor: pointer;
+    }
+
+    .search{
+        width:240px;
+    }
+
+    .box__search{
+        position: absolute;
+        left: calc(0px - var(--spacing-header));
+        top: 0;
+        width:110%;
+        height: 300px;
+        background-color: var(--white-color);
+        border-radius: 10px;
+        padding: 5px 10px;
+        box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+        transition: all 1s linear;
+
+        .search__back{
+            height: 40px; // sau tối ưu sau
+            position: relative;
+            display: flex;
+            align-items:center;
+            margin-bottom: 20px;
+        }
+
+        .list__result{
+            display: flex;
+            flex-direction: column;
+            color: #333;
+
+            &-header{
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                margin-bottom: 4px;
+
+                span:first-child{
+                    color: #333;
+                    font-size: 1.8rem;
+                    font-weight: bold;
+                }
+
+                span:last-child{
+                    color: blue;
+                    font-size: 1.4rem;
+                    padding: 10px;
+                    border-radius: 5px;
+                    
+                    &:hover{
+                        background-color: var(--color-hover);
+                        cursor: pointer;
+                    }
+                }
+            }
+
+            &-list{
+                display: flex;
+                flex-direction: column;
+            }
+        }
+    }
+}

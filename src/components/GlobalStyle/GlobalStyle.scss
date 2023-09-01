@@ -1,13 +1,22 @@
 @import 'normalize.css';
 
+*{
+    box-sizing: border-box;
+}
+
 h1{
     color: red;
 }
 
 :root{
+    --spacing-header: 15px;
     --white-color: #fff;
     --gray-color: #f0f2f5;
+    --blue-primary: #1b74e4;
     --color-hover: rgba(0, 0, 0, 0.05);
+    --blue-svg-primary: invert(30%) sepia(70%) saturate(4759%) hue-rotate(206deg) brightness(104%) contrast(79%);
+    --gray-svg-primary: invert(82%) sepia(7%) saturate(77%) hue-rotate(169deg) brightness(87%) contrast(89%);
+    --light-blue :#e7f3ff;
 }
 
 html{

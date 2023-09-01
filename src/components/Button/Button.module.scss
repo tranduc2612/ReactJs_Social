@@ -1,0 +1,68 @@
+.button{
+    $border-radius: 100%;
+
+    position: relative;
+    width: 40px;
+    height: 40px;
+    transition: all .3s linear;
+    display: flex;
+    align-items:center;
+    justify-content:center;
+    z-index: 999;
+
+    & ~ &{
+        margin-left:10px;
+    }
+
+    &:is(a){
+        background-color: rgb(240, 240, 240);
+    }
+
+    .layout{
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        border-radius: $border-radius;
+        background-color: transparent;
+    }
+
+    .icon{
+        width:80%; 
+        height:80%;
+        &.full{
+            top: 0;
+            left: 0;
+            overflow: hidden;
+        }
+        &.active{
+            filter: var(--blue-svg-primary)
+        }
+    }
+
+    &.circle{
+        border-radius: $border-radius;
+    }
+    
+    &.sm{
+        width: 36px;
+        height: 36px;
+    }
+    &.xl{
+        width: 40px;
+        height: 40px;
+    }
+    &.xxl{
+        width: 56px;
+        height: 56px;
+    }
+    &.no_background{
+        background-color: transparent
+    }
+
+    &:hover{
+        background-color: #E4E6EB;
+    }
+    &.active{
+        background-color: var(--light-blue);
+    }
+}
