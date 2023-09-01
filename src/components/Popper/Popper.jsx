@@ -9,7 +9,6 @@ function Popper({item, PopperRender}) {
     let Comp = "div"
     const refBox = useRef(null);
     const refPopper = useRef(null);
-    const id = useId()
     const [showBox,setShowBox] = useState(false)
     
     if(PopperRender){
@@ -22,8 +21,8 @@ function Popper({item, PopperRender}) {
 
     useEffect(()=>{
         function handleClickOutside(event) {
-            const btnPopper =refPopper.current.getLayoutClick()
-            if (refBox.current && !refBox.current.contains(event.target) && !btnPopper.isEqualNode(event.target)) {
+            const btnLayerClick = refPopper.current.getLayoutClick();
+            if (refBox.current && !refBox.current.contains(event.target) && !btnLayerClick.isEqualNode(event.target)) { 
                 setShowBox(false);
             }
           }
