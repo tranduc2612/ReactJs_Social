@@ -1,11 +1,13 @@
 import classNames from "classnames/bind";
 import styles from "./NavbarItem.module.scss";
-import Tippy from '@tippyjs/react/headless'; // import headless sẽ mất hiệu ứng hover tồn tại
+// import Tippy from '@tippyjs/react/headless'; // import headless sẽ mất hiệu ứng hover tồn tại
 
 const cx = classNames.bind(styles);
 
 function NavbarItem({icon,isActive = false,title}) {
-return ( <Tippy 
+return ( 
+    <>
+{/* <Tippy 
             interactive
             placement="bottom"
             trigger="mouseenter"
@@ -14,7 +16,7 @@ return ( <Tippy
             <div className={cx("message")} tabIndex="-1" {...attrs}>
                 {title || "Chưa có title"}
             </div>
-        )}>
+        )}> */}
         <div className={cx("item",{
             active: isActive
         })}>
@@ -22,7 +24,8 @@ return ( <Tippy
                 active: isActive
             })} src={icon} />
         </div>
-    </Tippy> 
+     {/* </Tippy>  */}
+    </>
     );
 }
 
