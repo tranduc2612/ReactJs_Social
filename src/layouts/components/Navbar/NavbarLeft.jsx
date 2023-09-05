@@ -47,7 +47,7 @@ function NavbarLeft() {
 
     return ( <div className={cx("header__left","d-flex align-items-center justify-content-between")}>
     <div className={cx("logo")}>
-        <img src={images.logo} />
+        <img src={images.logo.img_logo} />
     </div>
     <div className={cx("search","ms-2")}>
         <Input placeholder={"Tìm kiếm trên facebook"} icon={images.icon.search_icon} onFocus={handleFocus} onChange={handleChangeEvent} onBlur={handleBlur}/>

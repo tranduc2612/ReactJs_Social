@@ -1,4 +1,5 @@
 import img_logo from "./logo/facebook.svg";
+import logo_fulllname from "./logo/facebook-fullname.svg";
 import search_icon from "./icon/search-icon.svg";
 import home_icon from "./icon/home-icon.svg";
 import youtube_icon from "./icon/youtube-icon.svg";
@@ -14,9 +15,13 @@ import back_left_icon from "./icon/back-left-icon.svg"
 import avatar_demo from "./icon/317950785_3423963351171814_2305823669101113253_n.jpg"
 import three_dot_icon from "./icon/three-dot-icon.svg"
 import list_icon from "./icon/list-icon.png"
+import circle_plus_icon from "./icon/circle-plus-icon.svg";
 
 const images = {
-  logo: img_logo,
+  logo: {
+    img_logo, // logo 1 chữ f tròn
+    logo_fulllname, // logo cả chữ fb
+  },
   icon: {
     search_icon,
     home_icon,
@@ -32,7 +37,8 @@ const images = {
     bell_icon,
     back_left_icon,
     three_dot_icon,
-    list_icon
+    list_icon,
+    circle_plus_icon
   }
 };
 
