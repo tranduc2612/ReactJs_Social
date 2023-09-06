@@ -1,0 +1,111 @@
+.wrapper{
+    background-color: var(--gray-color);
+    min-height: 588px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    font-family: Helvetica, Arial, sans-serif;
+}
+
+.recent {
+    // background-color: red;
+    margin-right: 48px;
+
+    .logo__container {
+        padding: 8px 0 16px 0;
+    }
+    .logo__img {
+        height: 70px;
+        margin: -20px;
+    }
+
+    .title {
+        font-size: 28px;
+        font-weight: normal;
+        line-height: 32px;
+    }
+    .descrip {
+        padding-bottom: 12px;
+        color: #606770;
+        font-size: 15px;
+        line-height: 24px;
+        margin-bottom: 12px;
+    }
+
+    .account__item {
+        width: 160px;
+        position: relative;
+        display: inline-block;
+        margin-right: 17px;
+    }
+
+    .account__container {
+        border-radius: 8px;
+        box-shadow: 0 0 0 1px #dddfe2;
+        display: block;
+        transition: all .2s ease-out;
+
+        :first-child {
+            width: 160px;
+            height: 160px;
+            border-top-left-radius: 8px;
+            border-top-right-radius: 8px;
+            align-items: center;
+            background-color: #f5f6f7;
+        }
+
+        div {
+            border-bottom-left-radius: 8px;
+            border-bottom-right-radius: 8px;
+            padding: 12px;
+            background-color: #fff;
+            overflow: hidden;
+            text-align: center;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            color: #4b4f56;
+            font-size: 18px;
+            line-height: 22px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .plus__icon {
+            width: 65px;
+            height: 65px;
+        }
+    }
+
+    .remove_icon {
+        background-color: rgba(0, 0, 0, .3);
+        border-radius: 16px;
+        height: 16px;
+        width: 16px;
+        left: 4px;
+        position: absolute;
+        text-align: center;
+        top: 4px;
+        z-index: 1;
+        color: white;
+    }
+
+    .number_noti {
+        background-color: #fa3e3e;
+        border-radius: 24px;
+        box-shadow: -1px 1px 2px 0 rgba(0, 0, 0, .3);
+        color: #fff;
+        cursor: default;
+        font-size: 13px;
+        height: 24px;
+        line-height: 24px;
+        position: absolute;
+        right: -4px;
+        text-align: center;
+        top: -4px;
+        width: 24px;
+    }
+}
+
+.box_form {
+    // background-color: blue;
+}

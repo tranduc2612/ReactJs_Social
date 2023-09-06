@@ -7,7 +7,7 @@ const cx = classNames.bind(styles);
 function ItemSearch({nameUser,avatar,relative,url}) {
     return ( <Link to={url} className={cx("item")}>
         <div className={cx("avatar")}>
-            <img src={images.logo} />
+            <img src={images.logo.img_logo} />
         </div>
         <div className={cx("info")}>
             <div className={cx("name")}>
