@@ -2,6 +2,7 @@ import styles from "./Login.module.scss"
 import classNames from "classnames/bind";
 import images from "~/assets/images/index";
 import Box from "~/components/Box/Box";
+import Input from "~/components/Input2/Input";
 
 const cx = classNames.bind(styles);
 
@@ -47,7 +48,7 @@ function Login() {
                 </div>
                 <div className={cx("box_form","col-lg-3")}>
                     <Box>
-                        sadfbgbfdsa
+                        <Input placeholder={"Email hoặc số điện thoại"} />
                     </Box>
                 </div>
             </div>
