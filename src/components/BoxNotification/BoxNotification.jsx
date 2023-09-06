@@ -50,6 +50,21 @@ function BoxNotification(props,ref) {
                     </div>
                     <ul className={cx("list")}>
                         <NotiItem />
+                        <NotiItem />
+                        <NotiItem />
+                        <NotiItem />
+                        <NotiItem />
+                        <NotiItem />
+                        <NotiItem />
+                        <NotiItem />
+                        <NotiItem />
+                        <NotiItem />
+                        <NotiItem />
+                        <NotiItem />
+                        <NotiItem />
+                        <NotiItem />
+                        <NotiItem />
+                        <NotiItem />
                     </ul>
                 </div>
             </div>
