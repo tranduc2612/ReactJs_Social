@@ -1,12 +1,35 @@
-import styles from "./Login.module.scss"
 import classNames from "classnames/bind";
+import { Formik } from 'formik';
+import { useState } from "react";
+import { object, string } from 'yup';
 import images from "~/assets/images/index";
 import Box from "~/components/Box/Box";
-import Input from "~/components/Input2/Input";
+import styles from "./Login.module.scss";
+import Button from 'react-bootstrap/Button';
+import Col from 'react-bootstrap/Col';
+import Form from 'react-bootstrap/Form';
+import InputGroup from 'react-bootstrap/InputGroup';
+import Row from 'react-bootstrap/Row';
+import InputForm from "~/components/InputForm/InputForm";
+import * as yup from 'yup';
 
 const cx = classNames.bind(styles);
 
 function Login() {
+    const [errormsg, setErrormsg] = useState("");
+    const initialValues = {
+        email: '',
+        password: '',
+    }
+    const schema = yup.object().shape({
+        email: yup.string().required(),
+        password: yup.string().required(),
+      });
+
+    const handleSubmit = (values, formikHelpers) => {
+        console.log(values);
+    
+    }
 
     const accountItem = () => (
         <div className={cx("account__item")}>
@@ -46,10 +69,56 @@ function Login() {
                         </div>
                     </div>
                 </div>
-                <div className={cx("box_form","col-lg-3")}>
-                    <Box>
-                        <Input placeholder={"Email hoặc số điện thoại"} />
-                    </Box>
+                <div className="col-lg-4 d-flex justify-content-center">
+                    <div className={cx("box_container")}>
+                        <Box className={cx("box_form")}>
+                            <Formik 
+                                initialValues={initialValues} 
+                                onSubmit={(values, formikHelpers) => handleSubmit(values, formikHelpers)}
+                                validationSchema = {schema}
+                            >
+                                {({ handleSubmit, handleChange, values, touched, errors }) => (
+                                
+                                <Form noValidate onSubmit={handleSubmit}>
+                                    <InputForm 
+                                        type="text"
+                                        name = "email"
+                                        value = {values.email}
+                                        onChange = {handleChange}
+                                        component = "Control"
+                                        isInvalid={touched.email && !!errors.email}
+                                        errorMsg = {errors.email}
+                                        placeholder = "Email hoặc số điện thoại"
+                                    />
+
+                                    <InputForm 
+                                        type="password"
+                                        name = "password"
+                                        value = {values.password}
+                                        onChange = {handleChange}
+                                        component = "Control"
+                                        isInvalid={touched.password && !!errors.password}
+                                        errorMsg = {errors.password}
+                                        placeholder = "Mật khẩu"
+                                    />
+                                    
+                                    <Button className={cx("buttonForm")} type="submit">Đăng nhập</Button> 
+                                    <div className={cx("forgot_pass")}>
+                                        <a href="">Quên mật khẩu?</a>
+                                    </div>
+                                    <div className={cx("divider")}></div>
+                                    <Button className={cx("buttonForm", "create")} type="submit">Tạo tài khoản mới</Button> 
+                                    
+                                </Form>
+                            )}
+                                                        
+                            </Formik>
+                        </Box>
+                        <div className={cx("bottom_text")}>
+                            <a href="#"> Tạo Trang </a> dành cho người nổi tiếng, thương hiệu hoặc doanh nghiệp.
+                        </div>
+                    </div>
+                    
                 </div>
             </div>
         </div>
