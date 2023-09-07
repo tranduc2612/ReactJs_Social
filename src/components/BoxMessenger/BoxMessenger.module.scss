@@ -1,8 +1,8 @@
 .wrapper{
     position: absolute;
+    width: var(--width-max-box);
     top: 80%;
     right: 0;
-    width: 360px;
     padding: 10px;
     .messenger{
         max-height: 80vh;

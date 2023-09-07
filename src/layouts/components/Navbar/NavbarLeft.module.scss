@@ -6,7 +6,10 @@
     }
 
     .search{
-        width:240px;
+        width:280px;
+        &-input{
+            padding:4px;
+        }
     }
 
     .box__search{
