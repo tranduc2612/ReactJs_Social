@@ -1,13 +1,10 @@
 @import 'normalize.css';
 
-*{
-    box-sizing: border-box;
-}
-
 :root{
     // variable
     --width-max-box: 360px;
     --width-min-box: 280px;
+    --height-header: 55px;
     
     
     
@@ -22,6 +19,15 @@
     --light-blue :#e7f3ff;
 
     // --blue-login: #1877f2;
+}
+
+
+*{
+    box-sizing: border-box;
+}
+
+body{
+    background-color: var(--gray-color);
 }
 
 html{

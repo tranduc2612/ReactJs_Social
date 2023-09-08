@@ -12,10 +12,19 @@ import messenger_light_icon from "./icon/Facebook_Messenger-Logo.wine.svg";
 import menu_dot_icon from "./icon/menu-dot-icon.svg"
 import bell_icon from "./icon/bell-icon.svg"
 import back_left_icon from "./icon/back-left-icon.svg"
-import avatar_demo from "./icon/317950785_3423963351171814_2305823669101113253_n.jpg"
 import three_dot_icon from "./icon/three-dot-icon.svg"
 import list_icon from "./icon/list-icon.png"
 import circle_plus_icon from "./icon/circle-plus-icon.svg";
+import list_icon_sidebar from "./icon/list-icon-sidebar.png";
+import list_icon_sidebar_2 from "./icon/list-icon-sidebar-2.png";
+import arrow_down from "./icon/chevron-down-svgrepo-com.svg"
+import arrow_up from "./icon/arrow-up-svgrepo-com.svg"
+
+
+
+// ảnh demo sau xóa
+import avatar_demo from "./icon/317950785_3423963351171814_2305823669101113253_n.jpg"
+import group_avatar_demo from "./icon/demo_anh_group.jpg"
 
 const images = {
   logo: {
@@ -23,6 +32,8 @@ const images = {
     logo_fulllname, // logo cả chữ fb
   },
   icon: {
+    avatar_demo,
+    group_avatar_demo,
     search_icon,
     home_icon,
     youtube_icon,
@@ -30,15 +41,18 @@ const images = {
     group_icon,
     game_icon,
     user_icon,
+    arrow_down,
     messenger_dark_icon,
     messenger_light_icon,
     menu_dot_icon,
-    avatar_demo,
     bell_icon,
     back_left_icon,
     three_dot_icon,
     list_icon,
-    circle_plus_icon
+    circle_plus_icon,
+    list_icon_sidebar,
+    list_icon_sidebar_2,
+    arrow_up
   }
 };
 
