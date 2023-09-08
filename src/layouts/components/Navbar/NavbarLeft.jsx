@@ -50,7 +50,7 @@ function NavbarLeft() {
         <img src={images.logo.img_logo} />
     </div>
     <div className={cx("search","ms-2")}>
-        <Input placeholder={"Tìm kiếm trên facebook"} icon={images.icon.search_icon} onFocus={handleFocus} onChange={handleChangeEvent} onBlur={handleBlur}/>
+        <Input className={cx("search-input")} placeholder={"Tìm kiếm trên facebook"} icon={images.icon.search_icon} onFocus={handleFocus} onChange={handleChangeEvent} onBlur={handleBlur}/>
     </div>
     <div className={cx("box__search","d-none")} ref={searchRef}>
         <div className={cx("search__back")}>

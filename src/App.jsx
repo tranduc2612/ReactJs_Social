@@ -34,7 +34,7 @@ function App() {
   return (
     <>
       {/* fake login */}
-      <button style={{
+      {/* <button style={{
         position: "absolute",
         backgroundColor: "red",
         fontSize: "6rem",
@@ -48,7 +48,7 @@ function App() {
         fontSize: "6rem",
         top: "50%",
         left: "30%",
-      }} onClick={handleLogOut}>Log out</button>
+      }} onClick={handleLogOut}>Log out</button> */}
 
 
       <Router>

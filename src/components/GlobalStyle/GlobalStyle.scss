@@ -1,14 +1,13 @@
 @import 'normalize.css';
 
-*{
-    box-sizing: border-box;
-}
-
-h1{
-    color: red;
-}
-
 :root{
+    // variable
+    --width-max-box: 360px;
+    --width-min-box: 280px;
+    --height-header: 55px;
+    
+    
+    
     --spacing-header: 15px;
     --white-color: #fff;
     --gray-color: #f0f2f5;
@@ -18,7 +17,17 @@ h1{
     --blue-svg-primary: invert(30%) sepia(70%) saturate(4759%) hue-rotate(206deg) brightness(104%) contrast(79%);
     --gray-svg-primary: invert(82%) sepia(7%) saturate(77%) hue-rotate(169deg) brightness(87%) contrast(89%);
     --light-blue :#e7f3ff;
+
     // --blue-login: #1877f2;
+}
+
+
+*{
+    box-sizing: border-box;
+}
+
+body{
+    background-color: var(--gray-color);
 }
 
 html{
