@@ -1,0 +1,38 @@
+.Control, .Select {
+    border-radius: 6px !important;
+    font-size: 17px !important;
+    padding: 14px 16px !important;
+    line-height: 16px !important;
+    &::placeholder {
+        color: #90949c !important;
+    }
+}
+
+.Check {
+    border: 1px solid var(--bs-border-color);
+    border-radius: 6px;
+    font-size: 15px;
+    padding: 0px !important;
+    display: flex !important;
+    flex-direction: row-reverse;
+    align-items: center;
+    width: 100%;
+    margin: 0 !important;
+    input {
+        margin-right: 10px;
+    }
+    label {
+        padding: 8px;
+        width: 100%;
+    }
+}
+
+.error-msg {
+    font-size: 11px !important;
+    text-align: left;
+}
+
+.small {
+    font-size: 15px !important;
+    padding: 11px !important;
+}
