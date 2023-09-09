@@ -5,20 +5,22 @@ const cx = classNames.bind(styles);
 import Form from 'react-bootstrap/Form';
 
 function InputForm(props) {
-    const { component, children, errorMsg, label, ...inputProps } = props;
+    const { component, children, errorMsg, label, size, ...inputProps } = props;
 
     let Comp = component ? Form[`${component}`] : Form.Control;
 
     return ( 
         <Form.Group>
-            <Form.Label>{label}</Form.Label>
+            {(label && component != "Check") ? <Form.Label>{label}</Form.Label> : null}
             <Comp
-                className={cx(`${component}`)}
+                className={cx(`${component}`, `${size}`)}
                 {...inputProps}
+                label={label}
             >
                 {children}
             </Comp>
-            <Form.Control.Feedback className={cx("error-msg")} type="invalid">{errorMsg || ""}</Form.Control.Feedback>
+            <Form.Control.Feedback className={cx("error-msg")} type="invalid">{errorMsg}</Form.Control.Feedback>
+            
         </Form.Group>   
     );
 }

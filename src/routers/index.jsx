@@ -1,9 +1,10 @@
 import {
     DefaultLayout,
   } from "~/layouts/Index";
-  import Home from "~/pages/home/Index";
-  import Profile from "~/pages/profile/Index";
-  import Login from "~/pages/login/index";
+import Home from "~/pages/home/Index";
+import Profile from "~/pages/profile/Index";
+import Login from "~/pages/login/index";
+import Register from "~/pages/register/index";
   
   const publicRouter = [
     {
@@ -14,6 +15,11 @@ import {
     {
       path: "/login",
       page: Login,
+      layout: null,
+    },
+    {
+      path: "/register",
+      page: Register,
       layout: null,
     },
   ];
