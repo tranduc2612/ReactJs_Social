@@ -2,7 +2,7 @@
     position: absolute;
     top: 80%;
     right: 0;
-    width: 360px;
+    width: var(--width-max-box);
     padding: 10px;
 
     .notify{

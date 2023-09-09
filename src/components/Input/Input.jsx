@@ -3,7 +3,7 @@ import styles from "./Input.module.scss"
 import classNames from "classnames/bind";
 const cx = classNames.bind(styles);
 
-function Input({icon, placeholder, onChange, onBlur, onFocus},ref) {
+function Input({icon, placeholder, onChange, onBlur, onFocus, className},ref) {
     const refIcon = useRef(null)
     const props = {
         icon,
@@ -23,17 +23,18 @@ function Input({icon, placeholder, onChange, onBlur, onFocus},ref) {
     }
 
     const handleBlur = (e)=>{
-        const valueInput = e.target.value;
         refIcon.current.style.width = "3rem";
         if(onBlur){
             onBlur(e)
         }
     }
 
-    return ( <div className={cx("wrapper")}>
+    return ( <div className={cx("wrapper",{
+        [className]: true
+    })}>
         {icon && <img ref={refIcon} className={cx("icon")} src={icon} />}
         <input onFocus={handleFocus} onBlur={handleBlur} className={cx("input",{
-            no_icon: icon === undefined ? true : false
+            no_icon: icon === undefined ? true : false,
         })} {...props} ref={ref} />
     </div> );
 }

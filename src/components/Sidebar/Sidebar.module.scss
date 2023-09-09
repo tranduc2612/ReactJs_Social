@@ -1,0 +1,25 @@
+.sidebar{
+    position: fixed;
+    overflow: overlay;
+    top: calc(var(--height-header) );
+    min-width: var(--width-min-box);
+    max-width: var(--width-max-box);
+    width: 100%;
+    height: 100vh;
+    background-color:var(--gray-color);
+    z-index: -1;
+
+    &::-webkit-scrollbar {
+        border-radius: 0;
+        width: 8px;
+    }
+    
+    &::-webkit-scrollbar-thumb {
+        border-radius: 4px;
+        background-color: #d9dce4;
+    }
+    &::-webkit-scrollbar-track {
+        border-radius: 0;
+        background-color: rgba(0, 0, 0, 0);
+    }
+}
