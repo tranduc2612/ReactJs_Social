@@ -4,12 +4,12 @@ import styles from "./SidebarItem.module.scss";
 const cx = classNames.bind(styles);
 
 function SideBarItem(props) {
-    const {data,avatar,title, onClick,active = false, shape = "circle"} = props;
+    const {data,avatar,title, onClick,active = false,className, shape = "circle"} = props;
     const styles = {
         backgroundImage: `url(${data?.img_url})`,
         backgroundPosition: data?.position
     }
-    return ( <div className={cx("item")} onClick={onClick}>
+    return ( <div className={cx("item",{[className]:true})} onClick={onClick}>
         <div className={cx("wrapper")}>
             <div className={cx("icon",{[shape]: true})}>
                 {(avatar ? <img className={cx("avatar")} src={avatar} /> : <i style={styles}></i>)}
