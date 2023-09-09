@@ -5,6 +5,7 @@ import classNames from "classnames/bind";
 import images from "~/assets/images/index";
 import SideBar from "~/components/Sidebar/Sidebar";
 import SideBarItem from "~/components/SidebarItem/SidebarItem";
+import Box from "~/components/Box/Box";
 
 
 
@@ -116,7 +117,9 @@ function Home() {
                 </SideBar>
                 <div className={cx("body")}>
                     <ul className={cx("list__new-feed")}>
-                        
+                        <Box>
+                            
+                        </Box>
                     </ul>
                 </div>
                 <SideBar className={cx("right__sidebar")}>
