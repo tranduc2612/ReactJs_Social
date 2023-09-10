@@ -1,6 +1,8 @@
 .item{
     width: 100%;
     padding-left: 8px;
+    // max-height: 44px;
+    // margin-bottom: px;
 
     .wrapper{
         display:flex;
@@ -18,7 +20,7 @@
             position: relative;
             display: flex;
             flex-direction: column;
-            transform: scale(1);
+            transform: scale(.7777777);
             margin: 4px 6px 4px 0px;
             i{
                 background-size: 38px 570px;
@@ -42,7 +44,7 @@
             }
 
             &.square{
-                transform: scale(1.1);
+                transform: scale(1);
             }
 
             .status{
@@ -66,7 +68,7 @@
             flex: 1;
             .text{
                 font-size:1.5rem;
-                font-weight: bold;
+                font-weight: 600;
             }
         }
     }

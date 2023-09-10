@@ -1,6 +1,7 @@
 .sidebar{
     position: fixed;
-    overflow: overlay;
+    overflow-y: overlay;
+    overflow-x: hidden;
     top: calc(var(--height-header) );
     min-width: var(--width-min-box);
     max-width: var(--width-max-box);

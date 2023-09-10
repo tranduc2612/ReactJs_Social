@@ -17,8 +17,15 @@ import list_icon from "./icon/list-icon.png"
 import circle_plus_icon from "./icon/circle-plus-icon.svg";
 import list_icon_sidebar from "./icon/list-icon-sidebar.png";
 import list_icon_sidebar_2 from "./icon/list-icon-sidebar-2.png";
-import arrow_down from "./icon/chevron-down-svgrepo-com.svg"
-import arrow_up from "./icon/arrow-up-svgrepo-com.svg"
+import arrow_down from "./icon/chevron-down-svgrepo-com.svg";
+import arrow_up from "./icon/arrow-up-svgrepo-com.svg";
+import add_icon_post from "./icon/add_icon_post.png";
+import add_image_post from "./icon/add_image_post.png";
+import add_camera_post from "./icon/camera_post.png";
+import cross_icon from "./icon/cross_icon.svg"
+import public_icon from "./icon/public_icon.png"
+import private_icon from "./icon/private.png"
+import friend_icon from "./icon/friend_icon.png"
 
 
 
@@ -52,7 +59,14 @@ const images = {
     circle_plus_icon,
     list_icon_sidebar,
     list_icon_sidebar_2,
-    arrow_up
+    arrow_up,
+    add_icon_post,
+    add_image_post,
+    add_camera_post,
+    cross_icon,
+    public_icon,
+    private_icon,
+    friend_icon
   }
 };
 
