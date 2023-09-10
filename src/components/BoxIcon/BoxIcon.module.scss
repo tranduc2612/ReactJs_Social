@@ -1,0 +1,45 @@
+.box__icon{
+    width:325px;
+    padding: 8px 0;
+    z-index: 99999;
+    max-height: 260px;
+    overflow: overlay;
+
+    &::-webkit-scrollbar {
+        border-radius: 0;
+        width: 8px;
+    }
+    
+    &::-webkit-scrollbar-thumb {
+        border-radius: 4px;
+        background-color: #d9dce4;
+    }
+    &::-webkit-scrollbar-track {
+        border-radius: 0;
+        background-color: rgba(0, 0, 0, 0);
+    }
+
+
+    .list__icon{
+        display:flex;
+        justify-content: flex-start;
+        align-items: center;
+        flex-wrap: wrap;
+        padding: 0 10px;
+        .icon{
+            padding: 10px;
+            border-radius: 8px;
+            margin: 3px;
+            background-color: transparent;
+            cursor: pointer;
+            pointer-events: pointer;
+
+            &:hover{
+                background-color: var(--color-hover);
+            }
+            span{
+                font-size: 1.7rem;                
+            }
+        }
+    }
+}

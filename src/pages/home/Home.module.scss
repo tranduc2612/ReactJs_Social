@@ -73,6 +73,8 @@
                 &-item{
                     display: flex;
                     align-items:center;
+                    flex: 1;
+                    justify-content:center;
                     padding: 8px;
                     cursor: pointer;
                     border-radius: 5px;

@@ -126,7 +126,71 @@
                     content: attr(data-placeholder);
                     color: #6c6d71;
                 }
-                
+            }
+            .box__image{
+                $height_big_img: 230px;
+                $height_small_img: calc($height_big_img*2/3);
+                $gutter_small_image: calc($height_big_img / 3)*2; 
+                $gutter_big_image: 5px;
+                $padding_box: 8px;
+
+                display: grid;
+                grid-template-columns: repeat(auto-fill, minmax(40%,1fr));
+                // grid-template-rows: repeat(auto-fill, calc($height_small_img/2));
+                // grid-template-rows: $height_big_img;
+                grid-gap: $gutter_big_image;
+
+
+                // grid-auto-flow: dense;
+                // direction: rtl;
+
+                padding: $padding_box;
+                border: 1px solid #6c6d71;
+                margin: 0 16px;
+                border-radius: 8px;
+                height: auto;
+
+                &-item{
+                    position: relative;
+                    height:$height_big_img;
+                    background-size: contain;
+                    border-radius:$padding_box;
+                    img{
+                        height:100%;
+                        width: 100%;
+                        border-radius:$padding_box;
+                        object-fit: cover;
+                    }
+
+                    .delete_img{
+                        position: absolute;
+                        top: $padding_box;
+                        display: flex;
+                        justify-content: flex-end;
+                        right: 0;
+                        margin-right:$padding_box;
+                    }
+                }
+
+                &-item:nth-child(1){
+                    background-color: red;
+                    // height: $height_small_img;
+                }
+                &-item:nth-child(2){
+                    background-color: blue;
+                }
+                &-item:nth-child(3){
+                    background-color: green;
+                    // height: $height_small_img;
+                }
+                &-item:nth-child(4){
+                    background-color: palegreen;
+                    // grid-row: 4/7;
+                }
+                &-item:nth-child(5){
+                    background-color: pink;
+                    // height: $height_small_img;
+                }
             }
         }
     }

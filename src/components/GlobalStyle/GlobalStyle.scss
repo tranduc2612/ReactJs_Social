@@ -57,9 +57,9 @@ button,input{
     outline: none;
 }
 
-.modal-content{
+.modal-content,.box-custom{
     background-color: white;
-    padding-bottom: 0;
+    // padding-bottom: 0;
     border-radius: 10px;
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
     border: transparent;

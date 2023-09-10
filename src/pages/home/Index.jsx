@@ -96,6 +96,8 @@ function Home() {
         setModalShow(true)
     }
 
+    
+
     return ( <div className={cx("home")}>
                 <SideBar className={cx("left__sidebar")}>
                     <ul className={cx("left__sidebar-list")}>
@@ -152,7 +154,7 @@ function Home() {
                                         <img src={images.icon.add_image_post} />
                                     </div>
                                     <div className={cx("box__post-function")}>
-                                        <span>Video trực tuyến</span>
+                                        <span>Ảnh/Video</span>
                                     </div>
                                 </div>
 
@@ -161,7 +163,7 @@ function Home() {
                                         <img src={images.icon.add_icon_post} />
                                     </div>
                                     <div className={cx("box__post-function")}>
-                                        <span>Video trực tuyến</span>
+                                        <span>Cảm xúc/hoạt động</span>
                                     </div>
                                 </div>
                             </div>
@@ -216,7 +218,7 @@ function Home() {
                     onHide={() => setModalShow(false)}
                     size="md"
                 >
-                    <ModalPost setModalShow={setModalShow} />
+                        <ModalPost setModalShow={setModalShow} />
                 </Modal>
     </div> );
 }
