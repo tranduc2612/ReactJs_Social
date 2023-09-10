@@ -173,6 +173,7 @@ function ModalPost({setModalShow}) {
                      data-placeholder="Đức ơi, bạn đang nghĩ gì thế?" 
                      onInput={handleGetValueContent}
                      onClick={handleGetPosCursorContentEditable}
+                     onFocus={()=>setShowBoxIcon(false)}
                 >
                      
                 </div>
