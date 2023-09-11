@@ -10,6 +10,7 @@ import Box from "~/components/Box/Box";
 import Input from "~/components/Input/Input";
 import Button from "~/components/Button/Button";
 import ModalPost from "~/components/ModalPost/ModalPost";
+import BoxNewFeed from "~/components/BoxNewFeed/BoxNewFeed";
 
 
 
@@ -127,7 +128,7 @@ function Home() {
                     </ul>
                 </SideBar>
                 <div className={cx("body")}>
-                    <ul className={cx("list__new-feed")}>
+                    <div className={cx("body__page")}>
                         <Box className={cx("box__post")}>
                             <div className={cx("box__post-header")} onClick={handlePopupPost}>
                                 <div className={cx("box__post-avatar")}>
@@ -168,8 +169,18 @@ function Home() {
                                 </div>
                             </div>
                         </Box>
-                    </ul>
+
+                        <div className={cx("list__newfeed")}>
+                            <BoxNewFeed />
+                            <BoxNewFeed />
+                            <BoxNewFeed />
+                            <BoxNewFeed />
+
+                        </div>
+                    </div>
                 </div>
+
+
                 <SideBar className={cx("right__sidebar")}>
                     <h3 className={"pt-4 pb-2 fs-3"} style={{paddingLeft: "16px", color: "#6f7175"}}>Người liên hệ</h3>
                     <ul className={cx("left__sidebar-list")}>

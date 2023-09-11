@@ -1,0 +1,11 @@
+.box__newfeed{
+    margin-bottom: 15px;
+
+    &:first-child{
+        margin-top: 15px;
+    }
+
+    &:last-child{
+        margin-bottom: 0;
+    }
+}
