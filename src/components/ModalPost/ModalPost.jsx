@@ -73,8 +73,10 @@ function ModalPost({setModalShow}) {
 
     const handleSelectIcon = (e) => {
         const iconStr = e.target.innerText;
-        const newStr = contentEditable.slice(0, posCursorEditable) + iconStr + contentEditable.slice(posCursorEditable);
-        contentEditableRef.current.innerHTML = newStr;
+        
+        const newStr = contentEditable.substring(0, posCursorEditable) + iconStr + contentEditable.substring(posCursorEditable);
+        contentEditableRef.current.innerText = newStr;
+        setPosCursorEditable(posCursorEditable + 2)
         setContentEditable(newStr);
         setDataPost({
             ...dataPost,

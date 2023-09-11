@@ -9,7 +9,7 @@
         flex-grow: 1;
         background-color: var(--gray-color);
 
-        .list__new-feed{
+        .body__page{
             position: absolute;
             top: calc(var(--height-header) + 30px);
             width: 580px;
