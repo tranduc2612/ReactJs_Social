@@ -1,14 +1,13 @@
 @import 'normalize.css';
 
+
 :root{
     // variable
     --width-max-box: 360px;
     --width-min-box: 280px;
     --height-header: 55px;
-    
-    
-    
     --spacing-header: 15px;
+
     --white-color: #fff;
     --gray-color: #f0f2f5;
     --gray-deep-color: #727a95;
@@ -21,6 +20,9 @@
     // --blue-login: #1877f2;
 }
 
+.modal-backdrop {
+    background-color:#f3f3f4;
+}
 
 *{
     box-sizing: border-box;
@@ -52,5 +54,14 @@ h1,h2,h3,h4,h5{
 
 button,input{
     border: 1px solid transparent;
+    outline: none;
+}
+
+.modal-content,.box-custom{
+    background-color: white;
+    // padding-bottom: 0;
+    border-radius: 10px;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    border: transparent;
     outline: none;
 }

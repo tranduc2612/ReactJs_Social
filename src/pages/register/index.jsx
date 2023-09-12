@@ -197,8 +197,6 @@ function Register() {
                             <div className="d-flex justify-content-center">
                                 <Button className={cx("buttonForm")} type="submit">Đăng ký</Button> 
                             </div>
-                            
-                            
                         </Form>
                         )}               
                     </Formik>
