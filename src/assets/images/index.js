@@ -14,9 +14,15 @@ import bell_icon from "./icon/bell-icon.svg"
 import back_left_icon from "./icon/back-left-icon.svg"
 import three_dot_icon from "./icon/three-dot-icon.svg"
 import list_icon from "./icon/list-icon.png"
+import icon_camera from "./icon/icon_camera.png"
 import circle_plus_icon from "./icon/circle-plus-icon.svg";
 import list_icon_sidebar from "./icon/list-icon-sidebar.png";
 import list_icon_sidebar_2 from "./icon/list-icon-sidebar-2.png";
+import arrow_down from "./icon/chevron-down-svgrepo-com.svg"
+import arrow_up from "./icon/arrow-up-svgrepo-com.svg";
+import friend_icon_check from "./icon/friend_icon_check.png";
+import messager from "./icon/messager.png";
+import pen_icon from "./icon/pen_icon.png";
 import arrow_down from "./icon/chevron-down-svgrepo-com.svg";
 import arrow_up from "./icon/arrow-up-svgrepo-com.svg";
 import add_icon_post from "./icon/add_icon_post.png";
@@ -26,7 +32,6 @@ import cross_icon from "./icon/cross_icon.svg"
 import public_icon from "./icon/public_icon.png"
 import private_icon from "./icon/private.png"
 import friend_icon from "./icon/friend_icon.png"
-
 
 
 // ảnh demo sau xóa
@@ -59,6 +64,11 @@ const images = {
     circle_plus_icon,
     list_icon_sidebar,
     list_icon_sidebar_2,
+    icon_camera,
+    arrow_up,
+    friend_icon_check,
+    messager,
+    pen_icon,
     arrow_up,
     add_icon_post,
     add_image_post,
