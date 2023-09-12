@@ -54,6 +54,23 @@
         width: 56px;
         height: 56px;
     }
+    &.avt{
+        width: 176px;
+        height: 176px;
+    }
+    &.text_icon {
+        font-size: 15px;
+        font-weight: 600;
+        width: auto;
+        height: 36px;
+        padding: 0 12px;
+        border-radius: 6px;
+        .icon {
+            width: 16px;
+            height: 16px;
+            margin-right: 6px;
+        }
+    }
     &.no_background{
         background-color: transparent
     }
