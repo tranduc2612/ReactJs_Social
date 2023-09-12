@@ -8,4 +8,101 @@
     &:last-child{
         margin-bottom: 0;
     }
+
+    .header{
+        padding: 12px 16px 0;
+        margin-bottom: 12px;
+        display:flex;
+        justify-content:space-between;
+        align-items: center;
+
+        .header__left{
+            display: flex;
+            align-items: center;
+            justify-content:flex-start;
+            .avatar{
+                margin-right: 8px;
+            }
+
+            .info{
+                display: flex;
+                flex-direction: column;
+                .name__author{
+                    span{
+                        font-size:1.4rem;
+                        font-weight: 600;
+                    }
+                }
+
+                .time__created{
+                    span{
+                        font-size:1.2rem;
+                        font-weight: 500;
+                        margin-right: 8px;
+                    }
+
+                    .privacy_icon{
+                        width:12px;
+                        height:12px;
+                    }
+                }
+            }
+        }
+    }
+
+    .title{
+        padding:4px 16px 16px;
+        span{
+            font-size:1.7rem;
+            font-size: 500;
+        }
+    }
+
+    .images{
+        padding: 0 16px;
+
+        img{
+            width:100%;
+            height: 400px;
+            object-fit: cover;
+            border-radius:8px;
+            cursor: pointer;
+
+            &:nth-child(4) {
+                position: relative;
+            } 
+            
+        }
+        .layer__forth-pic{
+            position: relative;
+            width: 100%;
+            height: 100%;
+            background-color:transparent!important;
+            cursor: pointer;
+            &:after {
+                content:"";
+                position: absolute;
+                width: 100%;
+                height: 100%;
+                background-color:#b8b8ba;
+                opacity: 0.4;
+                border-radius:8px;
+                left: 0;
+            }
+
+            &:before {
+                content:attr(remain-photo);
+                position: absolute;
+                left: 50%;
+                top: 50%;
+                color: #fefefe;
+                transform: translate(-50%,-50%);
+                font-size: 5rem;
+                font-weight: 600;
+            }
+        }
+        
+        
+    }
+    
 }
