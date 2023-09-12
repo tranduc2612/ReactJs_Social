@@ -23,8 +23,6 @@ import arrow_up from "./icon/arrow-up-svgrepo-com.svg";
 import friend_icon_check from "./icon/friend_icon_check.png";
 import messager from "./icon/messager.png";
 import pen_icon from "./icon/pen_icon.png";
-import arrow_down from "./icon/chevron-down-svgrepo-com.svg";
-import arrow_up from "./icon/arrow-up-svgrepo-com.svg";
 import add_icon_post from "./icon/add_icon_post.png";
 import add_image_post from "./icon/add_image_post.png";
 import add_camera_post from "./icon/camera_post.png";

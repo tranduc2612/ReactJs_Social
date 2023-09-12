@@ -27,7 +27,7 @@ function Profile() {
                             <div className={cx("num_friend")}>50 bạn bè</div>
                         </div>
                         <div className={cx("option_container")}>
-                            <Button className={cx("relationship")} icon={images.icon.friend} size={"text_icon"} onClick={console.log} >
+                            <Button className={cx("relationship")} icon={images.icon.friend_icon_check} size={"text_icon"} onClick={console.log} >
                                 Bạn bè
                             </Button>
                             <Button className={cx("message")} icon={images.icon.messager} size={"text_icon"} onClick={console.log} >
