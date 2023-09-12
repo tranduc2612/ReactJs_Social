@@ -175,7 +175,6 @@ function Home() {
                             <BoxNewFeed />
                             <BoxNewFeed />
                             <BoxNewFeed />
-
                         </div>
                     </div>
                 </div>
