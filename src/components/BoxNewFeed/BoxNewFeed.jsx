@@ -3,7 +3,7 @@ import classNames from "classnames/bind";
 import images from "~/assets/images/index";
 import Button from "~/components/Button/Button"
 
-import Container from 'react-bootstrap/Container';
+
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 
@@ -133,7 +133,14 @@ function BoxNewFeed() {
         </div>
         <div className={cx("info__contact")}>
             <div className={cx("info__react")}>
-                haha
+                <div className={cx("info__react-icon")}>
+                    <span>
+                        <img src="" alt="" />
+                    </span>
+                </div>
+                <div className={cx("info__react-amount")}>
+                    Bạn và 900 người khác
+                </div>
             </div>
 
             <div className={cx("info__comment")}>
