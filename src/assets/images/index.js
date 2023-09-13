@@ -31,6 +31,15 @@ import public_icon from "./icon/public_icon.png"
 import private_icon from "./icon/private.png"
 import friend_icon from "./icon/friend_icon.png"
 
+import like from "./icon/like.svg"
+import tym from "./icon/tym.svg"
+import thuongthuong from "./icon/thuongthuong.svg"
+import haha from "./icon/haha.svg"
+import wow from "./icon/wow.svg"
+import buon from "./icon/buon.svg"
+import phanno from "./icon/tucgian.svg"
+import tools__icon from "./icon/tool-icon.png"
+
 
 // ảnh demo sau xóa
 import avatar_demo from "./icon/317950785_3423963351171814_2305823669101113253_n.jpg"
@@ -67,14 +76,21 @@ const images = {
     friend_icon_check,
     messager,
     pen_icon,
-    arrow_up,
     add_icon_post,
     add_image_post,
     add_camera_post,
     cross_icon,
     public_icon,
     private_icon,
-    friend_icon
+    friend_icon,
+    like,
+    tym,
+    thuongthuong,
+    haha,
+    wow,
+    buon,
+    phanno,
+    tools__icon
   }
 };
 
