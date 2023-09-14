@@ -9,6 +9,18 @@
     }
 }
 
+@keyframes fadeInUp{
+    0%{
+        transform:translate(0px, 8px); 
+        opacity: 0;
+    }
+    100%{
+        transform:translate(0px, 0); 
+        opacity: 1;
+    }
+}
+
+
 .box__newfeed{
     margin-bottom: 15px;
 
@@ -185,10 +197,13 @@
     }
 
     .tools__contact{
+        position: relative;
         display: flex;
         align-items: center;
         margin: 0 12px;
         padding: 4px;
+
+        
 
         &-text.active{
             font-size: 1.7rem;
@@ -210,6 +225,21 @@
                 background-color: var(--color-hover);
             }
         }
+
+        .react{
+            &:hover .box__react{
+                display: flex;
+                animation: fadeInUp .5s linear;
+            }
+
+            .box__react{
+                top: -110%;
+                left: 0;
+                position: absolute;
+                display: none;
+            }
+        }
+
         .tools__wrapper{
             padding: 6px 4px;
         }

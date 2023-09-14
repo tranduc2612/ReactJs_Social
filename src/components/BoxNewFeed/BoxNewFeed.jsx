@@ -4,9 +4,11 @@ import images from "~/assets/images/index";
 import Button from "~/components/Button/Button"
 import {REACT_EMOTION} from "~/utils/constant"
 
+import Tippy from '@tippyjs/react/headless'; // import headless sẽ mất hiệu ứng hover tồn tại
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import { useState } from "react";
+import { useRef, useState } from "react";
+import BoxReact from "../BoxReact/BoxReact";
 
 const cx = classNames.bind(styles);
 
@@ -110,18 +112,35 @@ function BoxNewFeed() {
         color: null,
         img: null
     }
+    const refBoxReact = useRef(null)
     const [react,setReact] = useState(BASE_STATE_REACT);
 
-    const handleLike = () =>{
-        if(react.id !== null){
-            setReact({
-                ...BASE_STATE_REACT
-            })
+    const handleReact = (e) =>{
+        const key = e.target.getAttribute('id-icon');
+        if(key !== null){
+            const objReact = REACT_EMOTION[key]
+            if(objReact !== null){
+                setReact({
+                    ...objReact
+                })
+            }
         }else{
-            setReact({
-                ...REACT_EMOTION.WOW
-            })
+            const keyDefault = e.target.getAttribute('id-default');
+            if(keyDefault !== null){
+                const objReact = REACT_EMOTION[keyDefault]
+                if(react.id != null){
+                    setReact({
+                        ...BASE_STATE_REACT
+                    })
+                }else{
+                    setReact({
+                        ...objReact
+                    })
+                }
+            }
+
         }
+        
     }
 
     const renderReactEmotion = () =>{
@@ -136,7 +155,7 @@ function BoxNewFeed() {
                     display: "inline-block",
                 }} className={cx("tools__contact-icon",{
                     active: false
-                })}>
+                })} id-default={REACT_EMOTION.LIKE.id}>
                 </div>
             )
         }else if(react.id === REACT_EMOTION.LIKE.id){
@@ -148,14 +167,14 @@ function BoxNewFeed() {
                     height: "18px",
                     backgroundRepeat: "no-repeat",
                     display: "inline-block",
-                }} className={cx("tools__contact-icon",{
+                }} key={react.id} className={cx("tools__contact-icon",{
                     active: true
-                })}>
+                })} id-default={REACT_EMOTION.LIKE.id}>
                 </div>
             )
         }else{
             return(
-                <img className={cx("active")} src={react.img} alt="" />
+                <img className={cx("active")} key={react.id} src={react.img} alt="" />
             )
         }
     }
@@ -220,14 +239,19 @@ function BoxNewFeed() {
         </div>
 
         <div className={cx("tools__contact")}>
-            <div className={cx("react")} onClick={handleLike}>
+            <div className={cx("react")} 
+                 onClick={handleReact}
+                 id-default={REACT_EMOTION.LIKE.id}
+            >
                 <div className={cx("tools__wrapper")}>
                     {renderReactEmotion()}
                 </div>
                 <span style={{color: react.color,padding: "6px 4px"}} className={cx("tools__contact-text",{
                     active: react.id ? true : false
-                })}>{react.title}</span>
+                })} id-default={REACT_EMOTION.LIKE.id}>{react.title}</span>
+                <BoxReact ref={refBoxReact} className={cx("box__react")} />
             </div>
+
             <div className={cx("comment")}>
                     <div className={cx("tools__wrapper")}>
                         <div style={{
@@ -238,7 +262,7 @@ function BoxNewFeed() {
                             height: "18px",
                             backgroundRepeat: "no-repeat",
                             display: "inline-block",
-                            "vertical-align": "-0.25em"
+                            verticalAlign: "-0.25em"
                         }} >
                         </div>
                     </div>
@@ -254,7 +278,7 @@ function BoxNewFeed() {
                             height: "18px",
                             backgroundRepeat: "no-repeat",
                             display: "inline-block",
-                            "vertical-align": "-0.25em"
+                            verticalAlign: "-0.25em"
                         }} >
                         </div>
                     </div>

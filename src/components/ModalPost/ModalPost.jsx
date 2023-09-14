@@ -214,7 +214,8 @@ function ModalPost({setModalShow}) {
                             <BoxIcon onClick={handleSelectIcon} />
                         </div>
                     )}>
-                        <div style={{marginLeft:"10px"}}>
+                        <div style={{marginLeft:"10px"}}
+                        >
                             <Button className={cx("btn__tool")} icon={images.icon.add_icon_post} shape="circle" size="sm" onClick={handleShowBoxIcon}/>
                         </div>
                     </Tippy>
