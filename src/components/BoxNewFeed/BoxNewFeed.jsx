@@ -2,10 +2,13 @@ import styles from "./BoxNewFeed.module.scss"
 import classNames from "classnames/bind";
 import images from "~/assets/images/index";
 import Button from "~/components/Button/Button"
+import {REACT_EMOTION} from "~/utils/constant"
 
-import Container from 'react-bootstrap/Container';
+import Tippy from '@tippyjs/react/headless'; // import headless sẽ mất hiệu ứng hover tồn tại
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
+import { useRef, useState } from "react";
+import BoxReact from "../BoxReact/BoxReact";
 
 const cx = classNames.bind(styles);
 
@@ -95,9 +98,86 @@ const renderImages = () =>{
     }
 }
 
-function BoxNewFeed() {
+// like color: rgb(32, 120, 244);
+// tym color: rgb(243, 62, 88);
+// thuongthuong,haha,wow,sad, : color: rgb(247, 177, 37);
+// phan no :color: rgb(233, 113, 15);
 
-    
+
+
+function BoxNewFeed() {
+    const BASE_STATE_REACT = {
+        id: null,
+        title: "Thích",
+        color: null,
+        img: null
+    }
+    const refBoxReact = useRef(null)
+    const [react,setReact] = useState(BASE_STATE_REACT);
+
+    const handleReact = (e) =>{
+        const key = e.target.getAttribute('id-icon');
+        if(key !== null){
+            const objReact = REACT_EMOTION[key]
+            if(objReact !== null){
+                setReact({
+                    ...objReact
+                })
+            }
+        }else{
+            const keyDefault = e.target.getAttribute('id-default');
+            if(keyDefault !== null){
+                const objReact = REACT_EMOTION[keyDefault]
+                if(react.id != null){
+                    setReact({
+                        ...BASE_STATE_REACT
+                    })
+                }else{
+                    setReact({
+                        ...objReact
+                    })
+                }
+            }
+
+        }
+        
+    }
+
+    const renderReactEmotion = () =>{
+        if(react.id === null){
+            return (
+                <div style={{
+                    backgroundImage: `url('${images.icon.tools__icon}')`,
+                    backgroundSize: "190px 190px",
+                    width: "18px",
+                    height: "18px",
+                    backgroundRepeat: "no-repeat",
+                    display: "inline-block",
+                }} className={cx("tools__contact-icon",{
+                    active: false
+                })} id-default={REACT_EMOTION.LIKE.id}>
+                </div>
+            )
+        }else if(react.id === REACT_EMOTION.LIKE.id){
+            return (
+                <div style={{
+                    backgroundImage: `url('${images.icon.tools__icon}')`,
+                    backgroundSize: "190px 190px",
+                    width: "18px",
+                    height: "18px",
+                    backgroundRepeat: "no-repeat",
+                    display: "inline-block",
+                }} key={react.id} className={cx("tools__contact-icon",{
+                    active: true
+                })} id-default={REACT_EMOTION.LIKE.id}>
+                </div>
+            )
+        }else{
+            return(
+                <img className={cx("active")} key={react.id} src={react.img} alt="" />
+            )
+        }
+    }
 
     return ( <div className={cx("box__newfeed","box-custom")}>
         <div className={cx("header")}>
@@ -133,28 +213,77 @@ function BoxNewFeed() {
         </div>
         <div className={cx("info__contact")}>
             <div className={cx("info__react")}>
-                haha
+
+                <div className={cx("info__list-icon")}>
+                    <div className={cx("info__react-icon")}>
+                        <img src={images.icon.like} alt="" />
+                    </div>
+
+                    <div className={cx("info__react-icon")}>
+                        <img src={images.icon.buon} alt="" />
+                    </div>
+
+                    <div className={cx("info__react-icon")}>
+                        <img src={images.icon.thuongthuong} alt="" />
+                    </div>
+                </div>
+
+                <div className={cx("info__react-total")}>
+                    <span>Bạn,Minh Ngọc và 900 người khác</span>
+                </div>
             </div>
 
             <div className={cx("info__comment")}>
-                65 comment
+                <span>65 bình luận</span>
             </div>
         </div>
 
         <div className={cx("tools__contact")}>
-            <div className={cx("react")}>
-                like
+            <div className={cx("react")} 
+                 onClick={handleReact}
+                 id-default={REACT_EMOTION.LIKE.id}
+            >
+                <div className={cx("tools__wrapper")}>
+                    {renderReactEmotion()}
+                </div>
+                <span style={{color: react.color,padding: "6px 4px"}} className={cx("tools__contact-text",{
+                    active: react.id ? true : false
+                })} id-default={REACT_EMOTION.LIKE.id}>{react.title}</span>
+                <BoxReact ref={refBoxReact} className={cx("box__react")} />
             </div>
+
             <div className={cx("comment")}>
-                comment
+                    <div className={cx("tools__wrapper")}>
+                        <div style={{
+                            backgroundImage: `url('${images.icon.tools__icon}')`,
+                            backgroundPosition: "-22px -132px",
+                            backgroundSize: "190px 190px",
+                            width: "18px",
+                            height: "18px",
+                            backgroundRepeat: "no-repeat",
+                            display: "inline-block",
+                            verticalAlign: "-0.25em"
+                        }} >
+                        </div>
+                    </div>
+                    <span style={{padding: "6px 4px"}}>bình luận</span>
             </div>
             <div className={cx("send")}>
-                gửi
+                    <div className={cx("tools__wrapper")}>
+                        <div style={{
+                            backgroundImage: `url('${images.icon.tools__icon}')`,
+                            backgroundPosition: "-82px -132px",
+                            backgroundSize: "190px 190px",
+                            width: "18px",
+                            height: "18px",
+                            backgroundRepeat: "no-repeat",
+                            display: "inline-block",
+                            verticalAlign: "-0.25em"
+                        }} >
+                        </div>
+                    </div>
+                <span style={{padding: "6px 4px"}}>Chia sẻ</span>
             </div>
-        </div>
-
-        <div className={cx("list__comment")}>
-            list comment
         </div>
     </div> );
 }

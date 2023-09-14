@@ -1,0 +1,28 @@
+.box__react{
+    display: flex;
+    height: 49px;
+    border-radius:999px;
+    padding: 0 5px;
+    align-items:center;
+    z-index: 99;
+    .list{
+        display: flex;
+        justify-content:space-between;
+        align-items:center;
+        .item{
+            cursor: pointer;
+            margin: 0px 4px;
+            transform: scale(1);
+            .icon{
+                transition: all .2s linear;
+                width: 39px;
+                height: 39px;
+            }
+
+            &:hover .icon{  
+                transform: scale(1.4);
+            }
+
+        }
+    }
+}
