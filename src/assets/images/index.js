@@ -20,6 +20,8 @@ import list_icon_sidebar from "./icon/list-icon-sidebar.png";
 import list_icon_sidebar_2 from "./icon/list-icon-sidebar-2.png";
 import arrow_down from "./icon/chevron-down-svgrepo-com.svg"
 import arrow_up from "./icon/arrow-up-svgrepo-com.svg";
+import arrow_left from "./icon/arrow_left.svg";
+import arrow_right from "./icon/arrow_right.svg";
 import friend_icon_check from "./icon/friend_icon_check.png";
 import messager from "./icon/messager.png";
 import pen_icon from "./icon/pen_icon.png";
@@ -30,6 +32,7 @@ import cross_icon from "./icon/cross_icon.svg"
 import public_icon from "./icon/public_icon.png"
 import private_icon from "./icon/private.png"
 import friend_icon from "./icon/friend_icon.png"
+import list_icon_3 from "./icon/list-icon-3.png"
 
 import like from "./icon/like.svg"
 import tym from "./icon/tym.svg"
@@ -90,7 +93,10 @@ const images = {
     wow,
     buon,
     phanno,
-    tools__icon
+    tools__icon,
+    arrow_right,
+    arrow_left,
+    list_icon_3,
   }
 };
 

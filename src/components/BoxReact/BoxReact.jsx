@@ -1,7 +1,6 @@
 import Box from "~/components/Box/Box";
 import styles from "./BoxReact.module.scss"
 import classNames from "classnames/bind";
-import images from "~/assets/images/index";
 import {IMAGES_REACT} from "~/utils/constant"
 import { forwardRef, memo } from "react";
 

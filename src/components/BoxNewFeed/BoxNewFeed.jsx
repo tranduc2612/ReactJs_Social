@@ -1,14 +1,22 @@
-import styles from "./BoxNewFeed.module.scss"
+import { useRef, useState,useCallback } from "react";
+import Modal from 'react-bootstrap/Modal';
 import classNames from "classnames/bind";
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Pagination } from 'swiper/modules';
+import 'swiper/css';
+import 'swiper/swiper-bundle.css';
+
+import styles from "./BoxNewFeed.module.scss"
 import images from "~/assets/images/index";
 import Button from "~/components/Button/Button"
 import {REACT_EMOTION} from "~/utils/constant"
 
-import Tippy from '@tippyjs/react/headless'; // import headless sẽ mất hiệu ứng hover tồn tại
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
-import { useRef, useState } from "react";
+// import Tippy from '@tippyjs/react/headless'; // import headless sẽ mất hiệu ứng hover tồn tại
 import BoxReact from "../BoxReact/BoxReact";
+import CustomBox from "../CustomBox/CustomBox";
+import InputEditor from "../InputEditor/InputEditor";
 
 const cx = classNames.bind(styles);
 
@@ -114,6 +122,21 @@ function BoxNewFeed() {
     }
     const refBoxReact = useRef(null)
     const [react,setReact] = useState(BASE_STATE_REACT);
+    const [showDetailPost, setShowDetailPost] = useState(false);
+    const sliderRef = useRef(null);
+
+    const handlePrev = useCallback(() => {
+        if (!sliderRef.current) return;
+        sliderRef.current.swiper.slidePrev();
+    }, []);
+
+    const handleNext = useCallback(() => {
+        if (!sliderRef.current) return;
+        sliderRef.current.swiper.slideNext();
+    }, []);
+
+    const handleClose = () => setShowDetailPost(false);
+    const handleShow = () => setShowDetailPost(true);
 
     const handleReact = (e) =>{
         const key = e.target.getAttribute('id-icon');
@@ -179,6 +202,31 @@ function BoxNewFeed() {
         }
     }
 
+    const renderFooterDetailPost = ()=>{
+        return (
+            <div className={cx("detail__post-footer")}>
+                <Button className={cx("avatar")} icon={images.icon.avatar_demo} shape="circle" full_icon={true} />
+                <InputEditor className={cx("input__comment")} />
+            </div>
+        )
+    }
+
+    const renderHeaderDetailPost = () =>{
+        return (
+            <>
+                <div className={cx("detail__post-header")}>
+                    <div className={cx("left__box")}>
+                        
+                    </div>
+                    <h2>Bài viết của Trần Minh Đức</h2>
+                    <div className={cx("right__box")}>
+                        <Button icon={images.icon.cross_icon} onClick={handleClose} shape="circle" />
+                    </div>
+                </div>
+            </>
+        )
+    }
+
     return ( <div className={cx("box__newfeed","box-custom")}>
         <div className={cx("header")}>
             <div className={cx("header__left")}>
@@ -211,6 +259,7 @@ function BoxNewFeed() {
         <div className={cx("images",`${LIST_ANH.length == 1 ? "ps-0 pe-0" : ""}`)}>
             {renderImages()}
         </div>
+
         <div className={cx("info__contact")}>
             <div className={cx("info__react")}>
 
@@ -252,7 +301,7 @@ function BoxNewFeed() {
                 <BoxReact ref={refBoxReact} className={cx("box__react")} />
             </div>
 
-            <div className={cx("comment")}>
+            <div className={cx("comment")} onClick={handleShow}>
                     <div className={cx("tools__wrapper")}>
                         <div style={{
                             backgroundImage: `url('${images.icon.tools__icon}')`,
@@ -266,7 +315,7 @@ function BoxNewFeed() {
                         }} >
                         </div>
                     </div>
-                    <span style={{padding: "6px 4px"}}>bình luận</span>
+                    <span style={{padding: "6px 4px"}}>Bình luận</span>
             </div>
             <div className={cx("send")}>
                     <div className={cx("tools__wrapper")}>
@@ -285,6 +334,143 @@ function BoxNewFeed() {
                 <span style={{padding: "6px 4px"}}>Chia sẻ</span>
             </div>
         </div>
+
+        <Modal show={showDetailPost} onHide={handleClose} centered size={"lg"}>
+            <CustomBox className={cx("detail__post")} header={renderHeaderDetailPost()}  footer={renderFooterDetailPost()}>
+                <div className={cx("detail__post-body")}>
+                    <div className={cx("header")}>
+                        <div className={cx("header__left")}>
+                            <div className={cx("avatar")}>
+                                <Button icon={images.icon.avatar_demo} full_icon={true} shape="circle" />
+                            </div>
+                            <div className={cx("info")}>
+                                <div className={cx("name__author")}>
+                                    <span>Chi Nguyễn</span>
+                                </div>
+
+                                <div className={cx("time__created")}>
+                                    <span>1 ngày</span>
+                                    <span className={cx("privacy")}><img className={cx("privacy_icon")} src={images.icon.public_icon} /></span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className={cx("header__right")}>
+                            <div className={cx("setting")}>
+                                <Button icon={images.icon.three_dot_icon} size={"sm"} shape="circle"/>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className={cx("title")}>
+                        <span>Nếu anh là người tốt thì mai mốt mình làm người tình !</span>
+                    </div>
+
+                    <div className={cx("slider__image")}>
+                        
+                        <Button className={cx("prev-arrow")} shape={"circle"} onClick={handlePrev} icon={images.icon.arrow_left}>
+                        </Button>
+                        <Button className={cx("next-arrow")} shape={"circle"} onClick={handleNext} icon={images.icon.arrow_right}>
+                        </Button>
+                        
+                        <Swiper
+                            modules={[Pagination]}
+                            spaceBetween={50}
+                            slidesPerView={1}
+                            onSlideChange={() => console.log('slide change')}
+                            onSwiper={(swiper) => console.log(swiper)}
+                            zoom={true}
+                            ref={sliderRef}
+                            pagination={true}
+                        >
+                            {LIST_ANH.map((e,index)=>{
+                                return(
+                                <SwiperSlide className={cx("image__slider")} key={index}>
+                                    <img src={e} alt="" />
+                                </SwiperSlide>
+                                )
+                            })}
+                        </Swiper>
+                        <div className="swiper-pagination">...</div>
+                    </div>
+
+                    <div className={cx("info__contact")}>
+                        <div className={cx("info__react")}>
+
+                            <div className={cx("info__list-icon")}>
+                                <div className={cx("info__react-icon")}>
+                                    <img src={images.icon.like} alt="" />
+                                </div>
+
+                                <div className={cx("info__react-icon")}>
+                                    <img src={images.icon.buon} alt="" />
+                                </div>
+
+                                <div className={cx("info__react-icon")}>
+                                    <img src={images.icon.thuongthuong} alt="" />
+                                </div>
+                            </div>
+
+                            <div className={cx("info__react-total")}>
+                                <span>Bạn,Minh Ngọc và 900 người khác</span>
+                            </div>
+                        </div>
+
+                        <div className={cx("info__comment")}>
+                            <span>65 bình luận</span>
+                        </div>
+                    </div>
+
+                    <div className={cx("tools__contact")}>
+                        <div className={cx("react")} 
+                            onClick={handleReact}
+                            id-default={REACT_EMOTION.LIKE.id}
+                        >
+                            <div className={cx("tools__wrapper")}>
+                                {renderReactEmotion()}
+                            </div>
+                            <span style={{color: react.color,padding: "6px 4px"}} className={cx("tools__contact-text",{
+                                active: react.id ? true : false
+                            })} id-default={REACT_EMOTION.LIKE.id}>{react.title}</span>
+                            <BoxReact ref={refBoxReact} className={cx("box__react")} />
+                        </div>
+
+                        <div className={cx("comment")} onClick={handleShow}>
+                                <div className={cx("tools__wrapper")}>
+                                    <div style={{
+                                        backgroundImage: `url('${images.icon.tools__icon}')`,
+                                        backgroundPosition: "-22px -132px",
+                                        backgroundSize: "190px 190px",
+                                        width: "18px",
+                                        height: "18px",
+                                        backgroundRepeat: "no-repeat",
+                                        display: "inline-block",
+                                        verticalAlign: "-0.25em"
+                                    }} >
+                                    </div>
+                                </div>
+                                <span style={{padding: "6px 4px"}}>Bình luận</span>
+                        </div>
+                        <div className={cx("send")}>
+                                <div className={cx("tools__wrapper")}>
+                                    <div style={{
+                                        backgroundImage: `url('${images.icon.tools__icon}')`,
+                                        backgroundPosition: "-82px -132px",
+                                        backgroundSize: "190px 190px",
+                                        width: "18px",
+                                        height: "18px",
+                                        backgroundRepeat: "no-repeat",
+                                        display: "inline-block",
+                                        verticalAlign: "-0.25em"
+                                    }} >
+                                    </div>
+                                </div>
+                            <span style={{padding: "6px 4px"}}>Chia sẻ</span>
+                        </div>
+                    </div>
+                </div>
+            </CustomBox>
+        </Modal>
     </div> );
 }
 
