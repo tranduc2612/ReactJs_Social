@@ -206,7 +206,7 @@ function BoxNewFeed() {
         return (
             <div className={cx("detail__post-footer")}>
                 <Button className={cx("avatar")} icon={images.icon.avatar_demo} shape="circle" full_icon={true} />
-                <InputEditor className={cx("input__comment")} />
+                <InputEditor placementTools="bottom" className={cx("input__comment")} />
             </div>
         )
     }

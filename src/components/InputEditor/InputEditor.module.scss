@@ -51,20 +51,20 @@
             background-color: #fff;
             transform: scale(1.24);
             &.active{
-                animation: zoomInIcon .3s linear forwards;
+                animation: zoomInIcon .5s linear forwards;
             }
         
             &.disabled{
-                animation: zoomOutIcon .3s linear forwards;
+                animation: zoomOutIcon .5s linear forwards;
             }
         }
 
         &.active{
-            animation: widthIn .3s linear forwards;
+            animation: widthIn .3s ease-in forwards;
         }
     
         &.disabled{
-            animation: widthOut .3s linear forwards;
+            animation: widthOut .3s ease-in forwards;
         }
     }
 
