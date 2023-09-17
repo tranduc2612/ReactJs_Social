@@ -33,6 +33,7 @@ import public_icon from "./icon/public_icon.png"
 import private_icon from "./icon/private.png"
 import friend_icon from "./icon/friend_icon.png"
 import list_icon_3 from "./icon/list-icon-3.png"
+import list_icon_4 from "./icon/list-icon-4.png"
 
 import like from "./icon/like.svg"
 import tym from "./icon/tym.svg"
@@ -97,6 +98,7 @@ const images = {
     arrow_right,
     arrow_left,
     list_icon_3,
+    list_icon_4
   }
 };
 

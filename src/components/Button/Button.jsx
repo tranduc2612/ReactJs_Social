@@ -4,7 +4,7 @@ import styles from "./Button.module.scss";
 import { forwardRef,useId,useImperativeHandle, useRef } from "react";
 
 const cx = classNames.bind(styles);
-function Button({positionImg,id_modified, to, children, icon, full_icon,no_background ,size, onClick, onBlur, onMouseOver, className, active, shape = "default"},ref) {
+function Button({positionImg,customStyle,id_modified, to, children, icon, full_icon,no_background ,size, onClick, onBlur, onMouseOver, className, active, shape = "default"},ref) {
     const idBtn = useId()
     const btnRef = useRef();
     const layoutRef = useRef();
@@ -50,7 +50,7 @@ function Button({positionImg,id_modified, to, children, icon, full_icon,no_backg
                 active: active,
                 no_background: no_background,
                 [shape]: true
-            })} {...props}>
+            })} style={customStyle} {...props}>
                 {!full_icon && icon ? <img className={cx("icon",{
                     full: full_icon,
                     active: active,

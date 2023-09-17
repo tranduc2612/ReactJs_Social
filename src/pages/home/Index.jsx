@@ -7,7 +7,6 @@ import images from "~/assets/images/index";
 import SideBar from "~/components/Sidebar/Sidebar";
 import SideBarItem from "~/components/SidebarItem/SidebarItem";
 import Box from "~/components/Box/Box";
-import Input from "~/components/Input/Input";
 import Button from "~/components/Button/Button";
 import ModalPost from "~/components/ModalPost/ModalPost";
 import BoxNewFeed from "~/components/BoxNewFeed/BoxNewFeed";
@@ -127,6 +126,7 @@ function Home() {
                         </div>
                     </ul>
                 </SideBar>
+
                 <div className={cx("body")}>
                     <div className={cx("body__page")}>
                         <Box className={cx("box__post")}>
@@ -171,10 +171,10 @@ function Home() {
                         </Box>
 
                         <div className={cx("list__newfeed")}>
-                            <BoxNewFeed />
-                            <BoxNewFeed />
-                            <BoxNewFeed />
-                            <BoxNewFeed />
+                            <BoxNewFeed shared={true} />
+                            <BoxNewFeed shared={false} />
+                            <BoxNewFeed shared={true} />
+                            <BoxNewFeed shared={false} />
                         </div>
                     </div>
                 </div>

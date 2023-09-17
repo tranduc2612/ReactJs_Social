@@ -51,20 +51,20 @@
             background-color: #fff;
             transform: scale(1.24);
             &.active{
-                animation: zoomInIcon .5s linear forwards;
+                animation: zoomInIcon .5s cubic-bezier(0.17, 0.17, 0, 1) forwards;
             }
         
             &.disabled{
-                animation: zoomOutIcon .5s linear forwards;
+                animation: zoomOutIcon .5s cubic-bezier(0.17, 0.17, 0, 1) forwards;
             }
         }
 
         &.active{
-            animation: widthIn .3s ease-in forwards;
+            animation: widthIn .3s cubic-bezier(0.17, 0.17, 0, 1) forwards;
         }
     
         &.disabled{
-            animation: widthOut .3s ease-in forwards;
+            animation: widthOut .3s cubic-bezier(0.17, 0.17, 0, 1) forwards;
         }
     }
 
@@ -76,34 +76,58 @@
         border-radius: 18px;
         flex: 3;
         
+        .wrapper__default{
+            overflow: overlay;
+            display: flex;
+            align-items: flex-end;
+        }
+
+        .tools__icon{
+            display: flex;
+            bottom: 15px;
+            padding: 4px;
+            margin: 0px 4px 4px 0;
+            align-items: flex-end;
+            justify-content: center;
+            height: 100%;
+            width:30px;
+
+            svg{
+                cursor: pointer;
+            }
+        }
+
         .content__wrapper{
+            position: relative;
             max-height: 300px;
-                overflow: overlay;
-    
-                &::-webkit-scrollbar {
-                    border-radius: 0;
-                    width: 8px;
-                }
-                
-                &::-webkit-scrollbar-thumb {
-                    border-radius: 4px;
-                    background-color: #d9dce4;
-                }
-                &::-webkit-scrollbar-track {
-                    border-radius: 0;
-                    background-color: rgba(0, 0, 0, 0);
-                }
+            flex: 1;
+            
+            &::-webkit-scrollbar {
+                border-radius: 0;
+                width: 8px;
+            }
+            
+            &::-webkit-scrollbar-thumb {
+                border-radius: 4px;
+                background-color: #d9dce4;
+            }
+            &::-webkit-scrollbar-track {
+                border-radius: 0;
+                background-color: rgba(0, 0, 0, 0);
+            }
+
             .content{
                 outline: none;
                 border: none;
                 color: #333;
                 font-size:1.6rem;
                 font-weight: 500;
-                padding: 8px 16px;
+                padding: 8px 4px 8px 16px;
                 cursor:text;
                 user-select: text;
                 white-space: pre-wrap;
                 word-break: break-word;
+                flex: 1;
                 &[data-placeholder]:empty::before {
                     content: attr(data-placeholder);
                     color: #87898d;
@@ -135,4 +159,6 @@
         }
     }
 }
+
+
 
