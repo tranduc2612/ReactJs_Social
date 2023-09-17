@@ -1,0 +1,27 @@
+.box__comment{
+    .filter__comment{
+        margin: 0px 16px;
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        margin-top: 6px;
+        cursor: pointer;
+        span{
+            font-size:1.6rem;
+            font-weight: 600;
+        }
+        img{
+            width:24px;
+            height: 24px;
+            margin-left: 8px;
+        }
+    }
+
+    .list__comment{
+        .comment__item{
+            padding-left: 16px;
+            padding-top: 4px;
+            padding-right: 16px;
+        }
+    }
+}

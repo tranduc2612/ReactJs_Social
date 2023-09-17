@@ -1,6 +1,7 @@
 import classNames from "classnames/bind";
 import { Formik } from 'formik';
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import * as yup from 'yup';
@@ -13,6 +14,8 @@ const cx = classNames.bind(styles);
 
 function Login() {
     const [errormsg, setErrormsg] = useState("");
+    const navigate = useNavigate();
+
     const initialValues = {
         email: '',
         password: '',
@@ -106,7 +109,7 @@ function Login() {
                                     <div className={cx("forgot_pass")}>
                                         <a href="">Quên mật khẩu?</a>
                                     </div>
-                                    <div className={cx("divider")}></div><Button className={cx("buttonForm", "create")} type="submit">Tạo tài khoản mới</Button> 
+                                    <div className={cx("divider")}></div><Button onClick={(e)=>{navigate("/register")}} className={cx("buttonForm", "create")}>Tạo tài khoản mới</Button> 
                                     
                                     
                                 </Form>

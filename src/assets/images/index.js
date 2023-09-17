@@ -20,6 +20,8 @@ import list_icon_sidebar from "./icon/list-icon-sidebar.png";
 import list_icon_sidebar_2 from "./icon/list-icon-sidebar-2.png";
 import arrow_down from "./icon/chevron-down-svgrepo-com.svg"
 import arrow_up from "./icon/arrow-up-svgrepo-com.svg";
+import arrow_left from "./icon/arrow_left.svg";
+import arrow_right from "./icon/arrow_right.svg";
 import friend_icon_check from "./icon/friend_icon_check.png";
 import messager from "./icon/messager.png";
 import pen_icon from "./icon/pen_icon.png";
@@ -30,6 +32,8 @@ import cross_icon from "./icon/cross_icon.svg"
 import public_icon from "./icon/public_icon.png"
 import private_icon from "./icon/private.png"
 import friend_icon from "./icon/friend_icon.png"
+import list_icon_3 from "./icon/list-icon-3.png"
+import list_icon_4 from "./icon/list-icon-4.png"
 import mail_icon from "./icon/mail_icon.png";
 import phone_icon from "./icon/phone_icon.png";
 import gender_female_icon from "./icon/gender_female_icon.png";
@@ -37,7 +41,6 @@ import gender_male_icon from "./icon/gender_male_icon.png";
 import clock_icon from "./icon/clock_icon.png";
 import address_icon from "./icon/address_icon.png";
 import cake_icon from "./icon/cake_icon.png";
-
 import like from "./icon/like.svg"
 import tym from "./icon/tym.svg"
 import thuongthuong from "./icon/thuongthuong.svg"
@@ -98,7 +101,10 @@ const images = {
     buon,
     phanno,
     tools__icon,
-    friend_icon,
+    arrow_right,
+    arrow_left,
+    list_icon_3,
+    list_icon_4,
     mail_icon,
     phone_icon,
     gender_female_icon,
