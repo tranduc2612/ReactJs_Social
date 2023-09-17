@@ -2,6 +2,8 @@ import styles from "./PostView.module.scss"
 import classNames from "classnames/bind";
 import Box from "~/components/Box/Box";
 import images from "~/assets/images/index";
+import CreatePost from "~/components/CreatePost/CreatePost";
+import ListNewFeed from "~/components/ListNewFeed/ListNewFeed";
 
 const cx = classNames.bind(styles);
 
@@ -63,9 +65,9 @@ function PostView({user}) {
                 />  
             </div>
             <div className={cx("main_content")}>
-                <Box 
-                    
-                />  
+                <CreatePost />
+
+                <ListNewFeed />
             </div>
             
         </div>

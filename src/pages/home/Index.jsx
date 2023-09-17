@@ -10,6 +10,8 @@ import Box from "~/components/Box/Box";
 import Button from "~/components/Button/Button";
 import ModalPost from "~/components/ModalPost/ModalPost";
 import BoxNewFeed from "~/components/BoxNewFeed/BoxNewFeed";
+import CreatePost from "~/components/CreatePost/CreatePost";
+import ListNewFeed from "~/components/ListNewFeed/ListNewFeed";
 
 
 
@@ -77,7 +79,6 @@ const SideBarLeftAll = [{
 function Home() {
     const [listSideBar,setListSidebar] = useState(SideBarLeft);
     const [moreSidebar,setMoreSidebar] = useState(false);
-    const [modalShow, setModalShow] = useState(false);
 
     useEffect(()=>{
         if(moreSidebar){
@@ -90,10 +91,6 @@ function Home() {
     const handleMoreSidebar = ()=>{
         // đoạn này xử lí thêm bớt thanh sidebar sau xử lí logic sau // fix tạm
         setMoreSidebar(!moreSidebar);
-    }
-
-    const handlePopupPost = ()=>{
-        setModalShow(true)
     }
 
     
@@ -129,53 +126,10 @@ function Home() {
 
                 <div className={cx("body")}>
                     <div className={cx("body__page")}>
-                        <Box className={cx("box__post")}>
-                            <div className={cx("box__post-header")} onClick={handlePopupPost}>
-                                <div className={cx("box__post-avatar")}>
-                                    <Button icon={images.icon.avatar_demo} full_icon={true} shape={"circle"} />
-                                </div>
-                                <div className={cx("box__post-input")}>
-                                    <span>Đức ơi, bạn đang nghĩ gì thế?</span>
-                                </div>
-                            </div>
 
+                        <CreatePost />
 
-                            <div className={cx("box__post-body")}>
-                                <div className={cx("box__post-item")}>
-                                    <div className={cx("box__post-img")}>
-                                        <img src={images.icon.add_camera_post} />
-                                    </div>
-                                    <div className={cx("box__post-function")}>
-                                        <span>Video trực tuyến</span>
-                                    </div>
-                                </div>
-
-                                <div className={cx("box__post-item")}>
-                                    <div className={cx("box__post-img")}>
-                                        <img src={images.icon.add_image_post} />
-                                    </div>
-                                    <div className={cx("box__post-function")}>
-                                        <span>Ảnh/Video</span>
-                                    </div>
-                                </div>
-
-                                <div className={cx("box__post-item")}>
-                                    <div className={cx("box__post-img")}>
-                                        <img src={images.icon.add_icon_post} />
-                                    </div>
-                                    <div className={cx("box__post-function")}>
-                                        <span>Cảm xúc/hoạt động</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </Box>
-
-                        <div className={cx("list__newfeed")}>
-                            <BoxNewFeed shared={true} />
-                            <BoxNewFeed shared={false} />
-                            <BoxNewFeed shared={true} />
-                            <BoxNewFeed shared={false} />
-                        </div>
+                        <ListNewFeed />
                     </div>
                 </div>
 
@@ -222,14 +176,6 @@ function Home() {
 
                     </ul>
                 </SideBar>
-    
-                <Modal
-                    show={modalShow}
-                    onHide={() => setModalShow(false)}
-                    size="md"
-                >
-                        <ModalPost setModalShow={setModalShow} />
-                </Modal>
     </div> );
 }
 
