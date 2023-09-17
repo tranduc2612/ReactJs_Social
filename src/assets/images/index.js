@@ -89,7 +89,7 @@ const images = {
     cross_icon,
     public_icon,
     private_icon,
-    friend_icon
+    friend_icon,
     like,
     tym,
     thuongthuong,
@@ -97,7 +97,7 @@ const images = {
     wow,
     buon,
     phanno,
-    tools__icon
+    tools__icon,
     friend_icon,
     mail_icon,
     phone_icon,
