@@ -1,0 +1,106 @@
+.container {
+    .box_container {
+        font-size: 15px;
+        line-height: 20px;
+        margin-bottom: 16px;
+        display: flex;
+        .left_nav {
+            padding: 15px 6px;
+            @media only screen and (min-width: 900px) {
+                width: 287px;
+            }
+            @media only screen and (min-width: 768px)
+            {
+                border-right: 1px solid #CED0D4;
+            }
+            .title {
+                margin: 0px 10px 18px;
+                h2 {
+                    font-weight: 700;
+                    font-size: 20px;
+                }
+            }
+            .item {
+                font-size: 15px;
+                font-weight: 600;
+                margin-bottom: 8px;
+                color: #65676b;
+                cursor: pointer;
+                &:hover {
+                    border-radius: 6px;
+                    background-color: var(--color-hover);
+                }
+                .item_content {
+                    padding: 8px 10px;
+                }
+            }
+            .active {
+                border-radius: 6px;
+                background-color: #E7F3FF;
+                color: #5382f2;
+            }
+        }
+        .right_content {
+            padding: 16px 32px 32px 16px;
+            position: relative;
+            @media only screen and (min-width: 900px) {
+                width: 744px;
+            }
+
+            .title_item {
+                font-size: 17px;
+                font-weight: 600;
+                margin-bottom: 20px;
+                margin-top: 20px;
+            }
+            .view {
+                
+                .info_item{
+                    display: flex;
+                    margin: 12px 6px;
+                    margin-left: -5px;
+                    .icon {
+                        padding: 6px;
+                        img {
+                            width: 24px;
+                            height: 24px;
+                            filter: var(--gray-svg-profile);
+                        }
+                    }
+                    .content {
+                        padding: 6px;
+                        padding-top: 8px;
+                        align-items: center;
+                        .content_bold {
+                            font-weight: 600;
+                        }
+                    }
+                }
+                .aboutme {
+                    // margin-bottom: 24px;
+                    text-align: center;
+                }
+            }
+
+            .edit {
+                padding-top: 15px;
+                .input_container {
+                    margin-top: -10px;
+                    margin-bottom: 10px;
+                    input {
+                        font-size: 15px !important;
+                    }
+                }
+            }
+
+            .btn_topright {
+                position: absolute;
+                top: 15px;
+                right: 15px;
+            }
+        }
+        
+        
+    }
+           
+}

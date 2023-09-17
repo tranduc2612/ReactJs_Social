@@ -34,7 +34,13 @@ import private_icon from "./icon/private.png"
 import friend_icon from "./icon/friend_icon.png"
 import list_icon_3 from "./icon/list-icon-3.png"
 import list_icon_4 from "./icon/list-icon-4.png"
-
+import mail_icon from "./icon/mail_icon.png";
+import phone_icon from "./icon/phone_icon.png";
+import gender_female_icon from "./icon/gender_female_icon.png";
+import gender_male_icon from "./icon/gender_male_icon.png";
+import clock_icon from "./icon/clock_icon.png";
+import address_icon from "./icon/address_icon.png";
+import cake_icon from "./icon/cake_icon.png";
 import like from "./icon/like.svg"
 import tym from "./icon/tym.svg"
 import thuongthuong from "./icon/thuongthuong.svg"
@@ -98,7 +104,14 @@ const images = {
     arrow_right,
     arrow_left,
     list_icon_3,
-    list_icon_4
+    list_icon_4,
+    mail_icon,
+    phone_icon,
+    gender_female_icon,
+    gender_male_icon,
+    clock_icon,
+    address_icon,
+    cake_icon
   }
 };
 
