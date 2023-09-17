@@ -3,11 +3,42 @@ import Box from "~/components/Box/Box";
 import styles from "./Profile.module.scss";
 import Button from "~/components/Button/Button";
 import images from "~/assets/images/index";
-
+import PostView from "~/components/Profile/PostView/PostView";
+import IntroView from "~/components/Profile/IntroView/IntroView";
+import FriendView from "~/components/Profile/FriendView/FriendView";
+import { useState } from "react";
 
 const cx = classNames.bind(styles);
+const LIST_NAVBAR = [
+    {
+        id: "POST",
+        title: "Bài viết",
+        component: PostView
+    },
+    {
+        id: "INTRO",
+        title: "Giới thiệu",
+        component: IntroView,
+    },
+    {
+        id: "FRIEND",
+        title: "Bạn bè",
+        component: FriendView,
+    }
+]
+
+const user = {
+    aboutMe: "What does the matter with you ✿",
+    address: "Hà Nội, Việt Nam",
+    dayOfBirth: '05/10/2002',
+    gender: "MALE",
+    email: "ngoc43552@gmail.com",
+    phone: "0399620226"
+}
 
 function Profile() {
+
+    const [content, setContent] = useState(LIST_NAVBAR[0]);
 
     return ( 
         <div className={cx("wrapper")}>
@@ -27,15 +58,15 @@ function Profile() {
                             <div className={cx("num_friend")}>50 bạn bè</div>
                         </div>
                         <div className={cx("option_container")}>
-                            <Button className={cx("relationship")} icon={images.icon.friend_icon_check} size={"text_icon"} onClick={console.log} >
+                            {/* <Button className={cx("relationship")} icon={images.icon.friend_icon_check} size={"text_icon"} onClick={console.log} >
                                 Bạn bè
                             </Button>
                             <Button className={cx("message")} icon={images.icon.messager} size={"text_icon"} onClick={console.log} >
                                 Nhắn tin
-                            </Button>
-                            {/* <Button className={cx("update")} icon={images.icon.pen_icon} size={"text_icon"} onClick={console.log} >
-                                Chỉnh sửa trang cá nhân
                             </Button> */}
+                            <Button className={cx("update")} icon={images.icon.pen_icon} size={"text_icon"} onClick={console.log} >
+                                Chỉnh sửa trang cá nhân
+                            </Button>
                         </div>
                     </div>
                 </div>
@@ -44,20 +75,20 @@ function Profile() {
             </div>
             <div className={cx("navbar")}>
                 <div className={cx("navbar_container")}>
-                    <div className={cx("navbar_item")}>
-                        <span>Bài viết</span>
-                        <div className={cx("underline")}></div>
-                    </div>
-                    <div className={cx("navbar_item")}>
-                        <span>Giới thiệu</span>
-                    </div>
-                    <div className={cx("navbar_item")}>
-                        <span>Bạn bè</span>
-                    </div>
+                    {LIST_NAVBAR.map((nav)=>{
+                        return (
+                            <div key={nav.id} className={cx("navbar_item")} onClick={() => setContent(nav)}>
+                                <span className={cx(`${nav.id == content.id ? "title_active" : ""}`)}>{nav.title}</span>
+                                <div className={cx(`${nav.id == content.id ? "underline" : ""}`)}></div>
+                            </div>
+                        )
+                    })}
                 </div>
             </div>
             <div className={cx("content")}>
-                content
+                <div className={cx("content_container")}>
+                    <content.component user={user}/>
+                </div>
             </div>
         </div>
     );

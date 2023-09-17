@@ -122,10 +122,25 @@
                 left: 0;
                 right: 0;
             }
+            .title_active {
+                color: hsl(214, 89%, 52%);
+            }
             &:hover {
                 border-radius: 6px;
                 background-color: var(--color-hover);
             }
         }
+    }
+}
+
+.content {
+    display: flex;
+    justify-content: center;
+    .content_container {
+        width: 100%;
+        max-width: 1031px;
+        // display: flex;
+        // align-items: center;
+        margin-top: 16px;
     }
 }
