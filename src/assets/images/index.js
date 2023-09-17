@@ -29,7 +29,7 @@ import add_camera_post from "./icon/camera_post.png";
 import cross_icon from "./icon/cross_icon.svg"
 import public_icon from "./icon/public_icon.png"
 import private_icon from "./icon/private.png"
-import friend_icon from "./icon/friend_icon.png";
+import friend_icon from "./icon/friend_icon.png"
 import mail_icon from "./icon/mail_icon.png";
 import phone_icon from "./icon/phone_icon.png";
 import gender_female_icon from "./icon/gender_female_icon.png";
@@ -37,6 +37,16 @@ import gender_male_icon from "./icon/gender_male_icon.png";
 import clock_icon from "./icon/clock_icon.png";
 import address_icon from "./icon/address_icon.png";
 import cake_icon from "./icon/cake_icon.png";
+
+import like from "./icon/like.svg"
+import tym from "./icon/tym.svg"
+import thuongthuong from "./icon/thuongthuong.svg"
+import haha from "./icon/haha.svg"
+import wow from "./icon/wow.svg"
+import buon from "./icon/buon.svg"
+import phanno from "./icon/tucgian.svg"
+import tools__icon from "./icon/tool-icon.png"
+
 
 // ảnh demo sau xóa
 import avatar_demo from "./icon/317950785_3423963351171814_2305823669101113253_n.jpg"
@@ -73,13 +83,21 @@ const images = {
     friend_icon_check,
     messager,
     pen_icon,
-    arrow_up,
     add_icon_post,
     add_image_post,
     add_camera_post,
     cross_icon,
     public_icon,
     private_icon,
+    friend_icon
+    like,
+    tym,
+    thuongthuong,
+    haha,
+    wow,
+    buon,
+    phanno,
+    tools__icon
     friend_icon,
     mail_icon,
     phone_icon,

@@ -17,14 +17,14 @@ return (
                 {title || "Chưa có title"}
             </div>
         )}>
-            <div className={cx("item",{
+        <div className={cx("item",{
+            active: isActive
+        })}>
+            <img className={cx("icon",{
                 active: isActive
-            })}>
-                <img className={cx("icon",{
-                    active: isActive
-                })} src={icon} />
-            </div>
-        </Tippy> 
+            })} src={icon} />
+        </div>
+     </Tippy> 
     </>
     );
 }
