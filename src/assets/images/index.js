@@ -30,6 +30,13 @@ import cross_icon from "./icon/cross_icon.svg"
 import public_icon from "./icon/public_icon.png"
 import private_icon from "./icon/private.png"
 import friend_icon from "./icon/friend_icon.png"
+import mail_icon from "./icon/mail_icon.png";
+import phone_icon from "./icon/phone_icon.png";
+import gender_female_icon from "./icon/gender_female_icon.png";
+import gender_male_icon from "./icon/gender_male_icon.png";
+import clock_icon from "./icon/clock_icon.png";
+import address_icon from "./icon/address_icon.png";
+import cake_icon from "./icon/cake_icon.png";
 
 import like from "./icon/like.svg"
 import tym from "./icon/tym.svg"
@@ -82,7 +89,7 @@ const images = {
     cross_icon,
     public_icon,
     private_icon,
-    friend_icon,
+    friend_icon
     like,
     tym,
     thuongthuong,
@@ -91,6 +98,14 @@ const images = {
     buon,
     phanno,
     tools__icon
+    friend_icon,
+    mail_icon,
+    phone_icon,
+    gender_female_icon,
+    gender_male_icon,
+    clock_icon,
+    address_icon,
+    cake_icon
   }
 };
 
