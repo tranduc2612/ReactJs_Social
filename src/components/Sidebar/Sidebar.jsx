@@ -5,7 +5,7 @@ const cx = classNames.bind(styles);
 
 function Sidebar({children,className}) {
     return ( 
-    <div className={cx("sidebar",{[className]:true})}>
+    <div className={cx("sidebar",{[className]:className && true})}>
         {children}
     </div> );
 }
