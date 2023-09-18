@@ -447,9 +447,6 @@ function BoxNewFeed({shared}) {
             </div>
         </>}
 
-
-        
-
         {/* Thông tin tương tác của bài viết */}
         <div className={cx("info__contact")}>
             <div className={cx("info__react")}>
