@@ -9,7 +9,15 @@ function Popper({item, PopperRender}) {
     let Comp = "div"
     const refBox = useRef(null);
     const refPopper = useRef(null);
-    const [showBox,setShowBox] = useState(false)
+    const [showBox,setShowBox] = useState(false);
+
+    const attr = {
+
+    }
+
+    if(item?.title !== "avatar"){
+        attr.count_noti = "2"
+    }
     
     if(PopperRender){
         Comp = PopperRender
@@ -34,8 +42,10 @@ function Popper({item, PopperRender}) {
           };
     },[refBox])
 
-    return ( <div className={cx("wrapper")}>
+    return ( <div className={cx("wrapper")} >
+        <div className={cx("btn")} {...attr}>
             <Button className={"custom__popper"} ref={refPopper} shape="circle" active={showBox} icon={item.icon} full_icon={item.full_icon} size={"xl"} onClick={handleClick} />
+        </div>
             {
                 showBox && <Comp ref={refBox} />
             }

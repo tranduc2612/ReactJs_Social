@@ -12,7 +12,6 @@ function PostView({user}) {
     const styled = {
         position: "sticky",
     }
-    const [scrollbar,setScrollBar] = useState(styled)
 
     const refSidebar = useRef(null)
 

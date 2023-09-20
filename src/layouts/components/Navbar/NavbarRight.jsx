@@ -10,18 +10,21 @@ const cx = classNames.bind(styles);
 const InfoButton =[
     {
         id: 1,
+        title: "setting",
         icon:images.icon.menu_dot_icon,
         full_icon: false,
         box_popper: null 
     },
     {
         id: 2,
+        title: "messenger",
         icon: images.icon.messenger_dark_icon,
         full_icon: false,
         box_popper: BoxMessenger
     },
     {
         id: 3,
+        title: "bell",
         icon: images.icon.bell_icon,
         full_icon: false,
         // box_popper: null
@@ -29,6 +32,7 @@ const InfoButton =[
     },
     {
         id: 4,
+        title: "avatar",
         icon: images.icon.avatar_demo,
         full_icon: true,
         box_popper: null
