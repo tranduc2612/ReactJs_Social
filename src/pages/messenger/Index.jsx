@@ -1,5 +1,5 @@
 import classNames from "classnames/bind";
-import styles from "./Chat.module.scss"
+import styles from "./Messenger.module.scss"
 import SideBar from '~/components/Sidebar/Sidebar';
 import CustomBox from "~/components/CustomBox/CustomBox";
 import Sidebar from "~/components/Sidebar/Sidebar";

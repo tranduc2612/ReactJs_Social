@@ -5,7 +5,7 @@ import Home from "~/pages/home/Index";
 import Profile from "~/pages/profile/Index";
 import Login from "~/pages/login/index";
 import Register from "~/pages/register/index";
-import Chat from "~/pages/chat/Index"
+import Messenger from "~/pages/messenger/Index"
   
   const publicRouter = [
     {
@@ -32,8 +32,8 @@ import Chat from "~/pages/chat/Index"
       layout: DefaultLayout,
     },
     {
-      path: "/chat",
-      page: Chat,
+      path: "/messenger",
+      page: Messenger,
       layout: DefaultLayout,
     },
   ];
