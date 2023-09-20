@@ -9,25 +9,13 @@ import ChatItem from "./components/ChatItem";
 
 const cx = classNames.bind(styles)
 
-const BASE_BTN = {
-    box_chat: false,
-    box_group: false
- }
 
 function BoxMessenger(props,ref) {
-    const [switchBox,setSwitchBox] = useState(BASE_BTN);
+    
+    const [switchBox,setSwitchBox] = useState(false);
 
     const handleWitchBox = (e) =>{
-        const value = e.target.getAttribute("value");
-        let newFilter = {...BASE_BTN};
-
-        if(value == "box_chat"){
-            newFilter.box_chat = true
-        }
-        if(value == "box_group"){
-            newFilter.box_group = true
-        }
-        setSwitchBox(newFilter)
+        setSwitchBox(!switchBox)
     }
     
 
@@ -45,11 +33,11 @@ function BoxMessenger(props,ref) {
                 
                 <div className={cx("filter")}>
                     <button className={cx("button__filter",{
-                        active: switchBox.box_chat
-                    })} onClick={()=>{}}><span value={"box_chat"} onClick={handleWitchBox}>Hộp thư</span></button>
+                        active: !switchBox
+                    })} onClick={handleWitchBox}><span value={"box_chat"} onClick={handleWitchBox}>Hộp thư</span></button>
                     <button className={cx("button__filter",{
-                        active: switchBox.box_group
-                    })} onClick={()=>{}}><span value={"box_group"} onClick={handleWitchBox}>Cộng đồng</span></button>
+                        active: switchBox
+                    })} onClick={handleWitchBox}><span value={"box_group"} onClick={handleWitchBox}>Cộng đồng</span></button>
                 </div>
 
                 <ul className={cx("list__chat")}>
