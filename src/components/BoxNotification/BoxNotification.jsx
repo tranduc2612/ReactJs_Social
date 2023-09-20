@@ -8,25 +8,12 @@ import NotiItem from "./component/NotiItem";
 
 const cx = classNames.bind(styles)
 
-const BASE_BTN = {
-    all: false,
-    unRead: false
- }
 function BoxNotification(props,ref) {
     
-    const [filterNotify, setFilterNotify] = useState(BASE_BTN);
+    const [filterNotify, setFilterNotify] = useState(false);
 
     const handleBtnFilter = (e)=> {
-        const value = e.target.getAttribute("value");
-        let newFilter = {...BASE_BTN};
-
-        if(value == "all"){
-            newFilter.all = true
-        }
-        if(value == "unread"){
-            newFilter.unRead = true
-        }
-        setFilterNotify(newFilter)
+        setFilterNotify(!filterNotify)
     }
 
     return ( <div className={cx("wrapper")} ref={ref}>
@@ -39,10 +26,10 @@ function BoxNotification(props,ref) {
                 <div className={cx("body")}>
                     <div className={cx("filter")}>
                         <button className={cx("button__filter",{
-                            active: filterNotify.all
+                            active: !filterNotify
                         })} onClick={handleBtnFilter}><span value={"all"}>Tất cả</span></button>
                         <button className={cx("button__filter",{
-                            active: filterNotify.unRead
+                            active: filterNotify
                         })} onClick={handleBtnFilter}><span value={"unread"}>Chưa được</span></button>
                     </div>
                     <div className={cx("title")}>
