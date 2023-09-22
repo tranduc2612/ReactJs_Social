@@ -2,8 +2,10 @@ import classNames from "classnames/bind";
 import { Link } from "react-router-dom";
 import styles from "./ItemSearch.module.scss"
 import images from "~/assets/images/index"
+import { useEffect, useState } from "react";
 
 const cx = classNames.bind(styles);
+
 function ItemSearch({nameUser,avatar,relative,url}) {
     return ( <Link to={url} className={cx("item")}>
         <div className={cx("avatar")}>

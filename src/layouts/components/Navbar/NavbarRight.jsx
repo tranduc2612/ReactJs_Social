@@ -4,6 +4,7 @@ import Popper from "~/components/Popper/Popper";
 import images from "~/assets/images/index";
 import BoxNotification from "~/components/BoxNotification/BoxNotification";
 import BoxMessenger from "~/components/BoxMessenger/BoxMessenger";
+import BoxAvatar from "~/components/BoxAvatar/BoxAvatar";
 
 const cx = classNames.bind(styles);
 
@@ -35,7 +36,7 @@ const InfoButton =[
         title: "avatar",
         icon: images.icon.avatar_demo,
         full_icon: true,
-        box_popper: null
+        box_popper: BoxAvatar
     }
 ]
 
