@@ -4,7 +4,7 @@ import Tippy from '@tippyjs/react/headless'; // import headless sẽ mất hiệ
 
 const cx = classNames.bind(styles);
 
-function NavbarItem({icon,isActive = false,title}) {
+function NavbarItem({Icon,isActive = false,title}) {
 return ( 
     <>
         <Tippy 
@@ -20,9 +20,12 @@ return (
         <div className={cx("item",{
             active: isActive
         })}>
-            <img className={cx("icon",{
+            <Icon className={cx("icon",{
                 active: isActive
-            })} src={icon} />
+            })} />
+            {/* <img className={cx("icon",{
+                active: isActive
+            })} src={icon} /> */}
         </div>
      </Tippy> 
     </>

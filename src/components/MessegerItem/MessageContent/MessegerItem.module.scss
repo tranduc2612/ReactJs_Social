@@ -1,0 +1,30 @@
+.mess__box{
+    display: flex;
+    line-height: 2rem;    
+    justify-content: flex-end;
+
+    &.partner{
+        justify-content: flex-start;
+    }
+
+    .mess__content{
+        max-width: 590px;
+        padding: 8px 12px;
+        overflow-x: hidden;
+        border-radius: 18px;
+        background-color: #0084ff;
+        color: #fff;
+
+        &.partner{
+            background-color: #e4e6eb;
+            color: #333;
+        }
+
+        span{
+            font-weight: 400;
+            font-size:1.5rem;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+    }
+}

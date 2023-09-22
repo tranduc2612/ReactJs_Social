@@ -10,12 +10,19 @@ import ChatItem from "~/components/BoxMessenger/components/ChatItem";
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import InputEditor from '~/components/InputEditor/InputEditor';
+import MessengerContent from "~/components/MessegerItem/MessageContent/MessegerItem";
+import SeenItem from "~/components/MessegerItem/SeenItem/SeenItem";
+import TimeLine from "~/components/MessegerItem/TimeLine/TimeLine";
 const cx = classNames.bind(styles);
 
 const BASE_BTN = {
     box_chat: false,
     box_group: false
  }
+
+ const LIST_MESSAGE = [
+    1,2,3,4,6,7
+ ]
 
 function Chat() {
     const [switchBox,setSwitchBox] = useState(false);
@@ -154,7 +161,27 @@ function Chat() {
                             <span>Hãy chọn một đoạn chat hoặc bắt đầu cuộc trò chuyện mới</span>
                         </div> */}
                         <CustomBox classBody={cx("custom__body")} className={cx("box__chat")} header={renderHeaderBoxChat()} footer={renderFooterBoxChat()}>
-                            <div className={cx("custom__")}>
+                            <div className={cx("list__message")}>
+                                {/* <MessengerContent />
+                                <MessengerContent type="partner" />
+                                <MessengerContent />
+                                <MessengerContent type="partner" />
+                                <MessengerContent />
+                                <MessengerContent />
+                                <MessengerContent /> */}
+                                {LIST_MESSAGE.map(mess=>{
+                                    {/* có 1 cái cờ để bt là đâu là tin cuối cùng đã được xem */}
+                                    let flag = false;
+                                    if(mess === 7){
+                                        flag = true;
+                                    }
+                                    return (
+                                        <>
+                                            {mess === 2 ? <TimeLine /> : <></>}
+                                            <MessengerContent key={mess} flag={flag} type={mess % 2 == 0 ? "partner": null} />
+                                        </>
+                                    )
+                                })}
                                 
                             </div>
 

@@ -5,7 +5,7 @@
         background-color: #fff;
         height: 100vh;
         overflow: hidden;
-        z-index: 999;
+        z-index: 99;
 
         .header{
             &__title{
@@ -147,6 +147,10 @@
             .custom__body{
                 max-height: 539px;
                 min-height: 539px;
+
+                .list__message{
+                    padding: 0 18px;
+                }
             }
 
             .footer{
