@@ -6,6 +6,7 @@ import Profile from "~/pages/profile/Index";
 import Login from "~/pages/login/index";
 import Register from "~/pages/register/index";
 import Messenger from "~/pages/messenger/Index"
+import Search from "~/pages/search/Index";
   
   const publicRouter = [
     {
@@ -22,7 +23,7 @@ import Messenger from "~/pages/messenger/Index"
       path: "/register",
       page: Register,
       layout: null,
-    },
+    }, 
   ];
   
   const privateRouter = [
@@ -34,6 +35,11 @@ import Messenger from "~/pages/messenger/Index"
     {
       path: "/messenger",
       page: Messenger,
+      layout: DefaultLayout,
+    },   
+    {
+      path: "/search",
+      page: Search,
       layout: DefaultLayout,
     },
   ];

@@ -91,101 +91,28 @@ function PostView({user}) {
 
                 <Box className={cx("box_container")}> 
                     <div className={cx("title")}>
-                        <h2>Giới thiệu</h2>
+                        <div>
+                            <h2>Bạn bè</h2>
+                            <div className={cx("info")}>50 bạn bè</div>
+                        </div>
+                        <a className={cx("link")}>Xem tất cả bạn bè</a>
                     </div>
-                    {/* about me */}
-                    {!user.aboutMe ? null : 
-                        <div className={cx("aboutme")}>
-                            {user.aboutMe}
-                        </div>
-                    }
-
+                    
                     {/* info ... */}
-                    <div className={cx("info_container")}>
-                        <div className={cx("info_item")}>
-                            <div className={cx("icon")}>
-                                <img src="https://static.xx.fbcdn.net/rsrc.php/v3/yG/r/H804hWf2rBh.png" alt="" /> 
-                            </div>
-                            <div className={cx("content")}>
-                                Học tại <span className={cx("content_bold")}>THPT Hưng yên </span>
-                            </div>
-                        </div>
-                        <div className={cx("info_item")}>
-                            <div className={cx("icon")}>
-                                <img src={images.icon.address_icon} alt="" />
-                            </div>
-                            <div className={cx("content")}>
-                                Đến từ <span className={cx("content_bold")}>{user.address}</span>
-                            </div>
-                        </div>
-
-                        <div className={cx("info_item")}>
-                            <div className={cx("icon")}>
-                                {user.gender == "MALE" ? <img src={images.icon.gender_male_icon} alt="" /> : <img src={images.icon.gender_female_icon} alt="" />}
-                            </div>
-                            <div className={cx("content")}>
-                                {user.gender == "MALE" ? "Nam" : "Nữ"}
-                            </div>
-                        </div>
-                        <div className={cx("info_item")}>
-                            <div className={cx("icon")}>
-                                <img src={images.icon.mail_icon} alt="" />
-                            </div>
-                            <div className={cx("content")}>
-                                {user.email}
-                            </div>
-                        </div>
+                    <div className={cx("friend_container", "row")}>
+                        {user.listFriends.map((friend) => {
+                            return (
+                                <div key={friend.name} className={cx("friend_item", "col-4")}>
+                                    <a href={friend.link}>
+                                        <img className={cx("avatar")} src={friend.avatar} alt="" />
+                                        <div className={cx("name")}>{friend.name}</div>
+                                    </a>
+                                </div>
+                            )
+                        })}
                     </div>
                 </Box>
 
-                <Box className={cx("box_container")}> 
-                    <div className={cx("title")}>
-                        <h2>Giới thiệu</h2>
-                    </div>
-                    {/* about me */}
-                    {!user.aboutMe ? null : 
-                        <div className={cx("aboutme")}>
-                            {user.aboutMe}
-                        </div>
-                    }
-
-                    {/* info ... */}
-                    <div className={cx("info_container")}>
-                        <div className={cx("info_item")}>
-                            <div className={cx("icon")}>
-                                <img src="https://static.xx.fbcdn.net/rsrc.php/v3/yG/r/H804hWf2rBh.png" alt="" /> 
-                            </div>
-                            <div className={cx("content")}>
-                                Học tại <span className={cx("content_bold")}>THPT Hưng yên </span>
-                            </div>
-                        </div>
-                        <div className={cx("info_item")}>
-                            <div className={cx("icon")}>
-                                <img src={images.icon.address_icon} alt="" />
-                            </div>
-                            <div className={cx("content")}>
-                                Đến từ <span className={cx("content_bold")}>{user.address}</span>
-                            </div>
-                        </div>
-
-                        <div className={cx("info_item")}>
-                            <div className={cx("icon")}>
-                                {user.gender == "MALE" ? <img src={images.icon.gender_male_icon} alt="" /> : <img src={images.icon.gender_female_icon} alt="" />}
-                            </div>
-                            <div className={cx("content")}>
-                                {user.gender == "MALE" ? "Nam" : "Nữ"}
-                            </div>
-                        </div>
-                        <div className={cx("info_item")}>
-                            <div className={cx("icon")}>
-                                <img src={images.icon.mail_icon} alt="" />
-                            </div>
-                            <div className={cx("content")}>
-                                {user.email}
-                            </div>
-                        </div>
-                    </div>
-                </Box>
                 </div>
                 
             </div>
