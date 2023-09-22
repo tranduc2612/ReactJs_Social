@@ -14,6 +14,7 @@ function NavbarLeft() {
     const [inputValue,setInputValue] = useState(null);
 
     const handleChangeEvent = (event)=>{
+        displayBoxSearch();
         setInputValue(event.target.value);
     }
 
@@ -22,9 +23,20 @@ function NavbarLeft() {
         setSearchResult([1,2,3,4])
     },[])
 
-    const handleBlur = (event)=>{
-        removeBoxSearch()
-    }
+    useEffect(()=>{
+        function handleClickOutside(event) {
+            const btnLayerClick = searchRef.current;
+            if (searchRef.current && !searchRef.current.contains(event.target) && !btnLayerClick.isEqualNode(event.target)) { 
+                removeBoxSearch()
+            }
+          }
+          // Bind the event listener
+          document.addEventListener("mousedown", handleClickOutside);
+          return () => {
+            // Unbind the event listener on clean up
+            document.removeEventListener("mousedown", handleClickOutside);
+          };
+    },[searchRef])
 
     const handleFocus = (event) =>{
         displayBoxSearch();
@@ -33,6 +45,8 @@ function NavbarLeft() {
     const handleBackBox = (event) =>{
         displayBoxSearch()
     }
+
+    
 
     
 
@@ -50,10 +64,10 @@ function NavbarLeft() {
         <img src={images.logo.img_logo} />
     </div>
     <div className={cx("search","ms-2")}>
-        <Input className={cx("search-input")} placeholder={"Tìm kiếm trên facebook"} icon={images.icon.search_icon} onFocus={handleFocus} onChange={handleChangeEvent} onBlur={handleBlur}/>
+        <Input className={cx("search-input")} placeholder={"Tìm kiếm trên facebook"} icon={images.icon.search_icon} onFocus={handleFocus} onChange={handleChangeEvent}/>
     </div>
     <div className={cx("box__search","d-none")} ref={searchRef}>
-        <div className={cx("search__back")}>
+        <div className={cx("search__back")} onClick={removeBoxSearch}>
             <Button shape="circle" icon={images.icon.back_left_icon} size={"xl"} no_background={true} onClick={handleBackBox} />
         </div>
         <div className={cx("list__result")}>
@@ -64,9 +78,9 @@ function NavbarLeft() {
             </div> */}
 
             <div className={cx("list__result-list")}>
-                <ItemSearch />
-                <ItemSearch />
-                <ItemSearch />
+                <ItemSearch url="/2" />
+                <ItemSearch url="/2" />
+                <ItemSearch url="/2" />
             </div>
         </div>
     </div>
