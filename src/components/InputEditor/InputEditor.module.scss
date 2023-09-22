@@ -3,13 +3,13 @@
         transform: scale(0)
     }
     100%{
-        transform: scale(1.24)
+        transform: scale(1)
     }
 }
 
 @keyframes zoomOutIcon {
     0%{
-        transform: scale(1.24)
+        transform: scale(1)
     }
     100%{
         transform: scale(0)
@@ -18,22 +18,19 @@
 
 @keyframes widthIn {
     0%{
-        flex: 0;
         width: 0%;
+        flex:0;
     }
     100%{
-        flex: 1;
-        width: 100%;
+        width: 15%;
     }
 }
 
 @keyframes widthOut {
     0%{
-        flex: 1;
-        width: 100%;
+        width: 15%;
     }
     100%{
-        flex: 0;
         width: 0%;
     }
 }
@@ -41,15 +38,14 @@
 .editor__wrapper{
     display:flex;
     .tools__default{
-        overflow: hidden;
         display: flex;
         align-items: center;
-        margin-right: 5px;
-        flex: 1;
+        justify-content:space-evenly;
         .btn__icon{
             display: inline;
             background-color: #fff;
-            transform: scale(1.24);
+            transform: scale(1);
+            margin: 0 2px;
             &.active{
                 animation: zoomInIcon .5s cubic-bezier(0.17, 0.17, 0, 1) forwards;
             }
@@ -73,9 +69,7 @@
     .input__editor{
         width:100%;
         background-color: #f0f2f5;
-        border-radius: 18px;
-        flex: 3;
-        
+        border-radius: 18px; 
         .wrapper__default{
             overflow: overlay;
             display: flex;

@@ -21,7 +21,11 @@ function BoxNotification(props,ref) {
             <div className={cx("notify")}>
                 <div className={cx("header","d-flex")}>
                     <h2>Thông báo</h2>
-                    <Button icon={images.icon.three_dot_icon} size={"sm"} shape="circle"/>
+                    <div className={cx("btn__header")}>
+                        <Button icon={images.icon.three_dot_icon} size={"sm"} shape="circle">
+                            
+                        </Button>
+                    </div>
                 </div>
                 <div className={cx("body")}>
                     <div className={cx("filter")}>

@@ -1,7 +1,6 @@
 import img_logo from "./logo/facebook.svg";
 import logo_fulllname from "./logo/facebook-fullname.svg";
 import search_icon from "./icon/search-icon.svg";
-import home_icon from "./icon/home-icon.svg";
 import youtube_icon from "./icon/youtube-icon.svg";
 import shop_icon from "./icon/shop-icon.svg";
 import group_icon from "./icon/group-icon.svg";
@@ -64,7 +63,6 @@ const images = {
     avatar_demo,
     group_avatar_demo,
     search_icon,
-    home_icon,
     youtube_icon,
     shop_icon,
     group_icon,

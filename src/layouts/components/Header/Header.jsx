@@ -6,39 +6,41 @@ import { useState } from "react";
 import Button from "~/components/Button/Button";
 import NavbarLeft from "../Navbar/NavbarLeft";
 import NavbarRight from "../Navbar/NavbarRight";
+import HomeIcon from "../IconSvg/Home/HomeIcon";
+import VideoIcon from "../IconSvg/Video/VideoIcon";
 const cx = classNames.bind(styles);
 
 const ListNav = [
     {
         id: 1,
         title: "Trang chủ",
-        icon: images.icon.home_icon,
+        icon: HomeIcon,
         isActive: true
     },
     {
         id: 2,
         title: "Video",
-        icon: images.icon.youtube_icon,
+        icon: VideoIcon,
         isActive: false
     },
-    {
-        id: 3,
-        title: "Marketplace",
-        icon: images.icon.shop_icon,
-        isActive: false
-    },
-    {
-        id: 4,
-        title: "Nhóm",
-        icon: images.icon.group_icon,
-        isActive: false
-    },
-    {
-        id: 5,
-        title: "Trò chơi",
-        icon: images.icon.game_icon,
-        isActive: false
-    }
+    // {
+    //     id: 3,
+    //     title: "Marketplace",
+    //     icon: images.icon.shop_icon,
+    //     isActive: false
+    // },
+    // {
+    //     id: 4,
+    //     title: "Nhóm",
+    //     icon: images.icon.group_icon,
+    //     isActive: false
+    // },
+    // {
+    //     id: 5,
+    //     title: "Trò chơi",
+    //     icon: images.icon.game_icon,
+    //     isActive: false
+    // }
 ]
 
 function Header() {
@@ -50,7 +52,7 @@ function Header() {
             <div className={cx("header__middle")}>
                 <ul className={cx("header__navbar","m-0 p-0")}>
                     {listNav.map((nav)=>{
-                        return(<NavbarItem key={nav.id} isActive={nav.isActive} title={nav.title} icon={nav.icon} />)
+                        return(<NavbarItem key={nav.id} isActive={nav.isActive} title={nav.title} Icon={nav.icon} />)
                     })}
                 </ul>
             </div>

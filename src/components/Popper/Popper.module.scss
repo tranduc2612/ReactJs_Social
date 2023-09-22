@@ -2,4 +2,28 @@
     & ~ &{
         margin-left: 10px;
     }
+
+    .btn{
+        position: relative;
+        &::before{
+            position: absolute;
+            content: attr(count_noti);
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #fff;
+            top: -7px;
+            right: -7px;
+            width: 50%;
+            height: 50%;
+            border-radius: 100%;
+            z-index: 99;
+            background-color:red;
+            text-align: center;
+            display: none;
+        }
+
+         &[count_noti]::before {
+            display: block;
+        }
+    }
 }
