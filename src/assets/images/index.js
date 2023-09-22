@@ -49,7 +49,6 @@ import buon from "./icon/buon.svg"
 import phanno from "./icon/tucgian.svg"
 import tools__icon from "./icon/tool-icon.png"
 
-
 // ảnh demo sau xóa
 import avatar_demo from "./icon/317950785_3423963351171814_2305823669101113253_n.jpg"
 import group_avatar_demo from "./icon/demo_anh_group.jpg"
@@ -109,7 +108,7 @@ const images = {
     gender_male_icon,
     clock_icon,
     address_icon,
-    cake_icon
+    cake_icon,
   }
 };
 

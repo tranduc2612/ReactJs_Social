@@ -14,9 +14,28 @@
             margin-bottom: 16px;
             padding: 15px 16px;
             .title {
+                display: flex;
+                justify-content: space-between;
                 h2 {
                     font-weight: 700;
                     font-size: 20px;
+                }
+                .info {
+                    font-size: 17px;
+                    color: #65676b;
+                    margin: 6px 0;
+                }
+                .link {
+                    height: fit-content;
+                    color: #216fdb;
+                    font-size: 17px;
+                    padding: 8px;
+                    &:hover {
+                        background-color: rgba(0, 0, 0, 0.05);
+                        border-radius: 5px;
+                    }
+                    cursor: pointer;
+                    text-decoration: none;
                 }
             }
             .aboutme {
@@ -46,6 +65,28 @@
                         .content_bold {
                             font-weight: 600;
                         }
+                    }
+                }
+            }
+
+            .friend_container {
+                margin-top: 10px;
+                justify-content: space-between;
+                .friend_item {
+                    // padding-left: 5px;
+                    // padding-right: 5px;
+                    margin-bottom: 12px;
+                    .avatar {
+                        border-radius: 8px;
+                        width: 100%;
+                    }
+                    .name {
+                        font-size: 13px;
+                        font-weight: 600;
+                        color: #050505;
+                        height: 33px;
+                        overflow: hidden;
+                        line-height: 16px;
                     }
                 }
             }
