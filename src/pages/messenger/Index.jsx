@@ -21,7 +21,7 @@ const BASE_BTN = {
  }
 
  const LIST_MESSAGE = [
-    1,2,3,4,6,7
+    1,2,3,4,6,7,8,9,10,11,12,10,7,7,6
  ]
 
 function Chat() {
@@ -120,7 +120,7 @@ function Chat() {
     const renderFooterBoxChat = () =>{
         return (
             <div className={cx("footer")}>
-                <InputEditor />
+                <InputEditor className={cx("input__editor")} />
             </div>
         )
     }
@@ -129,6 +129,7 @@ function Chat() {
         <div className={cx("chat__page")}>
             <Row className="g-0">
                 <Col xs={3} style={{width: "23.5%",height: "100%"}}>
+                    ss
                     <Sidebar className={cx("sidebar_chat")}>
                         <CustomBox classBody={cx("custom__body")} header={renderHeaderChatSidebar()} footer={renderFooterChatSidebar()}>
                             <div className={cx("list__chat")}>
@@ -155,7 +156,7 @@ function Chat() {
                         </CustomBox>
                     </Sidebar>
                 </Col>
-                <Col xs={9} style={{width: '76.5%',height: "100%"}}>
+                <Col xs={9} style={{width: 'auto',height: "100%", flex: 100}}>
                     <div className={cx("body__page")}>
                         {/* <div className={cx("box__init")}>
                             <span>Hãy chọn một đoạn chat hoặc bắt đầu cuộc trò chuyện mới</span>
