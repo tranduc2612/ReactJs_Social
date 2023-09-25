@@ -33,6 +33,7 @@ import private_icon from "./icon/private.png"
 import friend_icon from "./icon/friend_icon.png"
 import list_icon_3 from "./icon/list-icon-3.png"
 import list_icon_4 from "./icon/list-icon-4.png"
+import list_icon_5 from "./icon/list-icon-5.png"
 import mail_icon from "./icon/mail_icon.png";
 import phone_icon from "./icon/phone_icon.png";
 import gender_female_icon from "./icon/gender_female_icon.png";
@@ -109,6 +110,7 @@ const images = {
     clock_icon,
     address_icon,
     cake_icon,
+    list_icon_5
   }
 };
 
