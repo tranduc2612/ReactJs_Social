@@ -51,6 +51,7 @@ function HeaderPost({handleOpenConfirmDeleteModal,handleOpenEditModal,showModalE
                                         placement="bottom"
                                         delay={[100,50]}
                                         arrow = "true"
+                                        onClickOutside={()=>setShowSetting(false)}
                                         render={attrs => (
                                         <div tabIndex="-1" {...attrs}>
                                             <Box className={cx("box__setting")} style={{width: "300px"}}>

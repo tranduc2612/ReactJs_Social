@@ -1,4 +1,4 @@
-import { forwardRef, useImperativeHandle, useRef,useState } from "react";
+import { forwardRef, useEffect, useImperativeHandle, useRef,useState } from "react";
 import classNames from "classnames/bind";
 import Tippy from '@tippyjs/react/headless'; // import headless sẽ mất hiệu ứng hover tồn tại
 
@@ -10,7 +10,7 @@ import images from "~/assets/images/index";
 const cx = classNames.bind(styles);
 
 
-function InputEditor({placementTools = "default",className},ref) {
+function InputEditor({placementTools = "default",className, onChange, initValue},ref) {
     const refInputEditor = useRef(null);
     const [contentEditable,setContentEditable] = useState("");
     const [posCursorEditable, setPosCursorEditable] = useState(0);
@@ -22,20 +22,33 @@ function InputEditor({placementTools = "default",className},ref) {
             getInputEditor(){
                 return refInputEditor.current    
             },
+            resetInputValue(input){
+                if(refInputEditor){
+                    refInputEditor.current.innerText = input;
+                    return true
+                }
+                return false
+            }
         }
     ))
+    useEffect(()=>{
+       if(refInputEditor.current && initValue){
+            refInputEditor.current.innerText = initValue
+       } 
+    },[refInputEditor])
     // đăng bài
     const handleGetValueContent = (e)=>{
         const contentValue = e.target.innerText;
         setContentEditable(contentValue);
         const selectionEnd = window.getSelection().getRangeAt(0).endOffset;
-        console.log("Vị trí con trỏ kết thúc tại: ", selectionEnd);
+        // console.log("Vị trí con trỏ kết thúc tại: ", selectionEnd);
         setPosCursorEditable(selectionEnd)
+        onChange(contentValue)
     }
 
     const handleGetPosCursorContentEditable = (e) =>{
         const selectionStart = window.getSelection().getRangeAt(0).startOffset;
-        console.log("Vị trí con trỏ bắt đầu tại: ", selectionStart);
+        // console.log("Vị trí con trỏ bắt đầu tại: ", selectionStart);
         setPosCursorEditable(selectionStart)
     }
 
@@ -46,6 +59,7 @@ function InputEditor({placementTools = "default",className},ref) {
         refInputEditor.current.innerText = newStr;
         setPosCursorEditable(posCursorEditable + 2)
         setContentEditable(newStr);
+        onChange(newStr)
     }
 
     const handleSubmit = ()=>{

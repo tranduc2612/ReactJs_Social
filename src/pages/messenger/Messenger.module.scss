@@ -1,6 +1,7 @@
 .chat__page{
     $gutter: 10px;
     height: 100%;
+    $height-bottom: 5em;
     .sidebar_chat{
         max-width: inherit;
         width: inherit;
@@ -73,7 +74,7 @@
             align-items: center;
             width: 100%;
             // height: 54px;
-            height: 4em;
+            height: $height-bottom;
             cursor: pointer;
             transition: all 0.2s linear;
 
@@ -113,10 +114,6 @@
                 .header__left{
                     display: flex;
                     align-items: center;
-                    
-                    .avatar{
-                        
-                    }
     
                     .info{
                         display: flex;
@@ -150,8 +147,8 @@
             }
 
             .custom__body{
-                max-height: 88em;
-                min-height: 88em;
+                max-height: 60em;
+                min-height: 60em;
 
                 .list__message{
                     padding: 0 18px;
@@ -162,10 +159,21 @@
                 width: 100%;
                 display: flex;
                 align-items: center;
-                height: 5em;
+                height: $height-bottom;
                 padding: 5px;
                 .input__editor{
                     width: 100%;
+                }
+
+                .icon__submit{
+                    cursor: no-drop;
+                    margin: 0 10px;
+                    transition: all .3s linear;
+                    
+                    &.active{
+                        fill:#0084ff;
+                        cursor: pointer;
+                    }
                 }
             }
         }
