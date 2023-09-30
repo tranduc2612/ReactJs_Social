@@ -1,6 +1,6 @@
 import { Fragment, useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { privateRouter, publicRouter } from "./routers/Index";
+import { privateRouter, publicRouter } from "./routers/index";
 import { DefaultLayout } from "./layouts/Index";
 import { logIn,logOut } from "./redux/actions/authActions";
 import { useSelector, useDispatch } from 'react-redux'
