@@ -1,11 +1,11 @@
 import classNames from "classnames/bind";
-import Box from "../../components/Box/Box";
+import Box from "~/components/Box/Box";
 import styles from "./Profile.module.scss";
-import Button from "../../components/Button/Button";
-import images from "../../assets/images/index";
-import PostView from "../../components/Profile/PostView/PostView";
-import IntroView from "../../components/Profile/IntroView/IntroView";
-import FriendView from "../../components/Profile/FriendView/FriendView";
+import Button from "~/components/Button/Button";
+import images from "~/assets/images/index";
+import PostView from "~/components/Profile/PostView/PostView";
+import IntroView from "~/components/Profile/IntroView/IntroView";
+import FriendView from "~/components/Profile/FriendView/FriendView";
 import { useState } from "react";
 
 const cx = classNames.bind(styles);

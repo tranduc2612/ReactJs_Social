@@ -1,6 +1,6 @@
 import classNames from "classnames/bind";
 import styles from "./BoxIcon.module.scss";
-import {LIST_ICON} from "../../utils/constant"
+import {LIST_ICON} from "~/utils/constant"
 
 const cx = classNames.bind(styles);
 

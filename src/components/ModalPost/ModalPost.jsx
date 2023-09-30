@@ -6,9 +6,9 @@ import { useMemo, useState, useCallback,useRef,useEffect } from "react";
 import Tippy from '@tippyjs/react/headless'; // import headless sẽ mất hiệu ứng hover tồn tại
 
 import styles from "./ModalPost.module.scss";
-import Button from "../../components/Button/Button"
-import images from "../../assets/images/index";
-import BoxIcon from "../../components/BoxIcon/BoxIcon";
+import Button from "~/components/Button/Button"
+import images from "~/assets/images/index";
+import BoxIcon from "~/components/BoxIcon/BoxIcon";
 
 const cx = classNames.bind(styles);
 

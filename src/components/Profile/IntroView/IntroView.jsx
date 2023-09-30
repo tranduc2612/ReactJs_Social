@@ -1,13 +1,13 @@
 import styles from "./IntroView.module.scss"
 import classNames from "classnames/bind";
-import Box from "../../../components/Box/Box";
+import Box from "~/components/Box/Box";
 import { useState } from "react";
-import images from "../../../assets/images/index";
-import Button from "../../../components/Button/Button";
+import images from "~/assets/images/index";
+import Button from "~/components/Button/Button";
 import { Formik } from 'formik';
 import Form from 'react-bootstrap/Form';
 import * as yup from 'yup';
-import InputForm from "../../../components/InputForm/InputForm";
+import InputForm from "~/components/InputForm/InputForm";
 
 const cx = classNames.bind(styles);
 

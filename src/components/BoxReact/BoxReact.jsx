@@ -1,7 +1,7 @@
-import Box from "../../components/Box/Box";
+import Box from "~/components/Box/Box";
 import styles from "./BoxReact.module.scss"
 import classNames from "classnames/bind";
-import {IMAGES_REACT} from "../../utils/constant"
+import {IMAGES_REACT} from "~/utils/constant"
 import { forwardRef, memo } from "react";
 
 const cx = classNames.bind(styles);

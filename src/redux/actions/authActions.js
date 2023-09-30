@@ -1,5 +1,5 @@
 import { createAsyncThunk } from '@reduxjs/toolkit'
-import * as request from "../../services/base"
+import * as request from "~/services/base"
 
 export const logIn = createAsyncThunk(
   'auth/logIn',
