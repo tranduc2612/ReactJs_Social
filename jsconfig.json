@@ -2,8 +2,8 @@
     "compilerOptions": {
         "target": "ESNext",
         "baseUrl": ".",
-        "paths": {
-            "~/*": ["src/*"]
-        }
+        // "paths": {
+        //     "~/*": ["src/*"]
+        // }
     }
 }

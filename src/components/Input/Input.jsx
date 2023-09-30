@@ -2,7 +2,7 @@ import { forwardRef,useRef,useState } from "react";
 import styles from "./Input.module.scss"
 import classNames from "classnames/bind";
 import Button from "../Button/Button";
-import images from "~/assets/images/index";
+import images from "../../assets/images/index";
 const cx = classNames.bind(styles);
 
 function Input({icon, placeholder, onChange, onBlur, onFocus, className, isIconBack},ref) {

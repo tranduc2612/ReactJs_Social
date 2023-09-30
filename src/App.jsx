@@ -1,11 +1,10 @@
 import { Fragment, useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { privateRouter, publicRouter } from "~/routers/Index";
-import { DefaultLayout } from "~/layouts/Index";
+import { privateRouter, publicRouter } from "./routers/Index";
+import { DefaultLayout } from "./layouts/Index";
 import { logIn,logOut } from "./redux/actions/authActions";
 import { useSelector, useDispatch } from 'react-redux'
-import NotFound from "~/pages/notfound/Index";
-import * as req from "~/services/base"
+import NotFound from "./pages/notfound/Index";
 
 
 function App() {

@@ -3,15 +3,11 @@ import classNames from "classnames/bind";
 import Modal from 'react-bootstrap/Modal';
 
 import styles from "./Home.module.scss"
-import images from "~/assets/images/index";
-import SideBar from "~/components/Sidebar/Sidebar";
-import SideBarItem from "~/components/SidebarItem/SidebarItem";
-import Box from "~/components/Box/Box";
-import Button from "~/components/Button/Button";
-import ModalPost from "~/components/ModalPost/ModalPost";
-import BoxNewFeed from "~/components/BoxNewFeed/BoxNewFeed";
-import CreatePost from "~/components/CreatePost/CreatePost";
-import ListNewFeed from "~/components/ListNewFeed/ListNewFeed";
+import images from "../../assets/images/index";
+import SideBar from "../../components/Sidebar/Sidebar";
+import SideBarItem from "../../components/SidebarItem/SidebarItem";
+import CreatePost from "../../components/CreatePost/CreatePost";
+import ListNewFeed from "../../components/ListNewFeed/ListNewFeed";
 
 
 

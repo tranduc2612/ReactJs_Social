@@ -1,12 +1,12 @@
 import {
     DefaultLayout,
-  } from "~/layouts/Index";
-import Home from "~/pages/home/Index";
-import Profile from "~/pages/profile/Index";
-import Login from "~/pages/login/index";
-import Register from "~/pages/register/index";
-import Messenger from "~/pages/messenger/Index"
-import Search from "~/pages/search/Index";
+  } from "../layouts/Index";
+import Home from "../pages/home/Index";
+import Profile from "../pages/profile/Index";
+import Login from "../pages/login/index";
+import Register from "../pages/register/index";
+import Messenger from "../pages/messenger/Index"
+import Search from "../pages/search/Index";
   
   const publicRouter = [
     {

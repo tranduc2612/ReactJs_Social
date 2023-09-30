@@ -1,12 +1,12 @@
-import Button from "~/components/Button/Button";
+import Button from "../../../../components/Button/Button";
 import styles from "./CommentItem.module.scss"
 import classNames from "classnames/bind";
-import images from "~/assets/images/index";
+import images from "../../../../assets/images/index";
 import { useRef, useState } from "react";
-import InputEditor from "~/components/InputEditor/InputEditor";
+import InputEditor from "../../../../components/InputEditor/InputEditor";
 import Modal from 'react-bootstrap/Modal';
 import ButtonBootstrap from 'react-bootstrap/Button';
-import ModalConfirm from "~/components/ModalConfirm/ModalConfirm"
+import ModalConfirm from "../../../../components/ModalConfirm/ModalConfirm"
 
 const cx = classNames.bind(styles);
 

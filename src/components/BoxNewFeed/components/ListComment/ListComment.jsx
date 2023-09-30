@@ -1,7 +1,7 @@
 import styles from "./ListComment.module.scss"
 import CommentItem from "../CommentItem/CommentItem";
 import classNames from "classnames/bind";
-import images from "~/assets/images/index";
+import images from "../../../../assets/images/index";
 
 const cx = classNames.bind(styles);
 

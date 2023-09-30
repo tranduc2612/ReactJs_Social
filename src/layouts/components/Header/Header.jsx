@@ -1,9 +1,7 @@
 import classNames from "classnames/bind";
 import styles from "./Header.module.scss";
-import images from "~/assets/images/index";
-import NavbarItem from "~/components/NavbarItem/NavbarItem";
+import NavbarItem from "../../../components/NavbarItem/NavbarItem";
 import { useState } from "react";
-import Button from "~/components/Button/Button";
 import NavbarLeft from "../Navbar/NavbarLeft";
 import NavbarRight from "../Navbar/NavbarRight";
 import HomeIcon from "../IconSvg/Home/HomeIcon";

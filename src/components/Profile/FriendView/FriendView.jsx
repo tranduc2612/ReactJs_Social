@@ -1,10 +1,10 @@
 import styles from "./FriendView.module.scss"
 import classNames from "classnames/bind";
-import Box from "~/components/Box/Box";
-import images from "~/assets/images/index";
-import Input from "~/components/Input/Input"
+import Box from "../../../components/Box/Box";
+import images from "../../../assets/images/index";
+import Input from "../../../components/Input/Input"
 import { useEffect, useRef, useState } from "react";
-import Button from "~/components/Button/Button";
+import Button from "../../../components/Button/Button";
 
 const cx = classNames.bind(styles);
 
