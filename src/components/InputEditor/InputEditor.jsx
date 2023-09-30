@@ -10,7 +10,7 @@ import images from "~/assets/images/index";
 const cx = classNames.bind(styles);
 
 
-function InputEditor({placementTools = "default",className, onChange, initValue},ref) {
+function InputEditor({placementTools = "default",className, onChange, initValue,onKeyDown},ref) {
     const refInputEditor = useRef(null);
     const [contentEditable,setContentEditable] = useState("");
     const [posCursorEditable, setPosCursorEditable] = useState(0);
@@ -24,7 +24,7 @@ function InputEditor({placementTools = "default",className, onChange, initValue}
             },
             resetInputValue(input){
                 if(refInputEditor){
-                    refInputEditor.current.innerText = input;
+                    refInputEditor.current.innerHTML = input.trim();
                     return true
                 }
                 return false
@@ -123,6 +123,7 @@ function InputEditor({placementTools = "default",className, onChange, initValue}
                         setShowBoxIconBottom(false);
                         setShowBoxIconDefault(false)
                     }}
+                    onKeyDown={onKeyDown}
                 >
                     
                 </div>
