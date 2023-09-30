@@ -1,10 +1,10 @@
 import classNames from "classnames/bind";
 import styles from "./NavbarRIght.module.scss";
-import Popper from "~/components/Popper/Popper";
-import images from "~/assets/images/index";
-import BoxNotification from "~/components/BoxNotification/BoxNotification";
-import BoxMessenger from "~/components/BoxMessenger/BoxMessenger";
-import BoxAvatar from "~/components/BoxAvatar/BoxAvatar";
+import Popper from "../../../components/Popper/Popper";
+import images from "../../../assets/images/index";
+import BoxNotification from "../../../components/BoxNotification/BoxNotification";
+import BoxMessenger from "../../../components/BoxMessenger/BoxMessenger";
+import BoxAvatar from "../../../components/BoxAvatar/BoxAvatar";
 
 const cx = classNames.bind(styles);
 

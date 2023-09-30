@@ -1,4 +1,4 @@
-import images from "~/assets/images/index";
+import images from "../assets/images/index";
 
 export const LIST_ICON = [
     "🙂","😀","😄","😆","😅","😂","🤣","😊","😌","😉","😏","😍","😘","😗","😙","😚",

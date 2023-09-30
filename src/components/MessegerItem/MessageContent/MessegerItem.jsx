@@ -1,7 +1,5 @@
 import classNames from "classnames/bind";
 import styles from "./MessegerItem.module.scss";
-import Button from "../../Button/Button";
-import images from "~/assets/images/index";
 import SeenItem from "../SeenItem/SeenItem";
 const cx = classNames.bind(styles);
 

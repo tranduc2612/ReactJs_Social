@@ -5,9 +5,9 @@ import { useNavigate } from "react-router-dom";
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import * as yup from 'yup';
-import images from "~/assets/images/index";
-import Box from "~/components/Box/Box";
-import InputForm from "~/components/InputForm/InputForm";
+import images from "../../assets/images/index";
+import Box from "../../components/Box/Box";
+import InputForm from "../../components/InputForm/InputForm";
 import styles from "./Login.module.scss";
 
 const cx = classNames.bind(styles);
