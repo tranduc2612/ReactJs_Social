@@ -1,8 +1,8 @@
 import classNames from "classnames/bind";
 import styles from "./NotiItem.module.scss";
-import images from "../../../assets/images/index";
+import images from "~/assets/images/index";
 import Button from 'react-bootstrap/Button';
-import ButtonCustom from "../../../components/Button/Button";
+import ButtonCustom from "~/components/Button/Button";
 import { useRef } from "react";
 const cx = classNames.bind(styles)
 

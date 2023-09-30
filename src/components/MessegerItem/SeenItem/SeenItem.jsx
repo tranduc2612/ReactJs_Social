@@ -1,7 +1,7 @@
 import classNames from "classnames/bind";
 import styles from "./SeenItem.module.scss";
-import Button from "../../../components/Button/Button"
-import images from "../../../assets/images/index";
+import Button from "~/components/Button/Button"
+import images from "~/assets/images/index";
 const cx = classNames.bind(styles);
 
 

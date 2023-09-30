@@ -2,8 +2,8 @@ import { forwardRef, useState } from "react";
 import { Link } from "react-router-dom";
 import classNames from "classnames/bind";
 import styles from "./BoxAvatar.module.scss";
-import Box from "../../components/Box/Box";
-import images from "../../assets/images/index";
+import Box from "~/components/Box/Box";
+import images from "~/assets/images/index";
 import Button from "../Button/Button";
 
 const cx = classNames.bind(styles)

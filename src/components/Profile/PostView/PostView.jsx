@@ -1,9 +1,9 @@
 import styles from "./PostView.module.scss"
 import classNames from "classnames/bind";
-import Box from "../../../components/Box/Box";
-import images from "../../../assets/images/index";
-import CreatePost from "../../../components/CreatePost/CreatePost";
-import ListNewFeed from "../../../components/ListNewFeed/ListNewFeed";
+import Box from "~/components/Box/Box";
+import images from "~/assets/images/index";
+import CreatePost from "~/components/CreatePost/CreatePost";
+import ListNewFeed from "~/components/ListNewFeed/ListNewFeed";
 import { useEffect, useRef, useState } from "react";
 
 const cx = classNames.bind(styles);

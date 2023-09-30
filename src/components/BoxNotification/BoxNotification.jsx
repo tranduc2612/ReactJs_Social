@@ -1,8 +1,8 @@
 import classNames from "classnames/bind";
 import styles from "./BoxNotification.module.scss";
-import Box from "../../components/Box/Box"
-import Button from "../../components/Button/Button"
-import images from "../../assets/images/index";
+import Box from "~/components/Box/Box"
+import Button from "~/components/Button/Button"
+import images from "~/assets/images/index";
 import { forwardRef, useState } from "react";
 import NotiItem from "./component/NotiItem";
 

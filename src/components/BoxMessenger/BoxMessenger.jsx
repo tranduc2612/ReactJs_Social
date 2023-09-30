@@ -1,10 +1,10 @@
 import { forwardRef, useState } from "react";
 import classNames from "classnames/bind";
 import styles from "./BoxMessenger.module.scss";
-import Box from "../../components/Box/Box";
-import Button from "../../components/Button/Button";
-import images from "../../assets/images/index";
-import Input from "../../components/Input/Input"
+import Box from "~/components/Box/Box";
+import Button from "~/components/Button/Button";
+import images from "~/assets/images/index";
+import Input from "~/components/Input/Input"
 import ChatItem from "./components/ChatItem";
 
 const cx = classNames.bind(styles)

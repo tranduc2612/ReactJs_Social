@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState,useId } from "react";
 import classNames from "classnames/bind";
 import styles from "./Popper.module.scss";
-import Button from "../../components/Button/Button";
+import Button from "~/components/Button/Button";
 
 const cx = classNames.bind(styles);
 

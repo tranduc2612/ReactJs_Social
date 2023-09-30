@@ -1,7 +1,7 @@
 import classNames from "classnames/bind";
 import { Link } from "react-router-dom";
 import styles from "./ItemSearch.module.scss"
-import images from "../../assets/images/index"
+import images from "~/assets/images/index"
 import { useEffect, useState } from "react";
 
 const cx = classNames.bind(styles);

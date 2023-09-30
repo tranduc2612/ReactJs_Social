@@ -6,11 +6,11 @@ import 'swiper/swiper-bundle.css';
 import Tippy from '@tippyjs/react/headless'; // import headless sẽ mất hiệu ứng hover tồn tại
 
 import styles from "./HeaderPost.module.scss"
-import images from "../../../../assets/images/index";
-import Button from "../../../../components/Button/Button"
-import Box from "../../../../components/Box/Box";
-import ModalPost from "../../../../components/ModalPost/ModalPost";
-import ModalConfirm from "../../../../components/ModalConfirm/ModalConfirm"
+import images from "~/assets/images/index";
+import Button from "~/components/Button/Button"
+import Box from "~/components/Box/Box";
+import ModalPost from "~/components/ModalPost/ModalPost";
+import ModalConfirm from "~/components/ModalConfirm/ModalConfirm"
 
 
 const cx = classNames.bind(styles);

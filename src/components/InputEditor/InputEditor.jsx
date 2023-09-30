@@ -5,7 +5,7 @@ import Tippy from '@tippyjs/react/headless'; // import headless sẽ mất hiệ
 import styles from "./InputEditor.module.scss";
 import Button from "../Button/Button";
 import BoxIcon from "../BoxIcon/BoxIcon";
-import images from "../../assets/images/index";
+import images from "~/assets/images/index";
 
 const cx = classNames.bind(styles);
 

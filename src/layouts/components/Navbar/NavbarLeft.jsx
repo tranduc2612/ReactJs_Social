@@ -1,10 +1,10 @@
 import classNames from "classnames/bind";
 import styles from "./NavbarLeft.module.scss";
-import images from "../../../assets/images/index";
-import Input from "../../../components/Input/Input";
+import images from "~/assets/images/index";
+import Input from "~/components/Input/Input";
 import { useEffect, useRef, useState } from "react";
-import Button from "../../../components/Button/Button";
-import ItemSearch from "../../../components/ItemSearch/ItemSearch";
+import Button from "~/components/Button/Button";
+import ItemSearch from "~/components/ItemSearch/ItemSearch";
 
 const cx = classNames.bind(styles);
 

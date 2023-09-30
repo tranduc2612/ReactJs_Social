@@ -9,9 +9,9 @@ import 'swiper/css';
 import 'swiper/swiper-bundle.css';
 
 import styles from "./BoxNewFeed.module.scss"
-import images from "../../assets/images/index";
-import Button from "../../components/Button/Button"
-import {REACT_EMOTION} from "../../utils/constant"
+import images from "~/assets/images/index";
+import Button from "~/components/Button/Button"
+import {REACT_EMOTION} from "~/utils/constant"
 
 import Tippy from '@tippyjs/react/headless'; // import headless sẽ mất hiệu ứng hover tồn tại
 import BoxReact from "../BoxReact/BoxReact";

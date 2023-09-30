@@ -2,7 +2,7 @@ import styles from "./ListNewFeed.module.scss"
 import classNames from "classnames/bind";
 import BoxNewFeed from "../BoxNewFeed/BoxNewFeed";
 import { useEffect, useState } from "react";
-import { get } from "../../services/base";
+import { get } from "~/services/base";
 
 
 import { ToastContainer, toast } from 'react-toastify';

@@ -3,12 +3,12 @@ import classNames from "classnames/bind";
 import Modal from 'react-bootstrap/Modal';
 
 import styles from "./Search.module.scss"
-import images from "../../assets/images/index";
-import SideBar from "../../components/Sidebar/Sidebar";
-import SideBarItem from "../../components/SidebarItem/SidebarItem";
-import Box from "../../components/Box/Box";
-import Button from "../../components/Button/Button";
-import ListNewFeed from "../../components/ListNewFeed/ListNewFeed";
+import images from "~/assets/images/index";
+import SideBar from "~/components/Sidebar/Sidebar";
+import SideBarItem from "~/components/SidebarItem/SidebarItem";
+import Box from "~/components/Box/Box";
+import Button from "~/components/Button/Button";
+import ListNewFeed from "~/components/ListNewFeed/ListNewFeed";
 
 
 

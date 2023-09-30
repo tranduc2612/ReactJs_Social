@@ -1,11 +1,11 @@
 import { useState } from "react";
 import classNames from "classnames/bind";
 import Modal from 'react-bootstrap/Modal';
-import ModalPost from "../../components/ModalPost/ModalPost"
+import ModalPost from "~/components/ModalPost/ModalPost"
 import styles from "./CreatePost.module.scss"
-import images from "../../assets/images/index";
-import Box from "../../components/Box/Box";
-import Button from "../../components/Button/Button";
+import images from "~/assets/images/index";
+import Box from "~/components/Box/Box";
+import Button from "~/components/Button/Button";
 
 const cx = classNames.bind(styles);
 
