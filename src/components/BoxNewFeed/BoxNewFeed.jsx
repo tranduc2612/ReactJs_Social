@@ -38,7 +38,7 @@ let LIST_ANH = [
 // thuongthuong,haha,wow,sad, : color: rgb(247, 177, 37);
 // phan no :color: rgb(233, 113, 15);
 
-function BoxNewFeed({shared}) {
+function BoxNewFeed({data,shared}) {
     const BASE_STATE_REACT = {
         id: null,
         title: "Thích",
@@ -184,7 +184,7 @@ function BoxNewFeed({shared}) {
         <Modal show={showDetailPost} onHide={handleClose} centered size={"lg"}>
             <CustomBox className={cx("detail__post")} header={renderHeaderDetailPost()}  footer={renderFooterDetailPost()}>
                 <div className={cx("detail__post-body")}>
-                    <HeaderPost showModalEditPost={showModalEditPost} showConfirmBoxDelete={showConfirmBoxDelete} handleOpenConfirmDeleteModal={handleOpenConfirmDeleteModal} handleOpenEditModal={handleOpenEditModal} />
+                    <HeaderPost data={data} showModalEditPost={showModalEditPost} showConfirmBoxDelete={showConfirmBoxDelete} handleOpenConfirmDeleteModal={handleOpenConfirmDeleteModal} handleOpenEditModal={handleOpenEditModal} />
 
                     {shared ? <>
                         <div className={cx("post__searched")}>
@@ -258,7 +258,7 @@ function BoxNewFeed({shared}) {
                         <div className={cx("info__react")}>
 
                             <div className={cx("info__list-icon")}>
-                                <div className={cx("info__react-icon")}>
+                                {/* <div className={cx("info__react-icon")}>
                                     <img src={images.icon.like} alt="" />
                                 </div>
 
@@ -268,7 +268,7 @@ function BoxNewFeed({shared}) {
 
                                 <div className={cx("info__react-icon")}>
                                     <img src={images.icon.thuongthuong} alt="" />
-                                </div>
+                                </div> */}
                             </div>
 
                             <div className={cx("info__react-total")}>
@@ -425,7 +425,7 @@ function BoxNewFeed({shared}) {
 
     return ( <div className={cx("box__newfeed","box-custom")}>
         {/* header newfeed post */}
-        <HeaderPost showModalEditPost={showModalEditPost} showConfirmBoxDelete={showConfirmBoxDelete} handleOpenConfirmDeleteModal={handleOpenConfirmDeleteModal} handleOpenEditModal={handleOpenEditModal} />
+        <HeaderPost data={data} showModalEditPost={showModalEditPost} showConfirmBoxDelete={showConfirmBoxDelete} handleOpenConfirmDeleteModal={handleOpenConfirmDeleteModal} handleOpenEditModal={handleOpenEditModal} />
 
         {/* noi dung newfeed post */}
         {shared ? <>
@@ -452,7 +452,7 @@ function BoxNewFeed({shared}) {
             <div className={cx("info__react")}>
 
                 <div className={cx("info__list-icon")}>
-                    <div className={cx("info__react-icon")}>
+                    {/* <div className={cx("info__react-icon")}>
                         <img src={images.icon.like} alt="" />
                     </div>
 
@@ -462,11 +462,12 @@ function BoxNewFeed({shared}) {
 
                     <div className={cx("info__react-icon")}>
                         <img src={images.icon.thuongthuong} alt="" />
-                    </div>
+                    </div> */}
                 </div>
 
                 <div className={cx("info__react-total")}>
-                    <span>Bạn,Minh Ngọc và 900 người khác</span>
+                    {/* <span>Bạn,Minh Ngọc và 900 người khác</span> */}
+                    <span>{data?.likeCount}</span>
                 </div>
             </div>
 

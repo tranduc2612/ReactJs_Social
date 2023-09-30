@@ -15,7 +15,7 @@ import ModalConfirm from "~/components/ModalConfirm/ModalConfirm"
 
 const cx = classNames.bind(styles);
 
-function HeaderPost({handleOpenConfirmDeleteModal,handleOpenEditModal,showModalEditPost,showConfirmBoxDelete}) {
+function HeaderPost({handleOpenConfirmDeleteModal,handleOpenEditModal,showModalEditPost,showConfirmBoxDelete,data}) {
     const [showSetting,setShowSetting] = useState(false);
 
     useEffect(()=>{
@@ -32,11 +32,11 @@ function HeaderPost({handleOpenConfirmDeleteModal,handleOpenEditModal,showModalE
                 </div>
                 <div className={cx("info")}>
                     <div className={cx("name__author")}>
-                        <span>Chi Nguyễn</span>
+                        <span>{data?.username}</span>
                     </div>
 
                     <div className={cx("time__created")}>
-                        <span>1 ngày</span>
+                        <span>{data?.createdAt}</span>
                         <span className={cx("privacy")}><img className={cx("privacy_icon")} src={images.icon.public_icon} /></span>
                     </div>
                 </div>
@@ -101,7 +101,7 @@ function HeaderPost({handleOpenConfirmDeleteModal,handleOpenEditModal,showModalE
         </div>
 
         <div className={cx("title")}>
-            <span>Nếu anh là người tốt thì mai mốt mình làm người tình !</span>
+            <span>{data?.content}</span>
         </div>
                                             
     </> );

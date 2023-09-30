@@ -1,7 +1,8 @@
 import axios from 'axios'
 
 const request = axios.create({
-    baseURL: 'https://api.escuelajs.co/api/v1',
+    // baseURL: 'https://api.escuelajs.co/api/v1',
+    baseURL: 'http://127.0.0.1:8000/api',
 });
 
 

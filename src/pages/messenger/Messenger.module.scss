@@ -159,10 +159,12 @@
                 width: 100%;
                 display: flex;
                 align-items: center;
-                height: $height-bottom;
                 padding: 5px;
                 .input__editor{
                     width: 100%;
+                    [contenteditable=true]{
+                        max-height: 130px;
+                    }
                 }
 
                 .icon__submit{
