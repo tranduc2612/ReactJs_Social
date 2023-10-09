@@ -2,81 +2,44 @@ import { Fragment, useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { privateRouter, publicRouter } from "~/routers/index";
 import { DefaultLayout } from "./layouts/Index";
-import { logIn,logOut } from "./redux/actions/authActions";
+import { logIn, logOut } from "./redux/actions/authActions";
 import { useSelector, useDispatch } from 'react-redux'
 import NotFound from "./pages/notfound/Index";
-
+import { Navigate } from 'react-router-dom';
 
 function App() {
-  let isLogin = false;
-  const data = useSelector((state) => state.auth)
-  const dispatch = useDispatch();
-
-  useEffect(()=>{
-    console.log(data)
-  },[data])
-
-  const handleLogin = () =>{
-    // cách đăng nhập đây
-    dispatch(logIn({
-      email: "john@mail.com",
-      password: "changeme"
-    }))
-  }
-
-  const handleLogOut = () =>{
-    // cách đăng nhập đây
-    dispatch(logOut())
-  }
-
-
+  const userData = useSelector((state) => state.auth);
   return (
     <>
-      {/* fake login */}
-      {/* <button style={{
-        position: "absolute",
-        backgroundColor: "red",
-        fontSize: "6rem",
-        top: "50%",
-        left: "50%",
-      }} onClick={handleLogin}>Login</button>
-
-      <button style={{
-        position: "absolute",
-        backgroundColor: "red",
-        fontSize: "6rem",
-        top: "50%",
-        left: "30%",
-      }} onClick={handleLogOut}>Log out</button> */}
-
-
       <Router>
-      <Routes>
-        {publicRouter.map((route, index) => {
-          const Page = route.page;
-          
-          let Layout = DefaultLayout;
-          if (route.layout) {
-            Layout = route.layout;
-          } else if (route.layout === null) {
-            Layout = Fragment;
-          }
+        <Routes>
+          {publicRouter.map((route, index) => {
+            const Page = route.page;
 
-          return (
-            <Route
-              key={index}
-              path={route.path}
-              element={
-                <Layout>
-                  <Page />
-                </Layout>
-              }
-            />
-          );
-        })}
+            let Layout = DefaultLayout;
+            if (route.layout) {
+              Layout = route.layout;
+            } else if (route.layout === null) {
+              Layout = Fragment;
+            }
 
-        {data.access_token &&
-          privateRouter.map((route, index) => {
+            return (
+              <Route
+                key={index}
+                path={route.path}
+                element={
+                  userData.access_token && userData.data_user && route.auth ?
+                    <Navigate to="/" />
+                    :
+                    <Layout>
+                      <Page userData={userData} />
+                    </Layout>
+                }
+              />
+            );
+          })}
+
+          {privateRouter.map((route, index) => {
             const Page = route.page;
             const Layout = route.layout || DefaultLayout;
             return (
@@ -84,17 +47,19 @@ function App() {
                 key={index}
                 path={route.path}
                 element={
-                  <Layout>
-                    <Page />
-                  </Layout>
+                  userData.access_token && userData.data_user ?
+                    <Layout>
+                      <Page userData={userData} />
+                    </Layout>
+                    :
+                    <Navigate to="/login" />
                 }
               />
             );
           })}
-
-        <Route path="*" element={<NotFound />} />
-      </Routes>
-    </Router>
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+      </Router>
     </>
   )
 }
