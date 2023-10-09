@@ -7,10 +7,20 @@ import Form from 'react-bootstrap/Form';
 import * as yup from 'yup';
 import images from "~/assets/images/index";
 import InputForm from "~/components/InputForm/InputForm";
+import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 
 const cx = classNames.bind(styles);
 
-function Register() {
+function Register({userData}) {
+    const navigate = useNavigate();
+
+    useEffect(()=>{
+        if(userData.data_user && userData.access_token){
+            navigate("/")
+        }
+    },[userData])
+
     const initialValues = {
         email: '',
         password: '',
@@ -18,7 +28,11 @@ function Register() {
     const schema = yup.object().shape({
         email: yup.string().required(),
         password: yup.string().required(),
-      });
+    });
+
+    if(userData.data_user && userData.access_token){
+        return
+    }
     return (
         <div className={cx("wrapper")}>
             <Box className={cx("box_form")}>

@@ -1997,6 +1997,11 @@ react-router-dom@^6.15.0:
     "@remix-run/router" "1.8.0"
     react-router "6.15.0"
 
+react-router-redux@^4.0.8:
+  version "4.0.8"
+  resolved "https://registry.npmjs.org/react-router-redux/-/react-router-redux-4.0.8.tgz"
+  integrity sha512-lzlK+S6jZnn17BZbzBe6F8ok3YAhGAUlyWgRu3cz5mT199gKxfem5lNu3qcgzRiVhNEOFVG0/pdT+1t4aWhoQw==
+
 react-router@6.15.0:
   version "6.15.0"
   resolved "https://registry.npmjs.org/react-router/-/react-router-6.15.0.tgz"

@@ -1,17 +1,36 @@
 import { forwardRef, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import classNames from "classnames/bind";
 import styles from "./BoxAvatar.module.scss";
 import Box from "~/components/Box/Box";
 import images from "~/assets/images/index";
 import Button from "../Button/Button";
+import { logOut } from "~/redux/actions/authActions";
+import { useDispatch, useSelector } from 'react-redux'
+import { Post } from "~/services/base";
+import checkResponse from "~/utils/checkResponse";
 
 const cx = classNames.bind(styles)
 
 
-function BoxAvatar(props,ref) {
+function BoxAvatar(props, ref) {
+    const userData = useSelector((state) => state.auth);
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
 
-    return ( <div className={cx("wrapper")} ref={ref}>
+
+    const handleLogOut = async () => {
+        try {
+            const data = await Post("/logout", {}, userData?.access_token);
+            if (checkResponse(data)) {
+                dispatch(logOut())
+            }
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
+    return (<div className={cx("wrapper")} ref={ref}>
         <Box className={cx("box")}>
             <div className={cx("header")}>
                 <Box className={cx("box__header")}>
@@ -23,7 +42,7 @@ function BoxAvatar(props,ref) {
                     </div>
 
                     <div className={cx("separate__line")}>
-                        
+
                     </div>
 
                     <div className={cx("header__bottom")}>
@@ -36,7 +55,7 @@ function BoxAvatar(props,ref) {
 
             <div className={cx("body")}>
                 <div className={cx("list")}>
-                    
+
                     <div className={cx("item")}>
                         <div className={cx("icon")}>
                             <Button size={"sm"} shape="circle">
@@ -49,7 +68,7 @@ function BoxAvatar(props,ref) {
                                     backgroundRepeat: "no-repeat",
                                     display: "inline-block"
                                 }}>
-                                    
+
                                 </div>
                             </Button>
                         </div>
@@ -71,12 +90,12 @@ function BoxAvatar(props,ref) {
                                     backgroundRepeat: "no-repeat",
                                     display: "inline-block"
                                 }}>
-                                    
+
                                 </div>
                             </Button>
                         </div>
 
-                        <div className={cx("name")}>
+                        <div className={cx("name")} onClick={handleLogOut}>
                             Đăng xuất
                         </div>
                     </div>
@@ -84,7 +103,7 @@ function BoxAvatar(props,ref) {
                 </div>
             </div>
         </Box>
-</div> );
+    </div>);
 }
 
 export default forwardRef(BoxAvatar);

@@ -1,4 +1,6 @@
 import axios from 'axios'
+import { removeAllKeyAuthentication } from '~/utils/contactWithLocalStorage';
+import { useSelector } from 'react-redux'
 
 const request = axios.create({
     // baseURL: 'https://api.escuelajs.co/api/v1',
@@ -6,13 +8,40 @@ const request = axios.create({
 });
 
 
-export const get = async (path, options = {}) => {
-    const res = await request.get(path, options);
+export const Get = async (path, options = {},token) => {
+    const res = await request.get(path,{
+        ...options,
+        headers: {
+            'Authorization': `Bearer ${token}`
+        }
+    });
     return res.data
 }
 
-export const post = async (path, options = {}) => {
-    console.log(options)
-    const res = await request.post(path, options);
+export const Post = async (path, options = {},token) => {
+    const res = await request.post(path, options,{
+        headers: {
+            Authorization: `Bearer ${token}`
+        }
+    });
+    return res.data   
+}
+
+export const Put = async (path, options = {},token) => {
+    const res = await request.put(path, {
+        ...options,
+        headers: {
+            'Authorization': `Bearer ${token}`
+        }
+    });
+    return res.data
+}
+
+export const Delete = async (path, options = {},token) => {
+    const res = await request.delete(path, options,{
+        headers: {
+            Authorization: `Bearer ${token}`
+        }
+    });
     return res.data
 }
