@@ -19,11 +19,11 @@ function Login({ userData }) {
     const dispatch = useDispatch();
 
     const initialValues = {
-        email: '',
+        login: '',
         password: '',
     }
     const schema = yup.object().shape({
-        email: yup.string().required(),
+        login: yup.string().required(),
         password: yup.string().required(),
     });
 
@@ -84,13 +84,13 @@ function Login({ userData }) {
                                         <div className={cx("input_container")}>
                                             <InputForm
                                                 type="text"
-                                                name="email"
-                                                value={values.email}
+                                                name="login"
+                                                value={values.login}
                                                 onChange={handleChange}
                                                 component="Control"
-                                                isInvalid={touched.email && !!errors.email}
-                                                errorMsg={errors.email}
-                                                placeholder="Email hoặc số điện thoại"
+                                                isInvalid={touched.login && !!errors.login}
+                                                errorMsg={errors.login}
+                                                placeholder="Email hoặc tên đăng nhập"
                                             />
                                         </div>
 

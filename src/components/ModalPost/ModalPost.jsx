@@ -4,46 +4,76 @@ import DropdownButton from 'react-bootstrap/DropdownButton';
 import Dropzone, { useDropzone } from 'react-dropzone'
 import { useMemo, useState, useCallback, useRef, useEffect } from "react";
 import Tippy from '@tippyjs/react/headless'; // import headless sẽ mất hiệu ứng hover tồn tại
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 import styles from "./ModalPost.module.scss";
 import Button from "~/components/Button/Button"
 import images from "~/assets/images/index";
 import BoxIcon from "~/components/BoxIcon/BoxIcon";
+import { Post } from "~/services/base";
+import { useSelector, useDispatch } from 'react-redux'
+import checkResponse from "~/utils/checkResponse";
+import { createPost, updatePost } from "~/redux/actions/postActions";
+import { BASE_URL_MEDIA } from "~/services/base";
 
 const cx = classNames.bind(styles);
 
 const PRIVACY_OPTIONS = [
     {
-        name: "PU",
+        name: "PUBLIC",
         value: "Công khai",
         url: images.icon.public_icon
     },
     {
-        name: "FR",
+        name: "FRIENDS",
         value: "Bạn bè",
         url: images.icon.friend_icon
     }, {
-        name: "PR",
+        name: "ONLY_ME",
         value: "Riêng tư",
         url: images.icon.private_icon
     },
 ]
 
-function ModalPost({ setModalShow }) {
+function ModalPost({ setModalShow, data, setProgress, progress }) {
+    const userData = useSelector((state) => state.auth);
+    const dispatch = useDispatch();
     const [privacyOptions, setPrivacyOptions] = useState(PRIVACY_OPTIONS);
     const [contentEditable, setContentEditable] = useState("");
     const contentEditableRef = useRef(null);
     const [posCursorEditable, setPosCursorEditable] = useState(0);
-
+    const [fileImgUpdate, setFileImgUpdate] = useState([]);
     const [fileImg, setFileImg] = useState([]);
     const [showBoxIcon, setShowBoxIcon] = useState(false);
 
     const [dataPost, setDataPost] = useState({
-        privacy: "PU",
+        privacy: "PUBLIC",
         content: null,
         user_id: null,
         url: images.icon.public_icon
     })
+
+    useEffect(() => {
+        if (data) {
+            const postAudienceType = PRIVACY_OPTIONS.find((item) => item.name === data?.audience_type);
+            let postAudienceId = "PUBLIC";
+            let postAudienceUrl = images.icon.public_icon
+            if (postAudienceType) {
+                postAudienceId = postAudienceType?.name
+                postAudienceUrl = postAudienceType?.url
+            }
+            setDataPost({
+                ...dataPost,
+                content: data?.content,
+                url: postAudienceUrl,
+                privacy: postAudienceId
+            })
+            setContentEditable(data?.content)
+            contentEditableRef.current.innerText = data?.content;
+            handleUpdateImage(data?.media_info)
+        }
+    }, [data])
 
     const myMap = useMemo(() => {
         const mp = new Map();
@@ -55,7 +85,20 @@ function ModalPost({ setModalShow }) {
 
     const onDrop = useCallback(files => {
         setFileImg(files)
+        setFileImgUpdate([])
     }, [])
+
+    const handleUpdateImage = (imageFile) => {
+        if (imageFile) {
+            const imgData = JSON.parse(data?.media_info)?.file_info;
+            const arrImg = [];
+            imgData.forEach((nameImg) => {
+                arrImg.push(nameImg)
+            })
+            setFileImgUpdate(arrImg)
+        }
+    }
+
     const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop })
 
     // đăng bài
@@ -109,19 +152,94 @@ function ModalPost({ setModalShow }) {
 
     const handleDeleteImage = (e) => {
         setFileImg(fileImg.filter((img, index) => index.toString() !== e.target.getAttribute("id_modified")))
+        setFileImgUpdate(fileImgUpdate.filter((img, index) => index.toString() !== e.target.getAttribute("id_modified")))
     }
 
     const handleShowBoxIcon = (e) => {
         setShowBoxIcon(!showBoxIcon)
     }
 
+    const handleUploadFile = async (filesImg) => {
+        const formData = new FormData();
+        filesImg.forEach((file) => {
+            formData.append('media[]', file);
+        })
+        const reqUploadFile = await Post(
+            "/upload-file", formData, null
+        )
+
+        if (checkResponse(reqUploadFile)) {
+            toast.success(reqUploadFile.msg);
+            return reqUploadFile;
+        } else {
+            toast.error(reqUploadFile.msg)
+            return reqUploadFile;
+        }
+
+    }
 
 
+    const handleSubmit = async (e) => {
+        try {
+            setProgress((prev) => prev + 30)
+            if (contentEditable.length > 0) {
+                setModalShow(false)
+                if (data) {
+                    let reqUploadFile = null;
+                    if (fileImg && fileImg.length > 0 && typeof fileImg[0] != "string") {
+                        reqUploadFile = await handleUploadFile(fileImg);
+                    } else {
+                        // if (fileImgUpdate && fileImgUpdate.length > 0) {
+                        //     reqUploadFile = 
+                        // }
+                    }
+                    setProgress((prev) => prev + 30)
+                    const dataSend = {
+                        id_post: data?.post_id.toString(),
+                        content: dataPost.content,
+                        media: reqUploadFile ? JSON.stringify(reqUploadFile?.returnObj) : (fileImgUpdate.length > 0 ? JSON.stringify({ "file_info": fileImgUpdate }) : null),
+                        audience_type: dataPost.privacy,
+                        function: "U",
+                        token: userData?.access_token
+                    }
+                    console.log(dataSend, "âsa")
+                    const result = await dispatch(updatePost(dataSend))
 
-    const handleSubmit = (e) => {
-        if (contentEditable.length > 0) {
-            console.log(fileImg)
-            window.alert(`Đăng bài thành công ! chệ dộ bài viết: ${dataPost.privacy}, content: ${dataPost.content}`)
+                    if (checkResponse(result.payload)) {
+                        let dataRes = result.payload.returnObj;
+                        if (dataRes?.media_info) {
+                            handleUpdateImage(dataRes?.media_info)
+                        }
+                        setProgress((prev) => prev + 40)
+                        toast.success("Sửa bài viết thành công !")
+                    }
+                } else {
+                    // nếu không có data thì tức là đang tạo còn có thì sẽ là sửa
+                    let reqUploadFile = null;
+                    if (fileImg && fileImg.length > 0) {
+                        reqUploadFile = await handleUploadFile(fileImg);
+                    }
+                    setProgress((prev) => prev + 30)
+                    const dataSend = {
+                        content: dataPost.content,
+                        media: reqUploadFile ? JSON.stringify(reqUploadFile?.returnObj) : null,
+                        audience_type: dataPost.privacy,
+                        function: "C",
+                        token: userData?.access_token
+                    }
+                    const result = await dispatch(createPost(dataSend))
+                    if (checkResponse(result.payload)) {
+                        toast.success("Tạo bài viết thành công !")
+                        setProgress((prev) => prev + 40)
+                    }
+                    // console.log(fileImg)
+                    // window.alert(`Đăng bài thành công ! chệ dộ bài viết: ${dataPost.privacy}, content: ${dataPost.content}`)
+                }
+            }
+
+            return
+        } catch (error) {
+            console.log(error)
         }
     }
 
@@ -129,7 +247,8 @@ function ModalPost({ setModalShow }) {
 
     return (<div className={cx("modal_post")}>
         <div className={cx("header")}>
-            <span>Tạo bài viết</span>
+            {data ? <span>Sửa bài viết</span> : <span>Tạo bài viết</span>}
+
             <Button className={cx("close_btn")} shape="circle" size={"sm"} icon={images.icon.cross_icon} onClick={() => setModalShow(false)} />
         </div>
         <div className={cx("body")}>
@@ -178,14 +297,14 @@ function ModalPost({ setModalShow }) {
                     onClick={handleGetPosCursorContentEditable}
                     onFocus={() => setShowBoxIcon(false)}
                 >
-
+                    
                 </div>
-
                 {fileImg.length > 0 && <div className={cx("box__image")}>
                     {fileImg.map((img, index) => {
                         return (
                             <div className={cx("box__image-item")} key={index}>
                                 <img src={URL.createObjectURL(img)} />
+                                {/* <img src={typeof img === "string" ? img : URL.createObjectURL(img)} /> */}
                                 <div onClick={handleDeleteImage}>
                                     <div className={cx("delete_img")}>
                                         <Button className={cx("delete_img-icon")} icon={images.icon.cross_icon} shape="circle" sise={"sm"} id_modified={index} />
@@ -195,6 +314,22 @@ function ModalPost({ setModalShow }) {
                         )
                     })}
                 </div>}
+                {fileImgUpdate.length > 0 && <div className={cx("box__image")}>
+                    {fileImgUpdate.map((img, index) => {
+                        return (
+                            <div className={cx("box__image-item")} key={index}>
+                                <img src={BASE_URL_MEDIA + img?.name} />
+                                {/* <img src={typeof img === "string" ? img : URL.createObjectURL(img)} /> */}
+                                <div onClick={handleDeleteImage}>
+                                    <div className={cx("delete_img")}>
+                                        <Button className={cx("delete_img-icon")} icon={images.icon.cross_icon} shape="circle" sise={"sm"} id_modified={index} />
+                                    </div>
+                                </div>
+                            </div>
+                        )
+                    })}
+                </div>}
+
             </div>
         </div>
 
@@ -227,9 +362,10 @@ function ModalPost({ setModalShow }) {
                 <Button className={cx("btn__post", {
                     active: contentEditable.length > 0
                 })}
-                    onClick={handleSubmit}>Đăng</Button>
+                    onClick={handleSubmit}>{data ? "Cập nhật" : "Đăng"}</Button>
             </div>
         </div>
+        <ToastContainer />
     </div>);
 }
 

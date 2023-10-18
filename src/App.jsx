@@ -1,4 +1,4 @@
-import { Fragment, useEffect } from "react";
+import { Fragment, useEffect, useState } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { privateRouter, publicRouter } from "~/routers/index";
 import { DefaultLayout } from "./layouts/Index";
@@ -6,9 +6,41 @@ import { logIn, logOut } from "./redux/actions/authActions";
 import { useSelector, useDispatch } from 'react-redux'
 import NotFound from "./pages/notfound/Index";
 import { Navigate } from 'react-router-dom';
+// import { getValueLocalStorage, setValueToLocalStorage } from '~/utils/contactWithLocalStorage'
+// import { Get } from '~/services/base';
+// import checkResponse from '~/utils/checkResponse';
+// import { loginSuccess, logout } from "./redux/store/authSlide";
+
 
 function App() {
+  // const [initialCheckDone, setInitialCheckDone] = useState(false);
   const userData = useSelector((state) => state.auth);
+  const dispatch = useDispatch();
+
+  // useEffect(() => {
+  //   const checkTokenLogin = async () => {
+  //     const tokenLocal = getValueLocalStorage('access_token');
+  //     const checkLogin = await Get("/check-login", {}, tokenLocal);
+
+  //     if (checkResponse(checkLogin)) {
+  //       setValueToLocalStorage('user_data', checkLogin?.returnObj);
+  //       dispatch(loginSuccess({
+  //         data_user: checkLogin?.returnObj,
+  //         access_token: getValueLocalStorage('access_token'),
+  //       }));
+  //     } else {
+  //       dispatch(logout({
+  //         data_user: null,
+  //         access_token: null,
+  //       }));
+  //     }
+  //   };
+  //   if (!initialCheckDone) {
+  //     setInitialCheckDone(true);
+  //     checkTokenLogin();
+  //   }
+  // }, [dispatch]);
+
   return (
     <>
       <Router>

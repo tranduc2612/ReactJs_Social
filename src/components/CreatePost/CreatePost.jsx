@@ -6,15 +6,17 @@ import styles from "./CreatePost.module.scss"
 import images from "~/assets/images/index";
 import Box from "~/components/Box/Box";
 import Button from "~/components/Button/Button";
+import LoadingBar from 'react-top-loading-bar';
 
 const cx = classNames.bind(styles);
 
 function CreatePost() {
     const [modalShow, setModalShow] = useState(false);
-    const handlePopupPost = ()=>{
+    const [progress, setProgress] = useState(0)
+    const handlePopupPost = () => {
         setModalShow(true)
     }
-    return ( <>
+    return (<>
         <Box className={cx("box__post")}>
             <div className={cx("box__post-header")} onClick={handlePopupPost}>
                 <div className={cx("box__post-avatar")}>
@@ -61,9 +63,15 @@ function CreatePost() {
             onHide={() => setModalShow(false)}
             size="md"
         >
-            <ModalPost setModalShow={setModalShow} />
+            <ModalPost setProgress={setProgress} progress={progress} setModalShow={setModalShow} />
         </Modal>
-    </> );
+
+        <LoadingBar
+            color='#1b74e4'
+            progress={progress}
+            onLoaderFinished={() => setProgress(0)}
+        />
+    </>);
 }
 
 export default CreatePost;

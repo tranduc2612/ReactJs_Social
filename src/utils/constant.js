@@ -16,13 +16,13 @@ export const IMAGES_REACT = [
         img: images.icon.like
     },
     {
-        id: "TYM",
+        id: "LOVE",
         title: "Yêu thích",
         color: "rgb(243, 62, 88)",
         img: images.icon.tym
     },
     {
-        id: "THUONG_THUONG",
+        id: "CARE",
         title: "Thương thương",
         color: "rgb(247, 177, 37)",
         img: images.icon.thuongthuong
@@ -40,19 +40,18 @@ export const IMAGES_REACT = [
         img: images.icon.wow
     },
     {
-        id: "BUON",
+        id: "SAD",
         title: "Buồn",
         color: "rgb(247, 177, 37)",
         img: images.icon.buon
     },
     {
-        id: "TUC_GIAN",
+        id: "ANGRY",
         title: "Phẫn nộ",
         color: "rgb(233, 113, 15)",
         img: images.icon.phanno
     }
 ]
-
 export const REACT_EMOTION = {
     LIKE: {
         id: "LIKE",
@@ -60,14 +59,14 @@ export const REACT_EMOTION = {
         color: "rgb(32, 120, 244)",
         img: images.icon.like
     },
-    TYM: {
-        id: "TYM",
+    LOVE: {
+        id: "LOVE",
         title: "Yêu thích",
         color: "rgb(243, 62, 88)",
         img: images.icon.tym
     },
-    THUONG_THUONG: {
-        id: "THUONG_THUONG",
+    CARE: {
+        id: "CARE",
         title: "Thương thương",
         color: "rgb(247, 177, 37)",
         img: images.icon.thuongthuong
@@ -84,16 +83,34 @@ export const REACT_EMOTION = {
         color: "rgb(247, 177, 37)",
         img: images.icon.wow
     },
-    BUON: {
-        id: "BUON",
+    SAD: {
+        id: "SAD",
         title: "Buồn",
         color: "rgb(247, 177, 37)",
         img: images.icon.buon
     },
-    TUC_GIAN: {
-        id: "TUC_GIAN",
+    ANGRY: {
+        id: "ANGRY",
         title: "Phẫn nộ",
         color: "rgb(233, 113, 15)",
         img: images.icon.phanno
     },
 }
+
+export const AUDIENCE_TYPE = [
+    {
+        code: 'PUBLIC',
+        value: 'Công khai',
+        image: images.icon.public_icon
+    },
+    {
+        code: "ONLY_ME",
+        value: 'Chỉ mình tôi',
+        image: images.icon.private_icon
+    },
+    {
+        code: "FRIENDS",
+        value: 'Bạn bè',
+        image: images.icon.friend_icon
+    }
+]

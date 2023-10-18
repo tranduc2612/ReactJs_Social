@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import classNames from "classnames/bind";
 import Modal from 'react-bootstrap/Modal';
+import { useSelector, useDispatch } from 'react-redux'
 
 import styles from "./Home.module.scss"
 import images from "~/assets/images/index";
@@ -8,6 +9,7 @@ import SideBar from "~/components/Sidebar/Sidebar";
 import SideBarItem from "~/components/SidebarItem/SidebarItem";
 import CreatePost from "~/components/CreatePost/CreatePost";
 import ListNewFeed from "~/components/ListNewFeed/ListNewFeed";
+import { getListPost } from "~/redux/actions/postActions";
 
 
 
@@ -73,8 +75,23 @@ const SideBarLeftAll = [{
 }]
 
 function Home({ userData }) {
+    const lstPost = useSelector((state) => state.post);
+    const dispatch = useDispatch();
     const [listSideBar, setListSidebar] = useState(SideBarLeft);
     const [moreSidebar, setMoreSidebar] = useState(false);
+    const [indexPage, setIndexPage] = useState(1);
+    const [totalPage, setTotalPage] = useState(0);
+
+    const dataFetch = {
+        pageIndex: indexPage,
+        pageCount: 10,
+        token: userData?.access_token,
+    }
+    useEffect(() => {
+        if (lstPost.length > 0 && lstPost) {
+            setTotalPage(lstPost[0]?.total_page)
+        }
+    }, [lstPost]);
 
     useEffect(() => {
         if (moreSidebar) {
@@ -87,6 +104,15 @@ function Home({ userData }) {
     const handleMoreSidebar = () => {
         // đoạn này xử lí thêm bớt thanh sidebar sau xử lí logic sau // fix tạm
         setMoreSidebar(!moreSidebar);
+    }
+
+    const fetchApiPost = async () => {
+        if (indexPage == totalPage) {
+            return
+        }
+        const res = await dispatch(getListPost(dataFetch));
+        setIndexPage(indexPage + 1);
+        return res
     }
 
 
@@ -125,7 +151,7 @@ function Home({ userData }) {
 
                 <CreatePost />
 
-                <ListNewFeed userData={userData} />
+                <ListNewFeed userData={userData} lstPost={lstPost} fetchApiPost={fetchApiPost} />
             </div>
         </div>
 

@@ -9,6 +9,8 @@ import { logOut } from "~/redux/actions/authActions";
 import { useDispatch, useSelector } from 'react-redux'
 import { Post } from "~/services/base";
 import checkResponse from "~/utils/checkResponse";
+import { removeAllKeyAuthentication } from "~/utils/contactWithLocalStorage";
+import { clearPost } from "~/redux/store/postSlide";
 
 const cx = classNames.bind(styles)
 
@@ -20,10 +22,13 @@ function BoxAvatar(props, ref) {
 
 
     const handleLogOut = async () => {
+        removeAllKeyAuthentication()
         try {
             const data = await Post("/logout", {}, userData?.access_token);
             if (checkResponse(data)) {
                 dispatch(logOut())
+                dispatch(clearPost())
+                navigate("/login")
             }
         } catch (error) {
             console.error(error);

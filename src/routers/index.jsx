@@ -25,7 +25,7 @@ const publicRouter = [
 
 const privateRouter = [
   {
-    path: "/profile",
+    path: "/profile/:id",
     page: Profile,
     layout: DefaultLayout,
   },

@@ -28,7 +28,6 @@ export const logOut = createAsyncThunk(
   'auth/authentication',
   async (payload,options) => {
     // Đoạn này đóng vai trò như gọi từ service
-    removeAllKeyAuthentication();
     try{
       
       return true;

@@ -2,20 +2,24 @@ import { createSlice } from '@reduxjs/toolkit'
 import { logIn,logOut } from '../actions/authActions'
 import { getValueLocalStorage } from '~/utils/contactWithLocalStorage'
 
-
-const initialState = {
-  data_user: getValueLocalStorage('user_data') || null,
-  access_token: getValueLocalStorage('access_token') || null,
+const initialState = { 
+  data_user:getValueLocalStorage('user_data') || null, 
+  access_token: getValueLocalStorage('access_token') || null
 }
 
+console.log(initialState)
 const authSlice = createSlice({
   name: 'auth',
   initialState,
   reducers: {
-    // setAccessToken: (state, action) => {
-    //   state.data_user = action.payload.data_user;
-    //   state.access_token = action.payload.access_token;
-    // },
+    loginSuccess: (state, action) => {
+      state.data_user = action.payload.data_user;
+      state.access_token = action.payload.access_token;
+    },
+    logout: (state) => {
+      state.data_user = null;
+      state.access_token = null;
+    },
   },
   extraReducers: (builder) =>{
     builder.addCase(logIn.fulfilled,(state,action) =>{
@@ -34,6 +38,8 @@ const authSlice = createSlice({
   }
 })
 
-export const { setAccessToken } = authSlice.actions;
+
+
+export const { loginSuccess,logout } = authSlice.actions;
 
 export default authSlice.reducer

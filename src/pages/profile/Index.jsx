@@ -12,7 +12,7 @@ const cx = classNames.bind(styles);
 
 const InCommingView = () => {
     return (
-        <div style={{fontSize: '17px', fontWeight: '600'}}>Tính năng đang được phát triển</div>
+        <div style={{ fontSize: '17px', fontWeight: '600' }}>Tính năng đang được phát triển</div>
     )
 }
 
@@ -105,15 +105,15 @@ const user = {
     ]
 }
 
-function Profile() {
+function Profile({ userData }) {
 
     const [content, setContent] = useState(LIST_NAVBAR[0]);
 
-    return ( 
+    return (
         <div className={cx("wrapper")}>
             <div className={cx("header")}>
                 <div className={cx("cover_container")}>
-                    <div className={cx("cover")} style={{backgroundImage: 'url("https://scontent.fhan4-1.fna.fbcdn.net/v/t39.30808-6/324025292_1314744665765839_8870951313051136517_n.jpg?stp=dst-jpg_p960x960&_nc_cat=104&ccb=1-7&_nc_sid=52f669&_nc_ohc=cnk052oTQS4AX_0Ybva&_nc_ht=scontent.fhan4-1.fna&oh=00_AfAkn4CKVmgEohzlSV0Dgr_z2GFX4BvrzWs1RvprXYzt2w&oe=65006A57")'}}>
+                    <div className={cx("cover")} style={{ backgroundImage: 'url("https://scontent.fhan4-1.fna.fbcdn.net/v/t39.30808-6/324025292_1314744665765839_8870951313051136517_n.jpg?stp=dst-jpg_p960x960&_nc_cat=104&ccb=1-7&_nc_sid=52f669&_nc_ohc=cnk052oTQS4AX_0Ybva&_nc_ht=scontent.fhan4-1.fna&oh=00_AfAkn4CKVmgEohzlSV0Dgr_z2GFX4BvrzWs1RvprXYzt2w&oe=65006A57")' }}>
                     </div>
                 </div>
                 <div className={cx("info_container")}>
@@ -144,11 +144,11 @@ function Profile() {
             </div>
             <div className={cx("navbar")}>
                 <div className={cx("navbar_container")}>
-                    {LIST_NAVBAR.map((nav)=>{
+                    {LIST_NAVBAR.map((nav) => {
                         return (
                             <div key={nav.id} className={cx("navbar_item")} onClick={() => setContent(nav)}>
-                                <span className={cx("", {title_active: nav.id == content.id})}>{nav.title}</span>
-                                <div className={cx("", {underline: nav.id == content.id})}></div>
+                                <span className={cx("", { title_active: nav.id == content.id })}>{nav.title}</span>
+                                <div className={cx("", { underline: nav.id == content.id })}></div>
                             </div>
                         )
                     })}
@@ -156,7 +156,7 @@ function Profile() {
             </div>
             <div className={cx("content")}>
                 <div className={cx("content_container")}>
-                    <content.component user={user}/>
+                    <content.component userData={userData} />
                 </div>
             </div>
         </div>
