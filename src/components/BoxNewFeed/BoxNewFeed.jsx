@@ -1,4 +1,4 @@
-import { useRef, useState, useCallback, useMemo } from "react";
+import { useRef, useState, useCallback, useMemo, memo } from "react";
 import Modal from 'react-bootstrap/Modal';
 import classNames from "classnames/bind";
 import Row from 'react-bootstrap/Row';
@@ -49,16 +49,36 @@ function BoxNewFeed({ data, shared }) {
     const [progress, setProgress] = useState(0)
     const [lstMostReactPost, setLstMostReactPost] = useState([]);
 
-
     const [lstImg, setlstImg] = useState([]);
-    useEffect(()=>{
+    const INIT_LIST_REACT = useMemo(() => {
+        let arrMostEmotion = [];
+        if (data?.react_type1 || data?.react_type2 || data?.react_type3) {
+            let react1 = REACT_EMOTION[data?.react_type1];
+            let react2 = REACT_EMOTION[data?.react_type2];
+            let react3 = REACT_EMOTION[data?.react_type3];
+            if (react1) {
+                arrMostEmotion.push(react1)
+            }
+            if (react2) {
+                arrMostEmotion.push(react2)
+            }
+            if (react3) {
+                arrMostEmotion.push(react3)
+            }
+        }
+        return arrMostEmotion
+    }, [])
+
+    useEffect(() => {
         if (data?.media_info) {
             const imgData = JSON.parse(data?.media_info)?.file_info;
             setlstImg(imgData)
             return
         }
+        setLstMostReactPost(INIT_LIST_REACT)
         setlstImg([])
-    },[data])
+    }, [data])
+
     const sliderRef = useRef(null);
 
     const handlePrev = useCallback(() => {
@@ -75,28 +95,69 @@ function BoxNewFeed({ data, shared }) {
     const handleShow = () => setShowDetailPost(true);
 
     const handleReact = (e) => {
+        e.stopPropagation()
         const key = e.target.getAttribute('id-icon');
-        if (key !== null) {
-            const objReact = REACT_EMOTION[key]
+        const keyDefault = e.target.getAttribute('id-default');
+
+        if (key !== null || keyDefault !== null) {
+            // if (keyDefault && react.id) {
+            //     if (lstMostReactPost[lstMostReactPost.length - 1]?.self) {
+            //         setLstMostReactPost(INIT_LIST_REACT)
+            //     }
+            //     setReact({
+            //         ...BASE_STATE_REACT
+            //     })
+            //     return
+            // }
+            const objReact = REACT_EMOTION[key || keyDefault]
             if (objReact !== null) {
-                setReact({
-                    ...objReact
-                })
-            }
-        } else {
-            const keyDefault = e.target.getAttribute('id-default');
-            if (keyDefault !== null) {
-                const objReact = REACT_EMOTION[keyDefault]
-                if (react.id != null) {
+                if (keyDefault && react.id) {
+                    setLstMostReactPost(INIT_LIST_REACT)
                     setReact({
                         ...BASE_STATE_REACT
                     })
-                } else {
-                    setReact({
-                        ...objReact
-                    })
+                    return
                 }
+
+                setReact({
+                    ...objReact
+                })
+                let objecReactSet = {
+                    ...objReact,
+                    self: true
+                }
+
+                if (lstMostReactPost.find(item => objecReactSet?.id === item.id)) {
+                    setLstMostReactPost([
+                        ...INIT_LIST_REACT
+                    ])
+                    return
+                }
+
+
+                // if (lstMostReactPost.length === 3) {
+                if (lstMostReactPost[lstMostReactPost.length - 1]?.self) {
+                    setLstMostReactPost(prev => {
+                        let newArr = [...prev];
+                        newArr.pop();
+                        return [
+                            ...newArr,
+                            objecReactSet
+                        ]
+                    })
+                } else {
+                    setLstMostReactPost([
+                        ...lstMostReactPost,
+                        objecReactSet
+                    ])
+                }
+
             }
+        } else {
+            setReact({
+                ...BASE_STATE_REACT
+            })
+            setLstMostReactPost(INIT_LIST_REACT)
 
         }
 
@@ -264,13 +325,13 @@ function BoxNewFeed({ data, shared }) {
                                 onClick={handleReact}
                                 id-default={REACT_EMOTION.LIKE.id}
                             >
-                                <div className={cx("tools__wrapper")}>
+                                <div className={cx("tools__wrapper")} id-default={REACT_EMOTION.LIKE.id}>
                                     {renderReactEmotion()}
                                 </div>
                                 <span style={{ color: react.color, padding: "6px 4px" }} className={cx("tools__contact-text", {
                                     active: react.id ? true : false
                                 })} id-default={REACT_EMOTION.LIKE.id}>{react.title}</span>
-                                <BoxReact ref={refBoxReact} className={cx("box__react")} />
+                                <BoxReact ref={refBoxReact} className={cx("box__react")} id-default={REACT_EMOTION.LIKE.id} />
                             </div>
 
                             <div className={cx("comment")} onClick={handleFocusEditorInput}>
@@ -431,18 +492,13 @@ function BoxNewFeed({ data, shared }) {
             <div className={cx("info__react")}>
 
                 <div className={cx("info__list-icon")}>
-
-                    <div className={cx("info__react-icon")}>
-                        <img src={images.icon.like} alt="" />
-                    </div>
-
-                    <div className={cx("info__react-icon")}>
-                        <img src={images.icon.buon} alt="" />
-                    </div>
-
-                    <div className={cx("info__react-icon")}>
-                        <img src={images.icon.thuongthuong} alt="" />
-                    </div>
+                    {lstMostReactPost.map(react => {
+                        return (
+                            <div className={cx("info__react-icon")} key={react.id}>
+                                <img src={react.img} alt="" />
+                            </div>
+                        )
+                    })}
                 </div>
 
                 <div className={cx("info__react-total")}>
@@ -463,7 +519,7 @@ function BoxNewFeed({ data, shared }) {
                 onClick={handleReact}
                 id-default={REACT_EMOTION.LIKE.id}
             >
-                <div className={cx("tools__wrapper")}>
+                <div className={cx("tools__wrapper")} id-default={REACT_EMOTION.LIKE.id}>
                     {renderReactEmotion()}
                 </div>
                 <span style={{ color: react.color, padding: "6px 4px" }} className={cx("tools__contact-text", {
@@ -522,4 +578,4 @@ function BoxNewFeed({ data, shared }) {
     </div>);
 }
 
-export default BoxNewFeed;
+export default memo(BoxNewFeed);

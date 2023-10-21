@@ -1,10 +1,9 @@
 import styles from "./ListNewFeed.module.scss"
 import classNames from "classnames/bind";
 import BoxNewFeed from "../BoxNewFeed/BoxNewFeed";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, memo, useMemo } from "react";
 import { Get, Post } from "~/services/base";
 import { useSelector, useDispatch } from 'react-redux'
-
 
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -14,24 +13,47 @@ import Loading from "../Loading/Loading";
 
 const cx = classNames.bind(styles);
 
-function ListNewFeed({ userData, fetchApiPost, lstPost }) {
+function ListNewFeed({ userData, fetchApiPost }) {
     // const lstPost = useSelector((state) => state.post);
     // const dispatch = useDispatch();
     const [loading, setLoading] = useState(false);
+    const [lstPost, setLstPost] = useState([]);
+    const [indexPage, setIndexPage] = useState(1);
+    const [totalPage, setTotalPage] = useState(0);
+
+    const dataFetch = {
+        pageIndex: indexPage,
+        pageCount: 10,
+        token: userData?.access_token,
+    }
+
     useEffect(() => {
-        handleFetchApi()
+
+        setLoading(true);
+        fetchApiPost(dataFetch)
+            .then((res) => {
+                if (indexPage == totalPage) {
+                    return
+                }
+                setIndexPage(indexPage + 1);
+                if (checkResponse(res.payload)) {
+                    setLstPost([...res.payload.returnObj])
+                }
+            }).catch((err) => {
+
+            }).finally((res) => {
+                setLoading(false);
+            })
+
     }, [])
 
-    const handleFetchApi = async () => {
-        setLoading(true);
-        try {
-            await fetchApiPost();
-        } catch (e) {
-
-        } finally {
-            setLoading(false);
+    useEffect(() => {
+        if (lstPost.length > 0) {
+            setTotalPage(lstPost[0]?.total_page)
         }
-    }
+    }, [lstPost]);
+
+
 
 
 
@@ -44,35 +66,19 @@ function ListNewFeed({ userData, fetchApiPost, lstPost }) {
             if (Math.ceil(windowHeight + scrollTop) !== documentHeight || loading) {
                 return;
             }
-            handleFetchApi()
+            await handleFetchApi()
         };
 
         window.addEventListener('scroll', handleScroll);
         return () => window.removeEventListener('scroll', handleScroll);
     }, [loading]);
 
-
-    // const fetchApiPost = async () => {
-    // setLoading(true);    
-    //     try {
-    //         const res = await dispatch(getListPost(dataFetch));
-    //         setIndexPage((prev) => prev + 1);
-    //     } catch (e) {
-
-    //     } finally {
-    //         setLoading(false);
-    //     }
-    // }
-
     return (<div className={cx("list")}>
-        {lstPost?.map(post => {
+        {lstPost && lstPost?.map(post => {
             return (
-                <BoxNewFeed data={post} key={post.post_id} shared={false} />
+                <BoxNewFeed key={post.post_id} data={post} shared={false} />
             )
         })}
-        {/* <BoxNewFeed shared={false} />
-            <BoxNewFeed shared={true} />
-            <BoxNewFeed shared={false} /> */}
         {loading && <div className="d-flex justify-content-center mt-3">
             <Loading />
         </div>}
@@ -82,4 +88,4 @@ function ListNewFeed({ userData, fetchApiPost, lstPost }) {
     </div>);
 }
 
-export default ListNewFeed;
+export default memo(ListNewFeed);
