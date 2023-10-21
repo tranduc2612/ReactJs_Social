@@ -83,7 +83,7 @@ function BoxAvatar(props, ref) {
                         </div>
                     </div>
 
-                    <div className={cx("item")}>
+                    <div className={cx("item")} onClick={handleLogOut}>
                         <div className={cx("icon")}>
                             <Button size={"sm"} shape="circle">
                                 <div style={{
@@ -100,7 +100,7 @@ function BoxAvatar(props, ref) {
                             </Button>
                         </div>
 
-                        <div className={cx("name")} onClick={handleLogOut}>
+                        <div className={cx("name")} >
                             Đăng xuất
                         </div>
                     </div>

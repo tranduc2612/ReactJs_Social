@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState,useCallback } from "react";
 import classNames from "classnames/bind";
 import Modal from 'react-bootstrap/Modal';
 import { useSelector, useDispatch } from 'react-redux'
@@ -75,23 +75,11 @@ const SideBarLeftAll = [{
 }]
 
 function Home({ userData }) {
-    const lstPost = useSelector((state) => state.post);
+    // const lstPost = useSelector((state) => state.post);
+    // console.log(lstPost, "lstPost")
     const dispatch = useDispatch();
     const [listSideBar, setListSidebar] = useState(SideBarLeft);
     const [moreSidebar, setMoreSidebar] = useState(false);
-    const [indexPage, setIndexPage] = useState(1);
-    const [totalPage, setTotalPage] = useState(0);
-
-    const dataFetch = {
-        pageIndex: indexPage,
-        pageCount: 10,
-        token: userData?.access_token,
-    }
-    useEffect(() => {
-        if (lstPost.length > 0 && lstPost) {
-            setTotalPage(lstPost[0]?.total_page)
-        }
-    }, [lstPost]);
 
     useEffect(() => {
         if (moreSidebar) {
@@ -106,14 +94,10 @@ function Home({ userData }) {
         setMoreSidebar(!moreSidebar);
     }
 
-    const fetchApiPost = async () => {
-        if (indexPage == totalPage) {
-            return
-        }
+    const fetchApiPost = useCallback(async (dataFetch) => {
         const res = await dispatch(getListPost(dataFetch));
-        setIndexPage(indexPage + 1);
         return res
-    }
+    }, [])
 
 
 
@@ -141,7 +125,6 @@ function Home({ userData }) {
                     <SideBarItem avatar={images.icon.group_avatar_demo} title={"Màn Hình Máy Tính  Thanh Lý Cũ Mới Giá Rẻ"} shape={"square"} />
                     <SideBarItem avatar={images.icon.group_avatar_demo} title={"Màn Hình Máy Tính  Thanh Lý Cũ Mới Giá Rẻ"} shape={"square"} />
                     <SideBarItem avatar={images.icon.group_avatar_demo} title={"Màn Hình Máy Tính  Thanh Lý Cũ Mới Giá Rẻ"} shape={"square"} />
-
                 </div>
             </ul>
         </SideBar>
@@ -151,7 +134,7 @@ function Home({ userData }) {
 
                 <CreatePost />
 
-                <ListNewFeed userData={userData} lstPost={lstPost} fetchApiPost={fetchApiPost} />
+                <ListNewFeed userData={userData} fetchApiPost={fetchApiPost} />
             </div>
         </div>
 

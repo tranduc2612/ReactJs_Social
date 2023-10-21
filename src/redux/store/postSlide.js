@@ -24,9 +24,8 @@ const postSlice = createSlice({
     builder.addCase(getListPost.fulfilled,(state,action) =>{
       console.log(action)
       if(action.payload){
-        state = [...state,...action.payload?.returnObj];
+        return [...state,...action.payload?.returnObj];
       }
-      return state;
     })
     builder.addCase(createPost.fulfilled,(state,action) =>{
       if(action.payload){

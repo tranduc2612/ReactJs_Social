@@ -35,7 +35,7 @@ function HeaderPost({ handleOpenConfirmDeleteModal, handleOpenEditModal, showMod
                 </div>
                 <div className={cx("info")}>
                     <div className={cx("name__author")}>
-                        <span>{data?.username}</span>
+                        <span>{data?.fullname || "Cần cập nhật thông tin"}</span>
                     </div>
 
                     <div className={cx("time__created")}>
@@ -107,7 +107,7 @@ function HeaderPost({ handleOpenConfirmDeleteModal, handleOpenEditModal, showMod
         <div className={cx("title")}>
             <span>{data?.content}</span>
         </div>
-        
+
     </>);
 }
 
