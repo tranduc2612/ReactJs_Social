@@ -1,12 +1,12 @@
 import classNames from "classnames/bind";
-import styles from "./ChatItem.module.scss";
+import styles from "./ChatItemInfo.module.scss";
 import Button from '~/components/Button/Button';
 import images from "~/assets/images/index";
 
 const cx = classNames.bind(styles)
 
-function ChatItem() {
-    return ( <div className={cx("item")}>
+function ChatItemInfo() {
+    return (<div className={cx("item")}>
         <div className={cx("avatar")}>
             <Button size={"xxl"} icon={images.icon.avatar_demo} full_icon={true} shape={"circle"} />
         </div>
@@ -19,7 +19,7 @@ function ChatItem() {
                 <span className={cx("time")}>13 phút</span>
             </div>
         </div>
-    </div> );
+    </div>);
 }
 
-export default ChatItem;
+export default ChatItemInfo;
