@@ -1,34 +1,17 @@
 import classNames from "classnames/bind";
 import styles from "./BoxNotification.module.scss";
-import Pusher from "pusher-js";
 import Box from "~/components/Box/Box"
 import Button from "~/components/Button/Button"
 import images from "~/assets/images/index";
 import { forwardRef, useEffect, useState } from "react";
 import NotiItem from "./component/NotiItem";
-
+import Loading from "../Loading/Loading";
 const cx = classNames.bind(styles)
 
 function BoxNotification(props, ref) {
-
+    const { data, loading } = props;
     const [filterNotify, setFilterNotify] = useState(false);
-    const [noti, setNoti] = useState([]);
     const [message, setMessage] = useState("")
-    useEffect(() => {
-        const pusher = new Pusher('83b6c124825dc255f114', {
-            cluster: 'ap1'
-        })
-
-        // Đăng ký kênh bạn muốn lắng nghe
-        const channel = pusher.subscribe("chat");
-
-        // Lắng nghe sự kiện từ kênh
-        channel.bind("message", (data) => {
-            console.log("Received a new post event:", data);
-            // Xử lý thông báo realtime ở đây
-        });
-    }, [])
-
     const handleBtnFilter = (e) => {
         setFilterNotify(!filterNotify)
     }
@@ -41,7 +24,7 @@ function BoxNotification(props, ref) {
                     <h2>Thông báo</h2>
                     <div className={cx("btn__header")}>
                         <Button icon={images.icon.three_dot_icon} size={"sm"} shape="circle">
-
+                            
                         </Button>
                     </div>
                 </div>
@@ -58,25 +41,17 @@ function BoxNotification(props, ref) {
                         Mới
                     </div>
                     <ul className={cx("list")}>
-                        <NotiItem />
-                        <NotiItem />
-                        <NotiItem />
-                        <NotiItem />
-                        <NotiItem />
-                        <NotiItem />
-                        <NotiItem />
-                        <NotiItem />
-                        <NotiItem />
-                        <NotiItem />
-                        <NotiItem />
-                        <NotiItem />
-                        <NotiItem />
-                        <NotiItem />
-                        <NotiItem />
-                        <NotiItem />
+                        {data?.lstData.map(noti => {
+                            return (
+                                <NotiItem key={noti?.noti_id} data={noti} />
+                            )
+                        })}
                     </ul>
                 </div>
             </div>
+            {data?.loading && <div className="d-flex justify-content-center mt-3">
+                <Loading />
+            </div>}
         </Box>
     </div>);
 }

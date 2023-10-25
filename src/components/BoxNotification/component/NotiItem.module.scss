@@ -1,19 +1,20 @@
-.item{
-    display:flex;
-    align-items:flex-start;
+.item {
+    display: flex;
+    align-items: flex-start;
     transition: all .2s linear;
     padding: 10px 9px 8px 7px;
     border-radius: 10px;
     cursor: pointer;
 
-    &:hover{
-        background-color: var(--color-hover);   
+    &:hover {
+        background-color: var(--color-hover);
     }
 
-    .head{
+    .head {
         position: relative;
         margin-right: 10px;
-        .sub_icon{
+
+        .sub_icon {
             position: absolute;
             right: 0;
             bottom: 0;
@@ -26,53 +27,61 @@
     }
 
 
-    
-    .body{
+
+    .body {
         display: flex;
         flex-direction: column;
-        .content{
+
+        .content {
             line-height: 1.8rem;
             font-size: 1.4rem;
         }
-        .time{
+
+        .time {
             margin-top: 4px;
             line-height: 1.5rem;
             font-size: 1.4rem;
             font-weight: 600;
-            color: var(--blue-primary);
+            color: var(--gray-deep-color);
+
+            &.active {
+                color: var(--blue-primary);
+            }
         }
-        .co_friend{
+
+        .co_friend {
             font-weight: 500;
             color: #333;
             opacity: .6;
             margin: 5px 0;
             font-size: 1.2rem;
         }
-        .add_friend_btn{
+
+        .add_friend_btn {
             display: flex;
-            justify-content:center;
+            justify-content: center;
             position: relative;
-            .custom__btn{
+
+            .custom__btn {
                 display: flex;
                 justify-content: center;
                 align-items: center;
                 font-size: 1.3rem;
                 font-weight: bold;
-                width:100px;
+                width: 100px;
                 height: 33px;
                 border-radius: 5px;
                 margin-right: 8px;
 
 
-                &.accept{
+                &.accept {
                     color: #fff;
                 }
-                &.deny{
+
+                &.deny {
                     color: #333;
                 }
             }
         }
     }
 }
-
-

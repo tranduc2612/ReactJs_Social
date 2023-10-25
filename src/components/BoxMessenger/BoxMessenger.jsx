@@ -5,7 +5,7 @@ import Box from "~/components/Box/Box";
 import Button from "~/components/Button/Button";
 import images from "~/assets/images/index";
 import Input from "~/components/Input/Input"
-import ChatItem from "./components/ChatItem";
+import ChatItem from "./components/ChatItemInfo";
 
 const cx = classNames.bind(styles)
 

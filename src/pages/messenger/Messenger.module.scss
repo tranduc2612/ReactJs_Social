@@ -1,8 +1,9 @@
-.chat__page{
+.chat__page {
     $gutter: 10px;
     height: 100%;
     $height-bottom: 5em;
-    .sidebar_chat{
+
+    .sidebar_chat {
         max-width: inherit;
         width: inherit;
         background-color: #fff;
@@ -10,29 +11,32 @@
         overflow: scroll;
         z-index: 99;
 
-        .header{
+        .header {
             height: 15em;
-            &__title{
+
+            &__title {
                 padding: 12px 16px;
                 display: flex;
-                justify-content:space-between;
-                .text{
-                    font-size:2.5rem;
+                justify-content: space-between;
+
+                .text {
+                    font-size: 2.5rem;
                     font-weight: 700;
                 }
             }
 
-            &__search{
+            &__search {
                 display: flex;
                 padding: 0px 16px;
             }
 
-            .filter{
-                display:flex;
+            .filter {
+                display: flex;
                 margin-bottom: 10px;
                 margin-top: 10px;
                 padding-left: 16px;
-                .button__filter{
+
+                .button__filter {
                     display: flex;
                     justify-content: center;
                     align-items: center;
@@ -42,32 +46,34 @@
                     height: 30px;
                     background-color: transparent;
                     transition: all .3s linear;
-        
-                    &:hover{
+
+                    &:hover {
                         background-color: var(--color-hover)
                     }
-        
-                    &.active{
+
+                    &.active {
                         background-color: var(--light-blue);
                         color: var(--blue-primary);
                     }
-                    
-                    span{
+
+                    span {
                         font-size: 1.4rem;
                         font-weight: 500;
                     }
                 }
             }
         }
-        .custom__body{
+
+        .custom__body {
             max-height: 46em;
             min-height: 46em;
-            .list__chat{
+
+            .list__chat {
                 padding: 8px;
             }
         }
 
-        .sidebar__footer{
+        .sidebar__footer {
             padding: 0 20px;
             display: flex;
             justify-content: center;
@@ -78,102 +84,112 @@
             cursor: pointer;
             transition: all 0.2s linear;
 
-            &:hover{
+            &:hover {
                 background-color: var(--color-hover);
             }
-            span{
+
+            span {
                 margin-left: 10px;
-                font-size:1.7rem;
+                font-size: 1.7rem;
                 font-weight: 600;
             }
         }
     }
 
-    .body__page{
+    .body__page {
         position: relative;
         top: var(--height-header);
         width: 100%;
         height: 100%;
-        .box__init{
-            span{
+
+        .box__init {
+            span {
                 font-size: 3rem;
-                font-weight:700;
-                color:#65676b;
+                font-weight: 700;
+                color: #65676b;
             }
         }
 
-        .box__chat{
+        .box__chat {
             overflow: hidden;
             background-color: #fff;
-            .header{
+
+            .header {
                 display: flex;
                 justify-content: space-between;
                 align-items: center;
                 padding: 12px;
                 height: 7em;
-                .header__left{
+
+                .header__left {
                     display: flex;
                     align-items: center;
-    
-                    .info{
+
+                    .info {
                         display: flex;
                         flex-direction: column;
                         margin-left: 10px;
-                        span{
-                            &:nth-child(1){
-                                font-size:1.6rem;
+
+                        span {
+                            &:nth-child(1) {
+                                font-size: 1.6rem;
                                 font-weight: 700;
                             }
-    
-                            &:nth-child(2){
+
+                            &:nth-child(2) {
                                 display: flex;
                                 align-items: center;
-                                font-size:1.4rem;
-                                font-weight:400;
+                                font-size: 1.4rem;
+                                font-weight: 400;
                                 color: #65676b;
-                                div{
-                                    margin-left:10px;
+
+                                div {
+                                    margin-left: 10px;
                                 }
                             }
                         }
                     }
                 }
-    
-                .header__right{
+
+                .header__right {
                     display: flex;
                 }
-    
-                
+
+
             }
 
-            .custom__body{
-                max-height: 60em;
-                min-height: 60em;
+            .custom__body {
+                max-height: 54em;
+                min-height: 54em;
 
-                .list__message{
+                // responsive đoạn này
+                
+                .list__message {
                     padding: 0 18px;
                 }
             }
 
-            .footer{
+            .footer {
                 width: 100%;
                 display: flex;
                 align-items: center;
                 padding: 5px;
-                .input__editor{
+
+                .input__editor {
                     width: 100%;
-                    [contenteditable=true]{
+
+                    [contenteditable=true] {
                         max-height: 130px;
                     }
                 }
 
-                .icon__submit{
+                .icon__submit {
                     cursor: no-drop;
                     margin: 0 10px;
                     transition: all .3s linear;
-                    
-                    &.active{
-                        fill:#0084ff;
+
+                    &.active {
+                        fill: #0084ff;
                         cursor: pointer;
                     }
                 }

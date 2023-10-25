@@ -1,22 +1,23 @@
 import classNames from "classnames/bind";
 import styles from "./CustomBox.module.scss";
+import { forwardRef } from "react";
 
 const cx = classNames.bind(styles)
 
-function CustomBox({header,children,footer,className,classBody}) {
-    return ( <div className={cx("custom__box",{
-        [className]:true
+function CustomBox({ header, children, footer, className, classBody }, ref) {
+    return (<div className={cx("custom__box", {
+        [className]: true
     })}>
         <div className={cx("header")}>
             {header}
         </div>
-        <div className={cx("body",{[classBody]: classBody && true})}>
+        <div className={cx("body", { [classBody]: classBody && true })} ref={ref}>
             {children}
         </div>
         <div className={cx("footer")}>
             {footer}
         </div>
-    </div> );
+    </div>);
 }
 
-export default CustomBox;
+export default forwardRef(CustomBox);
