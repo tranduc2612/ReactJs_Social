@@ -1,4 +1,4 @@
-import { useEffect, useState,useCallback } from "react";
+import { useEffect, useState, useCallback } from "react";
 import classNames from "classnames/bind";
 import Modal from 'react-bootstrap/Modal';
 import { useSelector, useDispatch } from 'react-redux'
@@ -100,11 +100,11 @@ function Home({ userData }) {
     }, [])
 
 
-
+    { console.log(userData, "sdsd") }
     return (<div className={cx("home")}>
         <SideBar className={cx("left__sidebar")}>
             <ul className={cx("left__sidebar-list")}>
-                <SideBarItem avatar={images.icon.avatar_demo} title={"Trần Minh Đức"} />
+                <SideBarItem avatar={images.icon.avatar_demo} title={userData.data_user?.fullname} />
                 {listSideBar.map(item => {
                     return (
                         <SideBarItem key={item.id} title={item.title} data={item} />

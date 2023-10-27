@@ -22,9 +22,10 @@ import Box from "../Box/Box";
 import ModalPost from "../ModalPost/ModalPost";
 import ModalConfirm from "../ModalConfirm/ModalConfirm";
 import HeaderPost from "./components/HeaderPost/HeaderPost";
-import { BASE_URL_MEDIA } from "~/services/base";
+import { BASE_URL_MEDIA, Post } from "~/services/base";
 import LoadingBar from 'react-top-loading-bar';
 import { useEffect } from "react";
+import checkResponse from "~/utils/checkResponse";
 const cx = classNames.bind(styles);
 
 // like color: rgb(32, 120, 244);
@@ -32,7 +33,7 @@ const cx = classNames.bind(styles);
 // thuongthuong,haha,wow,sad, : color: rgb(247, 177, 37);
 // phan no :color: rgb(233, 113, 15);
 
-function BoxNewFeed({ data, shared }) {
+function BoxNewFeed({ data, shared, userData }) {
     const BASE_STATE_REACT = {
         id: null,
         title: "Thích",
@@ -41,14 +42,19 @@ function BoxNewFeed({ data, shared }) {
     }
     const refBoxReact = useRef(null);
     const inputEditorCommentRef = useRef(null);
-    const [react, setReact] = useState(BASE_STATE_REACT);
+    const [react, setReact] = useState(() => {
+        if (data?.current_react_type && REACT_EMOTION[data?.current_react_type]) {
+            const currentReact = REACT_EMOTION[data?.current_react_type];
+            return currentReact
+        }
+        return BASE_STATE_REACT
+    });
     const [showDetailPost, setShowDetailPost] = useState(false);
     const [showConfirmBoxDelete, setShowConfirmBoxDelete] = useState(false);
     const [showModalEditPost, setShowModalEditPost] = useState(false);
     const [idModifiedPost, setIdModifiedPost] = useState(null);
     const [progress, setProgress] = useState(0)
     const [lstMostReactPost, setLstMostReactPost] = useState([]);
-
     const [lstImg, setlstImg] = useState([]);
     const INIT_LIST_REACT = useMemo(() => {
         let arrMostEmotion = [];
@@ -94,7 +100,7 @@ function BoxNewFeed({ data, shared }) {
     const handleClose = () => setShowDetailPost(false);
     const handleShow = () => setShowDetailPost(true);
 
-    const handleReact = (e) => {
+    const handleReact = async (e) => {
         e.stopPropagation()
         const key = e.target.getAttribute('id-icon');
         const keyDefault = e.target.getAttribute('id-default');
@@ -109,49 +115,53 @@ function BoxNewFeed({ data, shared }) {
             //     })
             //     return
             // }
+            if (keyDefault && react.id) {
+                setLstMostReactPost(INIT_LIST_REACT)
+                setReact({
+                    ...BASE_STATE_REACT
+                })
+                return
+            }
             const objReact = REACT_EMOTION[key || keyDefault]
             if (objReact !== null) {
-                if (keyDefault && react.id) {
-                    setLstMostReactPost(INIT_LIST_REACT)
+                const callApiReact = await Post("/action/handle-react", {
+                    type: objReact?.id,
+                    post_id: data?.post_id,
+                }, userData?.access_token)
+
+                if (checkResponse(callApiReact)) {
                     setReact({
-                        ...BASE_STATE_REACT
+                        ...objReact
                     })
-                    return
-                }
 
-                setReact({
-                    ...objReact
-                })
-                let objecReactSet = {
-                    ...objReact,
-                    self: true
-                }
+                    let objecReactSet = {
+                        ...objReact,
+                        self: true
+                    }
 
-                if (lstMostReactPost.find(item => objecReactSet?.id === item.id)) {
-                    setLstMostReactPost([
-                        ...INIT_LIST_REACT
-                    ])
-                    return
-                }
-
-
-                // if (lstMostReactPost.length === 3) {
-                if (lstMostReactPost[lstMostReactPost.length - 1]?.self) {
-                    setLstMostReactPost(prev => {
-                        let newArr = [...prev];
-                        newArr.pop();
-                        return [
-                            ...newArr,
+                    if (lstMostReactPost.find(item => objecReactSet?.id === item.id)) {
+                        setLstMostReactPost([
+                            ...INIT_LIST_REACT
+                        ])
+                        return
+                    }
+                    // if (lstMostReactPost.length === 3) {
+                    if (lstMostReactPost[lstMostReactPost.length - 1]?.self) {
+                        setLstMostReactPost(prev => {
+                            let newArr = [...prev];
+                            newArr.pop();
+                            return [
+                                ...newArr,
+                                objecReactSet
+                            ]
+                        })
+                    } else {
+                        setLstMostReactPost([
+                            ...lstMostReactPost,
                             objecReactSet
-                        ]
-                    })
-                } else {
-                    setLstMostReactPost([
-                        ...lstMostReactPost,
-                        objecReactSet
-                    ])
+                        ])
+                    }
                 }
-
             }
         } else {
             setReact({

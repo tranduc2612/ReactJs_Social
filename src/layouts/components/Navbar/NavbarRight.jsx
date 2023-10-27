@@ -10,6 +10,8 @@ import checkResponse from "~/utils/checkResponse";
 import Pusher from "pusher-js";
 import { Get } from "~/services/base";
 import { useSelector } from 'react-redux'
+import Echo from 'laravel-echo';
+import axios from 'axios'
 
 
 const cx = classNames.bind(styles);
@@ -89,6 +91,27 @@ function NavbarRight({ listItem }) {
 
     useEffect(() => {
         setLoading(true)
+        // const pusher = new Pusher('83b6c124825dc255f114', {
+        //     cluster: 'ap1',
+        //     encrypted: true,
+        // });
+
+        // const channel = pusher.subscribe('private.tra-vh');
+
+        // channel.bind('message', function (data) {
+        //     console.log(data);
+        // });
+        // window.Echo = new Echo({
+        //     broadcaster: 'pusher',
+        //     key: '83b6c124825dc255f114',
+        //     cluster: 'ap1'
+        // });
+
+        // window.Echo.private(`private.tra-vh`)
+        //     .listen('message', (e) => {
+
+        //     });
+
         Get("/notification", {}, userData.access_token)
             .then(res => {
                 if (checkResponse(res)) {
@@ -101,7 +124,7 @@ function NavbarRight({ listItem }) {
                 })
 
                 // Đăng ký kênh bạn muốn lắng nghe
-                const channel = pusher.subscribe("chat");
+                const channel = pusher.subscribe(`private.${userData.data_user?.username}`);
 
                 // Lắng nghe sự kiện từ kênh
                 channel.bind("message", (data) => {

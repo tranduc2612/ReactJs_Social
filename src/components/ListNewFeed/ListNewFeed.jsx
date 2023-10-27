@@ -76,7 +76,7 @@ function ListNewFeed({ userData, fetchApiPost }) {
     return (<div className={cx("list")}>
         {lstPost && lstPost?.map(post => {
             return (
-                <BoxNewFeed key={post.post_id} data={post} shared={false} />
+                <BoxNewFeed key={post.post_id} data={post} shared={false} userData={userData} />
             )
         })}
         {loading && <div className="d-flex justify-content-center mt-3">
