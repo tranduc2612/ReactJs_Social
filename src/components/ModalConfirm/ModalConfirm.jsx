@@ -5,9 +5,8 @@ import { ToastContainer, toast } from 'react-toastify';
 import { deletePost } from '~/redux/actions/postActions';
 
 
-function ModalConfirm({ title, setShowConfirm, showConfirm, idPost, setProgress, progress }) {
+function ModalConfirm({ title, setShowConfirm, showConfirm, idPost, setProgress, progress, handlePost }) {
     const userData = useSelector((state) => state.auth);
-    const dispatch = useDispatch();
 
     const handleDelete = async (e) => {
         const token = userData.access_token;
@@ -19,9 +18,9 @@ function ModalConfirm({ title, setShowConfirm, showConfirm, idPost, setProgress,
         }
         setShowConfirm(false)
         setProgress(prev => prev + 50);
-        const req = await dispatch(deletePost(dataSend));
+        const res = await handlePost(dataSend);
         setProgress(prev => prev + 50);
-        if (req.payload) {
+        if (res) {
             toast.success("Xóa thành công");
         } else {
             toast.error("Xóa thất bại");

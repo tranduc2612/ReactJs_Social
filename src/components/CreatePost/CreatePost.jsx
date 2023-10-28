@@ -10,7 +10,7 @@ import LoadingBar from 'react-top-loading-bar';
 
 const cx = classNames.bind(styles);
 
-function CreatePost() {
+function CreatePost({ handlePost }) {
     const [modalShow, setModalShow] = useState(false);
     const [progress, setProgress] = useState(0)
     const handlePopupPost = () => {
@@ -63,7 +63,7 @@ function CreatePost() {
             onHide={() => setModalShow(false)}
             size="md"
         >
-            <ModalPost setProgress={setProgress} progress={progress} setModalShow={setModalShow} />
+            <ModalPost setProgress={setProgress} progress={progress} setModalShow={setModalShow} handlePost={handlePost} />
         </Modal>
 
         <LoadingBar

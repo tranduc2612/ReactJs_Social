@@ -9,18 +9,17 @@ import styles from "./HeaderPost.module.scss"
 import images from "~/assets/images/index";
 import Button from "~/components/Button/Button"
 import Box from "~/components/Box/Box";
-import ModalPost from "~/components/ModalPost/ModalPost";
-import ModalConfirm from "~/components/ModalConfirm/ModalConfirm"
 import { formatDate } from "~/utils/format";
 import { AUDIENCE_TYPE } from "~/utils/constant";
-
+import { useSelector, useDispatch } from 'react-redux'
 
 const cx = classNames.bind(styles);
 
 function HeaderPost({ handleOpenConfirmDeleteModal, handleOpenEditModal, showModalEditPost, showConfirmBoxDelete, data }) {
     const [showSetting, setShowSetting] = useState(false);
+    const userData = useSelector((state) => state.auth);
     const type_audience = AUDIENCE_TYPE.find(type => type.code === data?.audience_type) && AUDIENCE_TYPE.find(type => type.code === data?.audience_type)?.image;
-    console.log(type_audience)
+
     useEffect(() => {
         if (showModalEditPost || showConfirmBoxDelete) {
             setShowSetting(false)
@@ -45,63 +44,66 @@ function HeaderPost({ handleOpenConfirmDeleteModal, handleOpenEditModal, showMod
                     </div>
                 </div>
             </div>
+            {
+                userData.data_user?.username === data?.username ?
+                    <div className={cx("header__right")}>
+                        {handleOpenConfirmDeleteModal == null || handleOpenEditModal == null ? null : <>
+                            <div className={cx("setting")}>
+                                <Tippy
+                                    interactive
+                                    visible={showSetting}
+                                    placement="bottom"
+                                    delay={[100, 50]}
+                                    arrow="true"
+                                    onClickOutside={() => setShowSetting(false)}
+                                    render={attrs => (
+                                        <div tabIndex="-1" {...attrs}>
+                                            <Box className={cx("box__setting")} style={{ width: "300px" }}>
+                                                <ul className={cx("list__setting")}>
+                                                    <li className={cx("item__setting")}>
+                                                        <div style={{
+                                                            backgroundImage: `url(${images.icon.list_icon_4})`,
+                                                            backgroundPosition: "0px -374px",
+                                                            backgroundSize: "22px 616px",
+                                                            width: "20px",
+                                                            height: "20px",
+                                                            backgroundRepeat: "no-repeat",
+                                                            display: "inline-block"
+                                                        }}>
+                                                        </div>
+                                                        <span className={cx("setting__title")} onClick={(e) => handleOpenEditModal(e, data?.post_id)}>
+                                                            Chỉnh sừa bài viết
+                                                        </span>
+                                                    </li>
 
-            <div className={cx("header__right")}>
-                {handleOpenConfirmDeleteModal == null || handleOpenEditModal == null ? null : <>
-                    <div className={cx("setting")}>
-                        <Tippy
-                            interactive
-                            visible={showSetting}
-                            placement="bottom"
-                            delay={[100, 50]}
-                            arrow="true"
-                            onClickOutside={() => setShowSetting(false)}
-                            render={attrs => (
-                                <div tabIndex="-1" {...attrs}>
-                                    <Box className={cx("box__setting")} style={{ width: "300px" }}>
-                                        <ul className={cx("list__setting")}>
-                                            <li className={cx("item__setting")}>
-                                                <div style={{
-                                                    backgroundImage: `url(${images.icon.list_icon_4})`,
-                                                    backgroundPosition: "0px -374px",
-                                                    backgroundSize: "22px 616px",
-                                                    width: "20px",
-                                                    height: "20px",
-                                                    backgroundRepeat: "no-repeat",
-                                                    display: "inline-block"
-                                                }}>
-                                                </div>
-                                                <span className={cx("setting__title")} onClick={(e) => handleOpenEditModal(e, data?.post_id)}>
-                                                    Chỉnh sừa bài viết
-                                                </span>
-                                            </li>
-
-                                            <li className={cx("item__setting")} onClick={(e) => handleOpenConfirmDeleteModal(e, data?.post_id)}>
-                                                <div style={{
-                                                    backgroundImage: `url('https://static.xx.fbcdn.net/rsrc.php/v3/yG/r/msdW_D9Y2bQ.png')`,
-                                                    backgroundPosition: "0px -1120px",
-                                                    backgroundSize: "26px 1258px",
-                                                    width: "20px",
-                                                    height: "20px",
-                                                    backgroundRepeat: "no-repeat",
-                                                    display: "inline-block"
-                                                }}>
-                                                </div>
-                                                <span className={cx("setting__title")}>
-                                                    Xóa bài viết
-                                                </span>
-                                            </li>
-                                        </ul>
-                                    </Box>
-                                </div>
-                            )}>
-                            <div>
-                                <Button icon={images.icon.three_dot_icon} size={"sm"} shape="circle" onClick={() => setShowSetting(!showSetting)} />
+                                                    <li className={cx("item__setting")} onClick={(e) => handleOpenConfirmDeleteModal(e, data?.post_id)}>
+                                                        <div style={{
+                                                            backgroundImage: `url('https://static.xx.fbcdn.net/rsrc.php/v3/yG/r/msdW_D9Y2bQ.png')`,
+                                                            backgroundPosition: "0px -1120px",
+                                                            backgroundSize: "26px 1258px",
+                                                            width: "20px",
+                                                            height: "20px",
+                                                            backgroundRepeat: "no-repeat",
+                                                            display: "inline-block"
+                                                        }}>
+                                                        </div>
+                                                        <span className={cx("setting__title")}>
+                                                            Xóa bài viết
+                                                        </span>
+                                                    </li>
+                                                </ul>
+                                            </Box>
+                                        </div>
+                                    )}>
+                                    <div>
+                                        <Button icon={images.icon.three_dot_icon} size={"sm"} shape="circle" onClick={() => setShowSetting(!showSetting)} />
+                                    </div>
+                                </Tippy>
                             </div>
-                        </Tippy>
+                        </>}
                     </div>
-                </>}
-            </div>
+                    : null
+            }
         </div>
 
         <div className={cx("title")}>

@@ -33,7 +33,7 @@ const cx = classNames.bind(styles);
 // thuongthuong,haha,wow,sad, : color: rgb(247, 177, 37);
 // phan no :color: rgb(233, 113, 15);
 
-function BoxNewFeed({ data, shared, userData }) {
+function BoxNewFeed({ data, shared, userData, handlePost }) {
     const BASE_STATE_REACT = {
         id: null,
         title: "Thích",
@@ -56,6 +56,10 @@ function BoxNewFeed({ data, shared, userData }) {
     const [progress, setProgress] = useState(0)
     const [lstMostReactPost, setLstMostReactPost] = useState([]);
     const [lstImg, setlstImg] = useState([]);
+    const [likeCount, setLikeCount] = useState(() => data?.like_count);
+    const [commentCount, setCommentCount] = useState(0);
+
+
     const INIT_LIST_REACT = useMemo(() => {
         let arrMostEmotion = [];
         if (data?.react_type1 || data?.react_type2 || data?.react_type3) {
@@ -116,23 +120,33 @@ function BoxNewFeed({ data, shared, userData }) {
             //     return
             // }
             if (keyDefault && react.id) {
+                // hủy like này
                 setLstMostReactPost(INIT_LIST_REACT)
                 setReact({
                     ...BASE_STATE_REACT
                 })
+                const callApiReact = await Post("/action/delete-react", {
+                    post_id: data?.post_id,
+
+                }, userData?.access_token)
+                if (checkResponse(callApiReact)) {
+                    setLikeCount(callApiReact?.returnObj[0].like_count)
+                }
                 return
             }
             const objReact = REACT_EMOTION[key || keyDefault]
             if (objReact !== null) {
-                const callApiReact = await Post("/action/handle-react", {
+                setReact({
+                    ...objReact
+                })
+                const callApiReact = await Post("/action/create-react", {
                     type: objReact?.id,
                     post_id: data?.post_id,
+
                 }, userData?.access_token)
 
                 if (checkResponse(callApiReact)) {
-                    setReact({
-                        ...objReact
-                    })
+                    setLikeCount(callApiReact?.returnObj[0].like_count)
 
                     let objecReactSet = {
                         ...objReact,
@@ -164,10 +178,21 @@ function BoxNewFeed({ data, shared, userData }) {
                 }
             }
         } else {
+            // hủy like
+
             setReact({
                 ...BASE_STATE_REACT
             })
             setLstMostReactPost(INIT_LIST_REACT)
+
+            const callApiReact = await Post("/action/delete-react", {
+                post_id: data?.post_id,
+
+            }, userData?.access_token)
+
+            if (checkResponse(callApiReact)) {
+                setLikeCount(callApiReact?.returnObj[0].like_count)
+            }
 
         }
 
@@ -230,11 +255,20 @@ function BoxNewFeed({ data, shared, userData }) {
         }
     }
 
+    const handleSubmitComment = async (content) => {
+        const createComment = await Post("/action/create-comment", {
+            content,
+            post_id: data?.post_id,
+        }, userData?.access_token);
+        console.log(createComment)
+        // if(checkResponse(createComment))
+    }
+
     const renderFooterDetailPost = () => {
         return (
             <div className={cx("detail__post-footer")}>
                 <Button className={cx("avatar")} icon={images.icon.avatar_demo} shape="circle" full_icon={true} />
-                <InputEditor ref={inputEditorCommentRef} placementTools="bottom" className={cx("input__comment")} />
+                <InputEditor ref={inputEditorCommentRef} placementTools="bottom" className={cx("input__comment")} handleSubmitContent={handleSubmitComment} />
             </div>
         )
     }
@@ -263,9 +297,9 @@ function BoxNewFeed({ data, shared, userData }) {
             <Modal show={showDetailPost} onHide={handleClose} centered size={"lg"}>
                 <CustomBox className={cx("detail__post")} header={renderHeaderDetailPost()} footer={renderFooterDetailPost()}>
                     <div className={cx("detail__post-body")}>
-                        <HeaderPost data={data} showModalEditPost={showModalEditPost} showConfirmBoxDelete={showConfirmBoxDelete} handleOpenConfirmDeleteModal={handleOpenConfirmDeleteModal} handleOpenEditModal={handleOpenEditModal} />
+                        <HeaderPost data={data} userData={userData} showModalEditPost={showModalEditPost} showConfirmBoxDelete={showConfirmBoxDelete} handleOpenConfirmDeleteModal={handleOpenConfirmDeleteModal} handleOpenEditModal={handleOpenEditModal} />
 
-                        {lstImg ?
+                        {lstImg.length > 0 ?
                             <div className={cx("", {
                                 post__searched: shared
                             })}>
@@ -306,27 +340,23 @@ function BoxNewFeed({ data, shared, userData }) {
                             <div className={cx("info__react")}>
 
                                 <div className={cx("info__list-icon")}>
-                                    {/* <div className={cx("info__react-icon")}>
-                                    <img src={images.icon.like} alt="" />
-                                </div>
-
-                                <div className={cx("info__react-icon")}>
-                                    <img src={images.icon.buon} alt="" />
-                                </div>
-
-                                <div className={cx("info__react-icon")}>
-                                    <img src={images.icon.thuongthuong} alt="" />
-                                </div> */}
+                                    {lstMostReactPost.map(react => {
+                                        return (
+                                            <div className={cx("info__react-icon")} key={react.id}>
+                                                <img src={react.img} alt="" />
+                                            </div>
+                                        )
+                                    })}
                                 </div>
 
                                 <div className={cx("info__react-total")}>
                                     {/* <span>Bạn,Minh Ngọc và 900 người khác</span> */}
-                                    <span>{data?.like_count}</span>
+                                    <span>{likeCount}</span>
                                 </div>
                             </div>
 
                             <div className={cx("info__comment")}>
-                                <span>65 bình luận</span>
+                                <span>{commentCount} bình luận</span>
                             </div>
                         </div>
 
@@ -378,7 +408,7 @@ function BoxNewFeed({ data, shared, userData }) {
                             </div>
                         </div>
                         {/* Danh sách bình luận */}
-                        <ListComment />
+                        <ListComment idPost={data?.post_id} token={userData?.access_token} />
                     </div>
                 </CustomBox>
             </Modal>
@@ -469,7 +499,7 @@ function BoxNewFeed({ data, shared, userData }) {
 
     const renderModalEditPost = () => {
         return (<Modal show={showModalEditPost} onHide={handleCloseEditModal} centered size={"lg"}>
-            <ModalPost data={data} setModalShow={setShowModalEditPost} progress={progress} setProgress={setProgress} />
+            <ModalPost data={data} setModalShow={setShowModalEditPost} progress={progress} setProgress={setProgress} handlePost={handlePost} />
         </Modal>)
     }
 
@@ -513,12 +543,12 @@ function BoxNewFeed({ data, shared, userData }) {
 
                 <div className={cx("info__react-total")}>
                     {/* <span>Bạn,Minh Ngọc và 900 người khác</span> */}
-                    <span>{data?.like_count}</span>
+                    <span>{likeCount}</span>
                 </div>
             </div>
 
             <div className={cx("info__comment")}>
-                <span>{data?.comment_count} bình luận</span>
+                <span>{commentCount} bình luận</span>
             </div>
         </div>
 
@@ -578,7 +608,7 @@ function BoxNewFeed({ data, shared, userData }) {
 
         {renderModalEditPost()}
 
-        <ModalConfirm title={"bài viết"} progress={progress} setProgress={setProgress} showConfirm={showConfirmBoxDelete} setShowConfirm={setShowConfirmBoxDelete} idPost={idModifiedPost} />
+        <ModalConfirm handlePost={handlePost} title={"bài viết"} progress={progress} setProgress={setProgress} showConfirm={showConfirmBoxDelete} setShowConfirm={setShowConfirmBoxDelete} idPost={idModifiedPost} />
 
         <LoadingBar
             color='#1b74e4'
