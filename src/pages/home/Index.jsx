@@ -1,4 +1,4 @@
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useState, useCallback, useRef } from "react";
 import classNames from "classnames/bind";
 import Modal from 'react-bootstrap/Modal';
 import { useSelector, useDispatch } from 'react-redux'
@@ -10,6 +10,9 @@ import SideBarItem from "~/components/SidebarItem/SidebarItem";
 import CreatePost from "~/components/CreatePost/CreatePost";
 import ListNewFeed from "~/components/ListNewFeed/ListNewFeed";
 import { getListPost } from "~/redux/actions/postActions";
+import { Get, Post } from "~/services/base";
+import { createContext } from "react";
+import checkResponse from "~/utils/checkResponse";
 
 
 
@@ -74,13 +77,15 @@ const SideBarLeftAll = [{
     img_url: images.icon.list_icon_sidebar
 }]
 
+export const ListPostContext = createContext();
+
 function Home({ userData }) {
     // const lstPost = useSelector((state) => state.post);
     // console.log(lstPost, "lstPost")
     const dispatch = useDispatch();
+    const refListNewFeed = useRef(null)
     const [listSideBar, setListSidebar] = useState(SideBarLeft);
     const [moreSidebar, setMoreSidebar] = useState(false);
-
     useEffect(() => {
         if (moreSidebar) {
             setListSidebar(SideBarLeftAll)
@@ -95,12 +100,49 @@ function Home({ userData }) {
     }
 
     const fetchApiPost = useCallback(async (dataFetch) => {
-        const res = await dispatch(getListPost(dataFetch));
+        const res = await Get(`/post/get-list?page_count=${dataFetch.page_count}&page_index=${dataFetch.page_index}`, dataFetch, userData?.access_token)
         return res
     }, [])
 
+    const handlePost = async (dataSend) => {
+        const res = await Post(
+            "/post/handle-post", dataSend, userData?.access_token
+        )
 
-    { console.log(userData, "sdsd") }
+        if (checkResponse(res)) {
+            // Thêm bài viết
+            const currentListPost = refListNewFeed.current.getListPost();
+            const functionName = dataSend?.function;
+            if (functionName === "C") {
+                const newList = [
+                    res.returnObj,
+                    ...currentListPost
+                ];
+
+                refListNewFeed.current.setListPost(newList);
+            } else if (functionName === "U") {
+                // Sửa bài viết
+                const updatedPost = res.returnObj;
+                const updatedState = currentListPost.map((post) => {
+                    if (post.post_id === updatedPost.post_id) {
+                        return updatedPost;
+                    }
+                    return post;
+                });
+                refListNewFeed.current.setListPost(updatedState);
+            } else if (functionName === "D") {
+                // Xóa bài viết
+                const deletedList = currentListPost.filter((post) => post.post_id != res.returnObj);
+                refListNewFeed.current.setListPost(deletedList);
+            } else {
+                return null;
+            }
+            return res;
+        }
+        return null;
+    }
+
+
     return (<div className={cx("home")}>
         <SideBar className={cx("left__sidebar")}>
             <ul className={cx("left__sidebar-list")}>
@@ -131,10 +173,10 @@ function Home({ userData }) {
 
         <div className={cx("body")}>
             <div className={cx("body__page")}>
-
-                <CreatePost />
-
-                <ListNewFeed userData={userData} fetchApiPost={fetchApiPost} />
+                <ListPostContext.Provider value={refListNewFeed}>
+                    <CreatePost handlePost={handlePost} />
+                </ListPostContext.Provider>
+                <ListNewFeed handlePost={handlePost} ref={refListNewFeed} userData={userData} fetchApiPost={fetchApiPost} />
             </div>
         </div>
 

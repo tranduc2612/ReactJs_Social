@@ -1,7 +1,7 @@
 import styles from "./ListNewFeed.module.scss"
 import classNames from "classnames/bind";
 import BoxNewFeed from "../BoxNewFeed/BoxNewFeed";
-import { useEffect, useRef, useState, memo, useMemo } from "react";
+import { useEffect, useRef, useState, memo, useMemo, forwardRef, useImperativeHandle } from "react";
 import { Get, Post } from "~/services/base";
 import { useSelector, useDispatch } from 'react-redux'
 
@@ -13,31 +13,39 @@ import Loading from "../Loading/Loading";
 
 const cx = classNames.bind(styles);
 
-function ListNewFeed({ userData, fetchApiPost }) {
+function ListNewFeed({ userData, fetchApiPost, handlePost }, ref) {
     // const lstPost = useSelector((state) => state.post);
     // const dispatch = useDispatch();
     const [loading, setLoading] = useState(false);
     const [lstPost, setLstPost] = useState([]);
-    const [indexPage, setIndexPage] = useState(1);
+    const [indexPage, setIndexPage] = useState(0);
     const [totalPage, setTotalPage] = useState(0);
 
     const dataFetch = {
-        pageIndex: indexPage,
-        pageCount: 10,
+        page_index: indexPage,
+        page_count: 10,
         token: userData?.access_token,
     }
 
-    useEffect(() => {
+    useImperativeHandle(ref, () => (
+        {
+            getListPost() {
+                return lstPost
+            },
+            setListPost(newList) {
+                setLstPost(newList);
+            }
+        }
+    ))
 
+    useEffect(() => {
         setLoading(true);
         fetchApiPost(dataFetch)
             .then((res) => {
-                if (indexPage == totalPage) {
-                    return
-                }
                 setIndexPage(indexPage + 1);
-                if (checkResponse(res.payload)) {
-                    setLstPost([...res.payload.returnObj])
+                if (checkResponse(res) && res.returnObj.length > 0) {
+                    setLstPost([...res.returnObj]);
+                    setTotalPage(res.returnObj[0]?.total_page)
                 }
             }).catch((err) => {
 
@@ -48,25 +56,33 @@ function ListNewFeed({ userData, fetchApiPost }) {
     }, [])
 
     useEffect(() => {
-        if (lstPost.length > 0) {
-            setTotalPage(lstPost[0]?.total_page)
-        }
-    }, [lstPost]);
-
-
-
-
-
-    useEffect(() => {
         const handleScroll = async () => {
             const windowHeight = window.innerHeight;
             const documentHeight = document.documentElement.scrollHeight;
             const scrollTop = window.scrollY;
-            console.log(Math.ceil(windowHeight + scrollTop), documentHeight)
             if (Math.ceil(windowHeight + scrollTop) !== documentHeight || loading) {
                 return;
             }
-            await handleFetchApi()
+            if (indexPage == totalPage) {
+                return
+            }
+            setLoading(true);
+            fetchApiPost(dataFetch)
+                .then((res) => {
+
+                    if (checkResponse(res)) {
+                        if (res.returnObj.length === 0) {
+                            return
+                        }
+                        setIndexPage(indexPage + 1);
+                        setLstPost((prev) => [...prev, ...res.returnObj])
+                    }
+                }).catch((err) => {
+
+                }).finally((res) => {
+                    setLoading(false);
+                })
+
         };
 
         window.addEventListener('scroll', handleScroll);
@@ -76,7 +92,7 @@ function ListNewFeed({ userData, fetchApiPost }) {
     return (<div className={cx("list")}>
         {lstPost && lstPost?.map(post => {
             return (
-                <BoxNewFeed key={post.post_id} data={post} shared={false} userData={userData} />
+                <BoxNewFeed handlePost={handlePost} key={post.post_id} data={post} shared={false} userData={userData} />
             )
         })}
         {loading && <div className="d-flex justify-content-center mt-3">
@@ -88,4 +104,4 @@ function ListNewFeed({ userData, fetchApiPost }) {
     </div>);
 }
 
-export default memo(ListNewFeed);
+export default forwardRef(ListNewFeed);

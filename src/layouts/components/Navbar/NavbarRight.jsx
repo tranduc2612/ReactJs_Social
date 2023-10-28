@@ -10,8 +10,6 @@ import checkResponse from "~/utils/checkResponse";
 import Pusher from "pusher-js";
 import { Get } from "~/services/base";
 import { useSelector } from 'react-redux'
-import Echo from 'laravel-echo';
-import axios from 'axios'
 
 
 const cx = classNames.bind(styles);
@@ -109,8 +107,7 @@ function NavbarRight({ listItem }) {
 
         // window.Echo.private(`private.tra-vh`)
         //     .listen('message', (e) => {
-
-        //     });
+        // });
 
         Get("/notification", {}, userData.access_token)
             .then(res => {
@@ -127,7 +124,7 @@ function NavbarRight({ listItem }) {
                 const channel = pusher.subscribe(`private.${userData.data_user?.username}`);
 
                 // Lắng nghe sự kiện từ kênh
-                channel.bind("message", (data) => {
+                channel.bind("notification", (data) => {
                     const jsonRes = data?.data;
                     if (jsonRes) {
                         const dataRes = JSON.parse(jsonRes)[0];

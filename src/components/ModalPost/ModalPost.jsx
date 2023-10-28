@@ -16,6 +16,8 @@ import { useSelector, useDispatch } from 'react-redux'
 import checkResponse from "~/utils/checkResponse";
 import { createPost, updatePost } from "~/redux/actions/postActions";
 import { BASE_URL_MEDIA } from "~/services/base";
+import { ListPostContext } from "~/pages/home/Index";
+import { useContext } from "react";
 
 const cx = classNames.bind(styles);
 
@@ -36,7 +38,8 @@ const PRIVACY_OPTIONS = [
     },
 ]
 
-function ModalPost({ setModalShow, data, setProgress, progress }) {
+function ModalPost({ setModalShow, data, setProgress, handlePost }) {
+    const refListPost = useContext(ListPostContext)
     const userData = useSelector((state) => state.auth);
     const dispatch = useDispatch();
     const [privacyOptions, setPrivacyOptions] = useState(PRIVACY_OPTIONS);
@@ -200,13 +203,11 @@ function ModalPost({ setModalShow, data, setProgress, progress }) {
                         media: reqUploadFile ? JSON.stringify(reqUploadFile?.returnObj) : (fileImgUpdate.length > 0 ? JSON.stringify({ "file_info": fileImgUpdate }) : null),
                         audience_type: dataPost.privacy,
                         function: "U",
-                        token: userData?.access_token
                     }
-                    console.log(dataSend, "âsa")
-                    const result = await dispatch(updatePost(dataSend))
+                    const res = await handlePost(dataSend)
 
-                    if (checkResponse(result.payload)) {
-                        let dataRes = result.payload.returnObj;
+                    if (checkResponse(res)) {
+                        let dataRes = res.returnObj;
                         if (dataRes?.media_info) {
                             handleUpdateImage(dataRes?.media_info)
                         }
@@ -225,10 +226,9 @@ function ModalPost({ setModalShow, data, setProgress, progress }) {
                         media: reqUploadFile ? JSON.stringify(reqUploadFile?.returnObj) : null,
                         audience_type: dataPost.privacy,
                         function: "C",
-                        token: userData?.access_token
                     }
-                    const result = await dispatch(createPost(dataSend))
-                    if (checkResponse(result.payload)) {
+                    const res = await handlePost(dataSend)
+                    if (res) {
                         toast.success("Tạo bài viết thành công !")
                         setProgress((prev) => prev + 40)
                     }
@@ -297,7 +297,7 @@ function ModalPost({ setModalShow, data, setProgress, progress }) {
                     onClick={handleGetPosCursorContentEditable}
                     onFocus={() => setShowBoxIcon(false)}
                 >
-                    
+
                 </div>
                 {fileImg.length > 0 && <div className={cx("box__image")}>
                     {fileImg.map((img, index) => {

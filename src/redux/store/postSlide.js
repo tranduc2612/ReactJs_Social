@@ -29,7 +29,11 @@ const postSlice = createSlice({
     })
     builder.addCase(createPost.fulfilled,(state,action) =>{
       if(action.payload){
-        return [action.payload?.returnObj, ...state];
+        console.log(state,action,"abcsd")
+        return [
+          action.payload.returnObj,
+          ...state
+        ]
       }
     })
     builder.addCase(updatePost.fulfilled,(state,action) =>{
