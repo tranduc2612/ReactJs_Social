@@ -72,7 +72,7 @@ function InputEditor({ placementTools = "default", className, onChange, initValu
         }
         refInputEditor.current.innerText = "";
         handleSubmitContent(contentEditable)
-        // alert(contentEditable)
+        setContentEditable("")
     }
 
 
