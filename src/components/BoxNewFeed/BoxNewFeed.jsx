@@ -26,12 +26,15 @@ import { BASE_URL_MEDIA, Post } from "~/services/base";
 import LoadingBar from 'react-top-loading-bar';
 import { useEffect } from "react";
 import checkResponse from "~/utils/checkResponse";
+import { createContext } from "react";
 const cx = classNames.bind(styles);
 
 // like color: rgb(32, 120, 244);
 // tym color: rgb(243, 62, 88);
 // thuongthuong,haha,wow,sad, : color: rgb(247, 177, 37);
 // phan no :color: rgb(233, 113, 15);
+
+export const CommentContext = createContext()
 
 function BoxNewFeed({ data, shared, userData, handlePost }) {
     const BASE_STATE_REACT = {
@@ -41,6 +44,7 @@ function BoxNewFeed({ data, shared, userData, handlePost }) {
         img: null
     }
     const refBoxReact = useRef(null);
+    const refBoxDetail = useRef(null);
     const inputEditorCommentRef = useRef(null);
     const [react, setReact] = useState(() => {
         if (data?.current_react_type && REACT_EMOTION[data?.current_react_type]) {
@@ -57,7 +61,8 @@ function BoxNewFeed({ data, shared, userData, handlePost }) {
     const [lstMostReactPost, setLstMostReactPost] = useState([]);
     const [lstImg, setlstImg] = useState([]);
     const [likeCount, setLikeCount] = useState(() => data?.like_count);
-    const [commentCount, setCommentCount] = useState(0);
+    const [commentCount, setCommentCount] = useState(() => data?.comment_count);
+    const [contentComment, setContentComment] = useState("");
 
 
     const INIT_LIST_REACT = useMemo(() => {
@@ -78,6 +83,10 @@ function BoxNewFeed({ data, shared, userData, handlePost }) {
         }
         return arrMostEmotion
     }, [])
+
+    const scrollToBottom = () => {
+        refBoxDetail.current.scrollTop = refBoxDetail.current.scrollHeight;
+    }
 
     useEffect(() => {
         if (data?.media_info) {
@@ -260,8 +269,12 @@ function BoxNewFeed({ data, shared, userData, handlePost }) {
             content,
             post_id: data?.post_id,
         }, userData?.access_token);
-        console.log(createComment)
-        // if(checkResponse(createComment))
+        if (checkResponse(createComment)) {
+            setContentComment({
+                ...createComment.returnObj[0]
+            });
+            setCommentCount(createComment.returnObj[0]?.comment_count);
+        }
     }
 
     const renderFooterDetailPost = () => {
@@ -295,7 +308,7 @@ function BoxNewFeed({ data, shared, userData, handlePost }) {
     const renderModalDetailPost = () => {
         return (
             <Modal show={showDetailPost} onHide={handleClose} centered size={"lg"}>
-                <CustomBox className={cx("detail__post")} header={renderHeaderDetailPost()} footer={renderFooterDetailPost()}>
+                <CustomBox className={cx("detail__post")} header={renderHeaderDetailPost()} footer={renderFooterDetailPost()} ref={refBoxDetail}>
                     <div className={cx("detail__post-body")}>
                         <HeaderPost data={data} userData={userData} showModalEditPost={showModalEditPost} showConfirmBoxDelete={showConfirmBoxDelete} handleOpenConfirmDeleteModal={handleOpenConfirmDeleteModal} handleOpenEditModal={handleOpenEditModal} />
 
@@ -408,7 +421,9 @@ function BoxNewFeed({ data, shared, userData, handlePost }) {
                             </div>
                         </div>
                         {/* Danh sách bình luận */}
-                        <ListComment idPost={data?.post_id} token={userData?.access_token} />
+                        <CommentContext.Provider value={{ setCommentCount, commentCount }}>
+                            <ListComment idPost={data?.post_id} token={userData?.access_token} content={contentComment} userData={userData} scrollToBottom={scrollToBottom} />
+                        </CommentContext.Provider>
                     </div>
                 </CustomBox>
             </Modal>
