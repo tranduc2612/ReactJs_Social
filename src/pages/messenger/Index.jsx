@@ -17,6 +17,7 @@ import { Get, Post } from "~/services/base";
 import checkResponse from "~/utils/checkResponse";
 import getParamUrl from "~/utils/getParamUrl";
 import { useNavigate } from "react-router-dom";
+import Pusher from "pusher-js";
 
 const cx = classNames.bind(styles);
 
@@ -26,7 +27,7 @@ const BASE_BTN = {
 }
 
 function Chat({ userData }) {
-    const {username, access_token} = userData;
+  
     const [switchBox, setSwitchBox] = useState(false);
     const [valueInputChat, setValueInputChat] = useState("");
     const [listChatSessions, setListChatSessions] = useState([]);
@@ -48,7 +49,7 @@ function Chat({ userData }) {
         Get("/message", {}, userData?.access_token)
         .then((res) => {
             if(checkResponse(res)) {
-                console.log(res);
+                console.log('é',res);
                 setListChatSessions(res.returnObj);
             }
         }) 
@@ -62,8 +63,31 @@ function Chat({ userData }) {
         .then((res) => {
             if(checkResponse(res)) {
                 setLstMessage(res.returnObj.messages);
-                setCurrentInfo(res.returnObj.account);
+                setCurrentInfo(res.returnObj.accounts[0]);
             }
+
+            const pusher = new Pusher('83b6c124825dc255f114', {
+                cluster: 'ap1'
+            })
+
+            // Đăng ký kênh bạn muốn lắng nghe
+            const channel = pusher.subscribe(`chat.${curentChatId}.${userData.data_user?.username}`);
+
+            console.log('curr', curentChatId, userData.data_user?.username);
+            // Lắng nghe sự kiện từ kênh
+            channel.bind("messageNotification", (data) => {
+                const jsonRes = data?.data;
+                console.log(typeof jsonRes);
+
+                if (jsonRes) {
+                    const dataRes = JSON.parse(jsonRes);
+                    console.log('appen', dataRes);
+                    setLstMessage((prev) => [...prev, dataRes]);
+                }
+
+
+                console.log("Received a new post event:", data);
+            });
         }) 
 
         // gọi khi render ra lst chat scroll đến cuối cùng
@@ -181,8 +205,9 @@ function Chat({ userData }) {
         .then((res) => {
             if(checkResponse(res)) {
                 let mes = res.returnObj
-                setLstMessage([...lstMessage, mes])
+                setLstMessage((prev) => [...prev, mes])
             }
+
         }) 
 
         setValueInputChat("")
@@ -267,7 +292,7 @@ function Chat({ userData }) {
                                                     key={mess} 
                                                     // flag={true} 
                                                     content={mess.message}
-                                                    type={mess.username == username ? "partner" : null} />
+                                                    type={mess.username != userData.data_user?.username ? "partner" : null} />
                                             </div>
                                         )
                                     })}
