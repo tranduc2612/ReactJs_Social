@@ -30,6 +30,11 @@ const privateRouter = [
     layout: DefaultLayout,
   },
   {
+    path: "/messenger/:id",
+    page: Messenger,
+    layout: DefaultLayout,
+  },
+  {
     path: "/messenger",
     page: Messenger,
     layout: DefaultLayout,
