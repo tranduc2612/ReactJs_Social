@@ -14,7 +14,7 @@ function ChatItemInfo(props) {
         </div>
         <div className={cx("body")}>
             <div className={cx("name")}>
-                <span>{data.account.fullname}</span>
+                <span>{data.account[0].fullname}</span>
             </div>
             <div className={cx("last__message")}>
                 <span className={cx("message")}>{data.message?.message ?? "Hãy gửi lời chào"}</span>
