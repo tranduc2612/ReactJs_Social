@@ -2,10 +2,10 @@ import classNames from "classnames/bind";
 import styles from "./TimeLine.module.scss";
 const cx = classNames.bind(styles);
 
-function TimeLine() {
+function TimeLine({time}) {
     return ( 
         <div className={cx("line")}>
-            <span className={cx("time")}>9:30</span>
+            <span className={cx("time")}>{time}</span>
         </div> 
     );
 }

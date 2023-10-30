@@ -5,7 +5,7 @@ const cx = classNames.bind(styles);
 
 
 
-function MessengerContent({type,flag}) {
+function MessengerContent({type,flag, content}) {
     return ( <>
         <div className={cx("mess__box",{
             [type]: true
@@ -14,7 +14,7 @@ function MessengerContent({type,flag}) {
                 [type]: true
             })}>
                 <span>
-                    có cậu nào làm cái này nhánh và cận r confirm chor confirm r confirm r confirm r confirm  tớ kết quả với để tớ lấy output đập bọ    
+                    {content}
                 </span>
             </div>
         </div>
