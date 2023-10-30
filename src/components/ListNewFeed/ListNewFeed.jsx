@@ -48,7 +48,7 @@ function ListNewFeed({ userData, fetchApiPost, handlePost }, ref) {
                     setTotalPage(res.returnObj[0]?.total_page)
                 }
             }).catch((err) => {
-
+                console.log(err)
             }).finally((res) => {
                 setLoading(false);
             })

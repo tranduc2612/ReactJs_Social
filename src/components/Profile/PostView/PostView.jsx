@@ -5,9 +5,10 @@ import images from "~/assets/images/index";
 import CreatePost from "~/components/CreatePost/CreatePost";
 import ListNewFeed from "~/components/ListNewFeed/ListNewFeed";
 import { useEffect, useRef, useState } from "react";
-import { Get } from "~/services/base";
+import { Get, Post } from "~/services/base";
 import getParamUrl from "~/utils/getParamUrl";
 import checkResponse from "~/utils/checkResponse";
+import { useCallback } from "react";
 
 const cx = classNames.bind(styles);
 
@@ -17,6 +18,7 @@ function PostView({ userData }) {
     }
     const [indexPage, setIndexPage] = useState(1);
     const [totalPage, setTotalPage] = useState(0);
+    const refListProfileFeed = useRef(null)
     const [lstPostProfile, setLstPostProfile] = useState([]);
 
     const [userProfile, setUserProfile] = useState(userData?.data_user || {});
@@ -49,21 +51,48 @@ function PostView({ userData }) {
         }
     }, [lstPostProfile]);
 
-    const fetchApiPost = async () => {
-        try {
-            const username = getParamUrl();
-            if (indexPage == totalPage) {
-                return
-            }
-            const getListResult = await Get(`/post/get-list-profile?page_index=${indexPage}&page_count=10&profile_username=${username}`, {}, userData?.access_token);
-            if (checkResponse(getListResult)) {
-                setLstPostProfile(getListResult.returnObj)
-            }
-        } catch (error) {
+    const handlePost = async (dataSend) => {
+        const res = await Post(
+            "/post/handle-post", dataSend, userData?.access_token
+        )
 
+        if (checkResponse(res)) {
+            // Thêm bài viết
+            const currentListPost = refListProfileFeed.current.getListPost();
+            const functionName = dataSend?.function;
+            if (functionName === "C") {
+                const newList = [
+                    res.returnObj,
+                    ...currentListPost
+                ];
+
+                refListProfileFeed.current.setListPost(newList);
+            } else if (functionName === "U") {
+                // Sửa bài viết
+                const updatedPost = res.returnObj;
+                const updatedState = currentListPost.map((post) => {
+                    if (post.post_id === updatedPost.post_id) {
+                        return updatedPost;
+                    }
+                    return post;
+                });
+                refListProfileFeed.current.setListPost(updatedState);
+            } else if (functionName === "D") {
+                // Xóa bài viết
+                const deletedList = currentListPost.filter((post) => post.post_id != res.returnObj);
+                refListProfileFeed.current.setListPost(deletedList);
+            } else {
+                return null;
+            }
+            return res;
         }
-        setIndexPage(indexPage + 1);
-        return fetchApiPost
+        return null;
+    }
+
+    const fetchApiPost = async (dataFetch) => {
+        const res = await Get(`/post/get-list-profile?page_index=${dataFetch.page_index}&page_count=${dataFetch.page_count}&profile_username=${userData.data_user?.username}`, dataFetch, userData?.access_token);
+
+        return res
     }
 
     return (
@@ -149,7 +178,7 @@ function PostView({ userData }) {
             <div className={cx("main_content")}>
                 <CreatePost />
 
-                <ListNewFeed userData={userData} lstPost={lstPostProfile} fetchApiPost={fetchApiPost} />
+                <ListNewFeed userData={userData} fetchApiPost={fetchApiPost} ref={refListProfileFeed} handlePost={handlePost} />
             </div>
 
         </div>
