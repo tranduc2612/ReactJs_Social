@@ -12,7 +12,7 @@ import { useCallback } from "react";
 
 const cx = classNames.bind(styles);
 
-function PostView({ userData }) {
+function PostView({ userData, userProfileData }) {
     const styled = {
         position: "sticky",
     }
@@ -21,7 +21,7 @@ function PostView({ userData }) {
     const refListProfileFeed = useRef(null)
     const [lstPostProfile, setLstPostProfile] = useState([]);
 
-    const [userProfile, setUserProfile] = useState(userData?.data_user || {});
+    // const [userProfile, setUserProfile] = useState(userData?.data_user || {});
 
     const refSidebar = useRef(null)
 
@@ -90,7 +90,7 @@ function PostView({ userData }) {
     }
 
     const fetchApiPost = async (dataFetch) => {
-        const res = await Get(`/post/get-list-profile?page_index=${dataFetch.page_index}&page_count=${dataFetch.page_count}&profile_username=${userData.data_user?.username}`, dataFetch, userData?.access_token);
+        const res = await Get(`/post/get-list-profile?page_index=${dataFetch.page_index}&page_count=${dataFetch.page_count}&profile_username=${userProfileData?.username}`, dataFetch, userData?.access_token);
 
         return res
     }
@@ -104,37 +104,37 @@ function PostView({ userData }) {
                             <h2>Giới thiệu</h2>
                         </div>
                         {/* about me */}
-                        {!userProfile.aboutMe ? null :
+                        {!userProfileData.about_me ? null :
                             <div className={cx("aboutme")}>
-                                {userProfile?.aboutMe}
+                                {userProfileData?.about_me}
                             </div>
                         }
 
                         {/* info ... */}
                         <div className={cx("info_container")}>
-                            <div className={cx("info_item")}>
+                            {/* <div className={cx("info_item")}>
                                 <div className={cx("icon")}>
                                     <img src="https://static.xx.fbcdn.net/rsrc.php/v3/yG/r/H804hWf2rBh.png" alt="" />
                                 </div>
                                 <div className={cx("content")}>
                                     Học tại <span className={cx("content_bold")}>THPT Hưng yên </span>
                                 </div>
-                            </div>
+                            </div> */}
                             <div className={cx("info_item")}>
                                 <div className={cx("icon")}>
                                     <img src={images.icon.address_icon} alt="" />
                                 </div>
                                 <div className={cx("content")}>
-                                    Đến từ <span className={cx("content_bold")}>{userProfile?.address}</span>
+                                    Đến từ <span className={cx("content_bold")}>{userProfileData?.address}</span>
                                 </div>
                             </div>
 
                             <div className={cx("info_item")}>
                                 <div className={cx("icon")}>
-                                    {userProfile?.gender == "MALE" ? <img src={images.icon.gender_male_icon} alt="" /> : <img src={images.icon.gender_female_icon} alt="" />}
+                                    {userProfileData?.gender == "1" ? <img src={images.icon.gender_male_icon} alt="" /> : <img src={images.icon.gender_female_icon} alt="" />}
                                 </div>
                                 <div className={cx("content")}>
-                                    {userData?.gender == "MALE" ? "Nam" : "Nữ"}
+                                    {userProfileData?.gender == "1" ? "Nam" : "Nữ"}
                                 </div>
                             </div>
                             <div className={cx("info_item")}>
@@ -142,7 +142,7 @@ function PostView({ userData }) {
                                     <img src={images.icon.mail_icon} alt="" />
                                 </div>
                                 <div className={cx("content")}>
-                                    {userProfile?.email}
+                                    {userProfileData?.email}
                                 </div>
                             </div>
                         </div>
@@ -152,14 +152,14 @@ function PostView({ userData }) {
                         <div className={cx("title")}>
                             <div>
                                 <h2>Bạn bè</h2>
-                                <div className={cx("info")}>50 bạn bè</div>
+                                <div className={cx("info")}>{userProfileData.number_friend} bạn bè</div>
                             </div>
                             <a className={cx("link")}>Xem tất cả bạn bè</a>
                         </div>
 
                         {/* info ... */}
                         <div className={cx("friend_container", "row")}>
-                            {userProfile?.listFriends && userProfile?.listFriends.map((friend) => {
+                            {userProfileData?.listFriends && userProfileData?.listFriends.map((friend) => {
                                 return (
                                     <div key={friend.name} className={cx("friend_item", "col-4")}>
                                         <a href={friend.link}>

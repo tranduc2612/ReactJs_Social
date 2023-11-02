@@ -35,7 +35,7 @@ const LIST_NAV_FRIEND = [
     }
 ]
 
-function FriendView({user}) {
+function FriendView({ userData, userProfileData }) {
     const [content, setContent] = useState(LIST_NAV_FRIEND[0]);
     
     return (
@@ -62,7 +62,7 @@ function FriendView({user}) {
                     </div>
                 </div>
                 <div className={cx("friendview", "row")}>
-                    {user.listFriends.map((friend) => {
+                    {userProfileData?.listFriends?.map((friend) => {
                         return (
                             <div key={friend.name} className={cx("friend_item", "col-6")}>
                                 <div className={cx("friend_box")}>

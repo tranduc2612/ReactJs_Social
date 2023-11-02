@@ -49,6 +49,8 @@ import wow from "./icon/wow.svg"
 import buon from "./icon/buon.svg"
 import phanno from "./icon/tucgian.svg"
 import tools__icon from "./icon/tool-icon.png"
+import unfriend from "./icon/unfriend.png"
+import add_friend from "./icon/add_friend.png"
 
 // ảnh demo sau xóa
 import avatar_demo from "./icon/317950785_3423963351171814_2305823669101113253_n.jpg"
@@ -110,7 +112,9 @@ const images = {
     clock_icon,
     address_icon,
     cake_icon,
-    list_icon_5
+    list_icon_5,
+    unfriend,
+    add_friend
   }
 };
 

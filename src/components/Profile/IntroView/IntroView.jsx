@@ -8,18 +8,48 @@ import { Formik } from 'formik';
 import Form from 'react-bootstrap/Form';
 import * as yup from 'yup';
 import InputForm from "~/components/InputForm/InputForm";
+import { LIST_DAY, LIST_MONTH, LIST_YEAR } from "~/utils/constant";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { Post } from "~/services/base";
+import checkResponse from "~/utils/checkResponse";
 
 const cx = classNames.bind(styles);
 
-
-function IntroView({user}) {
+function IntroView({ userData, userProfileData }) {
     
 
     const overView = () => {
         const [isEdit, setIsEdit] = useState(false);
 
         const handleSubmit = (values, formikHelpers) => {
-            console.log(values);
+            console.log('valuesssss',values);
+
+            Post("/action/update-profile", 
+            {
+                fullname: values.fullname,
+                location: values.location,
+                phone: values.phone,
+                about_me: values.about_me,
+                // gender: values.gender,
+                // day_of_birth: new Date(values.day, values.month, values.year)
+            }, 
+            userData?.access_token)
+            .then((res) => {
+                console.log('xx', checkResponse(res));
+                if(checkResponse(res)) {
+                    console.log('update', res)
+                    let chat_id = res?.returnObj;
+                    setChatId(chat_id);
+                    toast.success('Cập nhật thông tin thành công');
+                }
+                else  toast.error('Cập nhật thất bại');
+            })
+            .catch((err) => {
+                console.log(err);
+                toast.error('Cập nhật thất bại');
+            })
+
             setIsEdit(false)
         }
 
@@ -27,14 +57,19 @@ function IntroView({user}) {
         //     email: yup.string().required(),
         //     password: yup.string().required(),
         // });
-
+        
         return (
         <div className={cx("overview")}>
-            {isEdit ? (
+            {isEdit && userData.data_user.username == userProfileData?.username ? (
                 <div className={cx("edit")}>
                     
                     <Formik
-                        initialValues={user} 
+                        initialValues={{
+                            ...userProfileData,
+                            day: userProfileData == null ? '' : new Date(userProfileData?.day_of_birth).getDate(),
+                            month: userProfileData == null ? '' : new Date(userProfileData?.day_of_birth).getMonth() + 1,
+                            yeah: userProfileData == null ? '' : new Date(userProfileData?.day_of_birth).getFullYear(),
+                        }}
                         onSubmit={(values, formikHelpers) => handleSubmit(values, formikHelpers)}
                         // validationSchema = {schema}
                     >
@@ -51,12 +86,12 @@ function IntroView({user}) {
                                 <div className={cx("input_container")}>
                                     <InputForm
                                         type = "text"
-                                        name = "aboutMe"
-                                        value = {values.aboutMe}
+                                        name = "about_me"
+                                        value = {values.about_me}
                                         onChange = {handleChange}
                                         component = "Control"
-                                        isInvalid={touched.aboutMe && !!errors.aboutMe}
-                                        errorMsg = {errors.aboutMe}
+                                        isInvalid={touched.about_me && !!errors.about_me}
+                                        errorMsg = {errors.about_me}
                                         placeholder = "Nhập mô tả về bạn"
                                     />
                                 </div>
@@ -64,12 +99,12 @@ function IntroView({user}) {
                                 <div className={cx("title_item")}>Địa chỉ</div>
                                 <div className={cx("input_container")}>
                                     <InputForm 
-                                        name = "address"
-                                        value = {values.address}
+                                        name = "location"
+                                        value = {values.location}
                                         onChange = {handleChange}
                                         component = "Control"
-                                        isInvalid={touched.address && !!errors.address}
-                                        errorMsg = {errors.address}
+                                        isInvalid={touched.location && !!errors.location}
+                                        errorMsg = {errors.location}
                                         placeholder = "Nhập địa chỉ"
                                     />
                                 </div>
@@ -86,9 +121,9 @@ function IntroView({user}) {
                                             errorMsg = {errors.day}
                                             size="small"
                                         >
-                                            <option value="1">1</option>
-                                            <option value="2">2</option>
-                                            <option value="3">3</option>
+                                            {LIST_DAY.map((item) => (
+                                                <option key={item.value} value={item.value}>{item.label}</option>
+                                            ))}
                                         </InputForm>
                                     </div>
                                     <div className="col lg-4">
@@ -101,9 +136,9 @@ function IntroView({user}) {
                                             errorMsg = {errors.month}
                                             size="small"
                                         >
-                                            <option value="1">Tháng 1</option>
-                                            <option value="2">Tháng 2</option>
-                                            <option value="3">Tháng 3</option>
+                                            {LIST_MONTH.map((item) => (
+                                                <option key={item.value} value={item.value}>{item.label}</option>
+                                            ))}
                                         </InputForm>
                                     </div>
                                     <div className="col lg-4">
@@ -116,9 +151,9 @@ function IntroView({user}) {
                                             errorMsg = {errors.year}
                                             size="small"
                                         >
-                                            <option value="1">2021</option>
-                                            <option value="2">2022</option>
-                                            <option value="3">2023</option>
+                                            {LIST_YEAR.map((item) => (
+                                                <option key={item.value} value={item.value}>{item.label}</option>
+                                            ))}
                                         </InputForm>
                                     </div>
                                 </div>
@@ -133,6 +168,7 @@ function IntroView({user}) {
                                             component = "Check"
                                             id = "female"
                                             label = "Nữ"
+                                            // checked = {values.gender == '0'}
                                             feedback="You must agree before submitting."
                                             feedbackType="invalid"
                                         />
@@ -145,6 +181,7 @@ function IntroView({user}) {
                                             component = "Check"
                                             id = "male"
                                             label = "Nam"
+                                            // checked = {values.gender == '1'}
                                         />
                                     </div>
                                     <div className="col lg-4">
@@ -155,6 +192,7 @@ function IntroView({user}) {
                                         name = "gender"
                                         component = "Check"
                                         label = "Tùy chỉnh"
+                                        // checked = {values.gender == '2'}
                                     />
                                 </div>
                                 <div className={cx("row")}>
@@ -183,6 +221,7 @@ function IntroView({user}) {
                                                 isInvalid={touched.email && !!errors.email}
                                                 errorMsg = {errors.email}
                                                 placeholder = "Nhập email"
+                                                disabled
                                             />
                                         </div>
                                     </div>
@@ -197,17 +236,19 @@ function IntroView({user}) {
             ) : (
                 <div className={cx("view")}>
                     {/* Button edit */}
-                    <div className={cx("btn_topright")}>
-                        <Button type="button" className={cx("update")} icon={images.icon.pen_icon} size={"text_icon"} onClick={() => {setIsEdit(true)}} >
-                            Chỉnh sửa
-                        </Button>
-                    </div>
+                    {userData.data_user.username != userProfileData.username ? null : 
+                        <div className={cx("btn_topright")}>
+                            <Button type="button" className={cx("update")} icon={images.icon.pen_icon} size={"text_icon"} onClick={() => {setIsEdit(true)}} >
+                                Chỉnh sửa
+                            </Button>
+                        </div>
+                    }
                     
                     {/* about me */}
                     <div className={cx("title_item")}>Mô tả</div>
-                    {!user.aboutMe ? null : 
+                    {!userProfileData.about_me ? null : 
                         <div className={cx("aboutme")}>
-                            {user.aboutMe}
+                            {userProfileData.about_me}
                         </div>
                     }
                     <div className={cx("title_item")}>Tổng quan</div>
@@ -217,16 +258,16 @@ function IntroView({user}) {
                             <img src={images.icon.address_icon} alt="" />
                         </div>
                         <div className={cx("content")}>
-                            Đến từ <span className={cx("content_bold")}>{user.address}</span>
+                            Đến từ <span className={cx("content_bold")}>{userProfileData.location}</span>
                         </div>
                     </div>
                     {/* Giới tính */}
                     <div className={cx("info_item")}>
                         <div className={cx("icon")}>
-                            {user.gender == "MALE" ? <img src={images.icon.gender_male_icon} alt="" /> : <img src={images.icon.gender_female_icon} alt="" />}
+                            {userProfileData.gender == "1" ? <img src={images.icon.gender_male_icon} alt="" /> : <img src={images.icon.gender_female_icon} alt="" />}
                         </div>
                         <div className={cx("content")}>
-                            {user.gender == "MALE" ? "Nam" : "Nữ"}
+                            {userProfileData.gender == "1" ? "Nam" : "Nữ"}
                         </div>
                     </div>
                     {/* Ngày tạo tài khoản */}
@@ -235,7 +276,7 @@ function IntroView({user}) {
                             <img src={images.icon.clock_icon} alt="" />
                         </div>
                         <div className={cx("content")}>
-                            Tham gia từ 5/2016
+                            Tham gia từ {(new Date(userProfileData?.created_at)).getMonth() + 1 + '/' + (new Date(userProfileData?.created_at)).getFullYear()}
                         </div>
                     </div>
                     {/* Ngày sinh */}
@@ -244,7 +285,7 @@ function IntroView({user}) {
                             <img src={images.icon.cake_icon} alt="" />
                         </div>
                         <div className={cx("content")}>
-                            Sinh ngày 05/10/2002
+                            Sinh ngày {(new Date(userProfileData?.day_of_birth)).getDate() + '/' + ((new Date(userProfileData?.day_of_birth)).getMonth() + 1) + '/' + (new Date(userProfileData?.day_of_birth)).getFullYear()}
                         </div>
                     </div>
                     <div className={cx("title_item")}>Thông tin liên hệ</div>
@@ -253,7 +294,7 @@ function IntroView({user}) {
                             <img src={images.icon.phone_icon} alt="" />
                         </div>
                         <div className={cx("content")}>
-                            {user.phone}
+                            {userProfileData?.phone}
                         </div>
                     </div>
                     <div className={cx("info_item")}>
@@ -261,7 +302,7 @@ function IntroView({user}) {
                             <img src={images.icon.mail_icon} alt="" />
                         </div>
                         <div className={cx("content")}>
-                            {user.email}
+                            {userProfileData?.email}
                         </div>
                     </div>
                 </div>
