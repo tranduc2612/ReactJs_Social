@@ -5,14 +5,15 @@ import images from "~/assets/images/index";
 import CreatePost from "~/components/CreatePost/CreatePost";
 import ListNewFeed from "~/components/ListNewFeed/ListNewFeed";
 import { useEffect, useRef, useState } from "react";
-import { Get, Post } from "~/services/base";
+import { Get, Post, BASE_URL_MEDIA } from "~/services/base";
 import getParamUrl from "~/utils/getParamUrl";
 import checkResponse from "~/utils/checkResponse";
 import { useCallback } from "react";
+import { useNavigate } from 'react-router-dom';
 
 const cx = classNames.bind(styles);
 
-function PostView({ userData }) {
+function PostView({ userData, userProfileData, handleUpdateInfo = null }) {
     const styled = {
         position: "sticky",
     }
@@ -21,9 +22,10 @@ function PostView({ userData }) {
     const refListProfileFeed = useRef(null)
     const [lstPostProfile, setLstPostProfile] = useState([]);
 
-    const [userProfile, setUserProfile] = useState(userData?.data_user || {});
+    // const [userProfile, setUserProfile] = useState(userData?.data_user || {});
 
-    const refSidebar = useRef(null)
+    const refSidebar = useRef(null);
+    const navigate = useNavigate();
 
     const handleMouseMove = (event) => {
         console.log(event)
@@ -90,7 +92,7 @@ function PostView({ userData }) {
     }
 
     const fetchApiPost = async (dataFetch) => {
-        const res = await Get(`/post/get-list-profile?page_index=${dataFetch.page_index}&page_count=${dataFetch.page_count}&profile_username=${userData.data_user?.username}`, dataFetch, userData?.access_token);
+        const res = await Get(`/post/get-list-profile?page_index=${dataFetch.page_index}&page_count=${dataFetch.page_count}&profile_username=${userProfileData?.username}`, dataFetch, userData?.access_token);
 
         return res
     }
@@ -104,37 +106,46 @@ function PostView({ userData }) {
                             <h2>Giới thiệu</h2>
                         </div>
                         {/* about me */}
-                        {!userProfile.aboutMe ? null :
+                        {!userProfileData.about_me ? null :
                             <div className={cx("aboutme")}>
-                                {userProfile?.aboutMe}
+                                {userProfileData?.about_me}
                             </div>
                         }
 
                         {/* info ... */}
                         <div className={cx("info_container")}>
-                            <div className={cx("info_item")}>
+                            {/* <div className={cx("info_item")}>
                                 <div className={cx("icon")}>
                                     <img src="https://static.xx.fbcdn.net/rsrc.php/v3/yG/r/H804hWf2rBh.png" alt="" />
                                 </div>
                                 <div className={cx("content")}>
                                     Học tại <span className={cx("content_bold")}>THPT Hưng yên </span>
                                 </div>
-                            </div>
+                            </div> */}
                             <div className={cx("info_item")}>
                                 <div className={cx("icon")}>
                                     <img src={images.icon.address_icon} alt="" />
                                 </div>
                                 <div className={cx("content")}>
-                                    Đến từ <span className={cx("content_bold")}>{userProfile?.address}</span>
+                                    Đến từ <span className={cx("content_bold")}>{userProfileData?.location}</span>
                                 </div>
                             </div>
 
                             <div className={cx("info_item")}>
                                 <div className={cx("icon")}>
-                                    {userProfile?.gender == "MALE" ? <img src={images.icon.gender_male_icon} alt="" /> : <img src={images.icon.gender_female_icon} alt="" />}
+                                    {userProfileData?.gender == "1" ? <img src={images.icon.gender_male_icon} alt="" /> : <img src={images.icon.gender_female_icon} alt="" />}
                                 </div>
                                 <div className={cx("content")}>
-                                    {userData?.gender == "MALE" ? "Nam" : "Nữ"}
+                                    {userProfileData?.gender == "1" ? "Nam" : "Nữ"}
+                                </div>
+                            </div>
+                            {/* Ngày sinh */}
+                            <div className={cx("info_item")}>
+                                <div className={cx("icon")}>
+                                    <img src={images.icon.cake_icon} alt="" />
+                                </div>
+                                <div className={cx("content")}>
+                                    Sinh ngày {(new Date(userProfileData?.day_of_birth)).getDate() + '/' + ((new Date(userProfileData?.day_of_birth)).getMonth() + 1) + '/' + (new Date(userProfileData?.day_of_birth)).getFullYear()}
                                 </div>
                             </div>
                             <div className={cx("info_item")}>
@@ -142,7 +153,7 @@ function PostView({ userData }) {
                                     <img src={images.icon.mail_icon} alt="" />
                                 </div>
                                 <div className={cx("content")}>
-                                    {userProfile?.email}
+                                    {userProfileData?.email}
                                 </div>
                             </div>
                         </div>
@@ -152,19 +163,20 @@ function PostView({ userData }) {
                         <div className={cx("title")}>
                             <div>
                                 <h2>Bạn bè</h2>
-                                <div className={cx("info")}>50 bạn bè</div>
+                                <div className={cx("info")}>{userProfileData.number_friend} bạn bè</div>
                             </div>
                             <a className={cx("link")}>Xem tất cả bạn bè</a>
                         </div>
 
                         {/* info ... */}
                         <div className={cx("friend_container", "row")}>
-                            {userProfile?.listFriends && userProfile?.listFriends.map((friend) => {
+                            {userProfileData?.listFriend && userProfileData?.listFriend.map((friend) => {
                                 return (
-                                    <div key={friend.name} className={cx("friend_item", "col-4")}>
-                                        <a href={friend.link}>
-                                            <img className={cx("avatar")} src={friend.avatar} alt="" />
-                                            <div className={cx("name")}>{friend.name}</div>
+                                    <div key={friend.username} className={cx("friend_item", "col-4")}>
+                                        {/* <a onClick={() => navigate(`/profile/${friend.username}`)}> */}
+                                        <a href={`/profile/${friend.username}`}> 
+                                            <img className={cx("avatar")} src={`${BASE_URL_MEDIA}/${friend.avatar}`} alt="" />
+                                            <div className={cx("name")}>{friend.fullname}</div>
                                         </a>
                                     </div>
                                 )
