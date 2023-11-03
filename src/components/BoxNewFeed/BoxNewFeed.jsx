@@ -287,7 +287,7 @@ function BoxNewFeed({ data, shared, userData, handlePost }) {
     const renderFooterDetailPost = () => {
         return (
             <div className={cx("detail__post-footer")}>
-                <Button className={cx("avatar")} icon={images.icon.avatar_demo} shape="circle" full_icon={true} />
+                <Button className={cx("avatar")} icon={BASE_URL_MEDIA + userData.data_user?.avatar} shape="circle" full_icon={true} />
                 <InputEditor ref={inputEditorCommentRef} placementTools="bottom" className={cx("input__comment")} handleSubmitContent={handleSubmitComment} />
             </div>
         )
@@ -300,7 +300,7 @@ function BoxNewFeed({ data, shared, userData, handlePost }) {
                     <div className={cx("left__box")}>
 
                     </div>
-                    <h2>Bài viết của {data?.username}</h2>
+                    <h2>Bài viết của {data?.fullname}</h2>
                     <div className={cx("right__box")}>
                         <Button icon={images.icon.cross_icon} onClick={handleClose} shape="circle" />
                     </div>

@@ -8,7 +8,7 @@ import Modal from 'react-bootstrap/Modal';
 import ButtonBootstrap from 'react-bootstrap/Button';
 import { formatDateType2 } from "~/utils/format";
 import ModalConfirmComment from "~/components/ModalConfirm/ModalConfirmComment";
-import { Post } from "~/services/base";
+import { BASE_URL_MEDIA, Post } from "~/services/base";
 import checkResponse from "~/utils/checkResponse";
 import { useContext } from "react";
 import { CommentContext } from "../../BoxNewFeed";
@@ -60,7 +60,7 @@ function CommentItem({ data, userData, listComment, setListComment }) {
 
     return (<div className={cx("item")}>
         <div className={cx("avatar")}>
-            <Button icon={images.icon.avatar_demo} full_icon={true} shape={"circle"} />
+            <Button icon={BASE_URL_MEDIA + data?.avatar} full_icon={true} shape={"circle"} />
         </div>
         <div className={cx("wrapper", {
             active: showEditComment
