@@ -60,7 +60,7 @@ function App() {
                 key={index}
                 path={route.path}
                 element={
-                  userData.access_token && userData.data_user && route.auth ?
+                  userData.access_token && userData.data_user && route.auth && (route.path == "/login" || route.path == "/register") ?
                     <Navigate to="/" />
                     :
                     <Layout>
