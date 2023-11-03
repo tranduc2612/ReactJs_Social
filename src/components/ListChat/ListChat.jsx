@@ -19,7 +19,7 @@ const BASE_BTN = {
     box_group: false
 }
 
-function ListChat({ userData, curentChatId }) {
+function ListChat({ userData, curentChatId, handleSortChatSession }) {
   
     const [valueInputChat, setValueInputChat] = useState("");
     const inputEditRef = useRef(null)
@@ -151,6 +151,7 @@ function ListChat({ userData, curentChatId }) {
             if(checkResponse(res)) {
                 let mes = res.returnObj
                 setLstMessage((prev) => [...prev, mes])
+                handleSortChatSession(curentChatId, valueInputChat);
             }
 
         }) 
