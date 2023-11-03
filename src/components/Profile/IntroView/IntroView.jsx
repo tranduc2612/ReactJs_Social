@@ -16,7 +16,7 @@ import checkResponse from "~/utils/checkResponse";
 
 const cx = classNames.bind(styles);
 
-function IntroView({ userData, userProfileData }) {
+function IntroView({ userData, userProfileData, handleUpdateInfo }) {
     
 
     const overView = () => {
@@ -24,33 +24,31 @@ function IntroView({ userData, userProfileData }) {
 
         const handleSubmit = (values, formikHelpers) => {
             console.log('valuesssss',values);
-
+            let birth = new Date(values.year, values.month - 1, values.day);
             Post("/action/update-profile", 
             {
-                fullname: values.fullname,
                 location: values.location,
                 phone: values.phone,
                 about_me: values.about_me,
-                // gender: values.gender,
-                // day_of_birth: new Date(values.day, values.month, values.year)
+                gender: values.gender,
+                day_of_birth: birth
             }, 
             userData?.access_token)
             .then((res) => {
-                console.log('xx', checkResponse(res));
                 if(checkResponse(res)) {
-                    console.log('update', res)
-                    let chat_id = res?.returnObj;
-                    setChatId(chat_id);
+                    let info = res?.returnObj?.[0];
                     toast.success('Cập nhật thông tin thành công');
+                    handleUpdateInfo(info);
                 }
-                else  toast.error('Cập nhật thất bại');
+                else toast.error('Cập nhật thất bại');
             })
             .catch((err) => {
                 console.log(err);
                 toast.error('Cập nhật thất bại');
             })
-
-            setIsEdit(false)
+            .finally(() => {
+                setIsEdit(false);
+            })
         }
 
         // const schema = yup.object().shape({
@@ -68,7 +66,7 @@ function IntroView({ userData, userProfileData }) {
                             ...userProfileData,
                             day: userProfileData == null ? '' : new Date(userProfileData?.day_of_birth).getDate(),
                             month: userProfileData == null ? '' : new Date(userProfileData?.day_of_birth).getMonth() + 1,
-                            yeah: userProfileData == null ? '' : new Date(userProfileData?.day_of_birth).getFullYear(),
+                            year: userProfileData == null ? '' : new Date(userProfileData?.day_of_birth).getFullYear(),
                         }}
                         onSubmit={(values, formikHelpers) => handleSubmit(values, formikHelpers)}
                         // validationSchema = {schema}
@@ -314,6 +312,7 @@ function IntroView({ userData, userProfileData }) {
     const settingView =() => {
         const handleSubmit = (values, formikHelpers) => {
             console.log(values);
+
         }
 
         return (

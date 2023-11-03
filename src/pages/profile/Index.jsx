@@ -57,6 +57,7 @@ function Profile({ userData }) {
     
     const [content, setContent] = useState(LIST_NAVBAR[0]);
     const [userProfile, setUserProfile] = useState({});
+    const [listFriends, setListFriends] = useState([]);
     const [chatId, setChatId] = useState('undefined');
     const navigate = useNavigate();
 
@@ -76,8 +77,13 @@ function Profile({ userData }) {
         .then((res) => {
             if(checkResponse(res)) {
                 console.log('react',res)
-                let profileUserData = res?.returnObj?.[0];
-                setUserProfile(profileUserData);
+                let profileUserData = res?.returnObj?.profile?.[0];
+                let listFriend = res?.returnObj?.friends;
+                setUserProfile( {
+                    ...profileUserData,
+                    listFriend
+                });
+                setListFriends(listFriend);
             }
         })
         .catch((err) => {
@@ -104,6 +110,7 @@ function Profile({ userData }) {
     }
 
     const handleFriends = (type) => {
+        console.log('x',userProfile.username)
         Post("/action/handle-relationship", 
         {
             action: type,
@@ -112,7 +119,7 @@ function Profile({ userData }) {
         userData?.access_token)
         .then((res) => {
             if(checkResponse(res)) {
-                let type = res?.returnObj?.type_relation;
+                let type = res?.returnObj?.[0].type_relation ?? null;
                 setUserProfile((prev) => {return {...prev, type_relationship: type}});
             }
         })
@@ -120,7 +127,16 @@ function Profile({ userData }) {
             console.log(err);
         })
     }
-console.log('to', userProfile.type_relationship);
+
+    const handleUpdateInfo = (info) => {
+        setUserProfile((prev) => {
+            return {
+                ...prev,
+                ...info
+        }});
+        setContent(LIST_NAVBAR[0]);
+    }
+
     const renderButton = () => {
         if (userProfile.username == userData.data_user.username) {
             return (
@@ -176,7 +192,7 @@ console.log('to', userProfile.type_relationship);
                 )
         }
     }
-
+console.log('info',userProfile)
     return (
         <div className={cx("wrapper")}>
             <div className={cx("header")}>
@@ -216,7 +232,7 @@ console.log('to', userProfile.type_relationship);
             </div>
             <div className={cx("content")}>
                 <div className={cx("content_container")}>
-                    <content.component userData={userData} userProfileData={userProfile}/>
+                    <content.component userData={userData} userProfileData={userProfile} handleUpdateInfo={handleUpdateInfo}/>
                     
                 </div>
             </div>

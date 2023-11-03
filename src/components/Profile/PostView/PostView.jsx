@@ -5,14 +5,15 @@ import images from "~/assets/images/index";
 import CreatePost from "~/components/CreatePost/CreatePost";
 import ListNewFeed from "~/components/ListNewFeed/ListNewFeed";
 import { useEffect, useRef, useState } from "react";
-import { Get, Post } from "~/services/base";
+import { Get, Post, BASE_URL_MEDIA } from "~/services/base";
 import getParamUrl from "~/utils/getParamUrl";
 import checkResponse from "~/utils/checkResponse";
 import { useCallback } from "react";
+import { useNavigate } from 'react-router-dom';
 
 const cx = classNames.bind(styles);
 
-function PostView({ userData, userProfileData }) {
+function PostView({ userData, userProfileData, handleUpdateInfo = null }) {
     const styled = {
         position: "sticky",
     }
@@ -23,7 +24,8 @@ function PostView({ userData, userProfileData }) {
 
     // const [userProfile, setUserProfile] = useState(userData?.data_user || {});
 
-    const refSidebar = useRef(null)
+    const refSidebar = useRef(null);
+    const navigate = useNavigate();
 
     const handleMouseMove = (event) => {
         console.log(event)
@@ -125,7 +127,7 @@ function PostView({ userData, userProfileData }) {
                                     <img src={images.icon.address_icon} alt="" />
                                 </div>
                                 <div className={cx("content")}>
-                                    Đến từ <span className={cx("content_bold")}>{userProfileData?.address}</span>
+                                    Đến từ <span className={cx("content_bold")}>{userProfileData?.location}</span>
                                 </div>
                             </div>
 
@@ -135,6 +137,15 @@ function PostView({ userData, userProfileData }) {
                                 </div>
                                 <div className={cx("content")}>
                                     {userProfileData?.gender == "1" ? "Nam" : "Nữ"}
+                                </div>
+                            </div>
+                            {/* Ngày sinh */}
+                            <div className={cx("info_item")}>
+                                <div className={cx("icon")}>
+                                    <img src={images.icon.cake_icon} alt="" />
+                                </div>
+                                <div className={cx("content")}>
+                                    Sinh ngày {(new Date(userProfileData?.day_of_birth)).getDate() + '/' + ((new Date(userProfileData?.day_of_birth)).getMonth() + 1) + '/' + (new Date(userProfileData?.day_of_birth)).getFullYear()}
                                 </div>
                             </div>
                             <div className={cx("info_item")}>
@@ -159,12 +170,13 @@ function PostView({ userData, userProfileData }) {
 
                         {/* info ... */}
                         <div className={cx("friend_container", "row")}>
-                            {userProfileData?.listFriends && userProfileData?.listFriends.map((friend) => {
+                            {userProfileData?.listFriend && userProfileData?.listFriend.map((friend) => {
                                 return (
-                                    <div key={friend.name} className={cx("friend_item", "col-4")}>
-                                        <a href={friend.link}>
-                                            <img className={cx("avatar")} src={friend.avatar} alt="" />
-                                            <div className={cx("name")}>{friend.name}</div>
+                                    <div key={friend.username} className={cx("friend_item", "col-4")}>
+                                        {/* <a onClick={() => navigate(`/profile/${friend.username}`)}> */}
+                                        <a href={`/profile/${friend.username}`}> 
+                                            <img className={cx("avatar")} src={`${BASE_URL_MEDIA}/${friend.avatar}`} alt="" />
+                                            <div className={cx("name")}>{friend.fullname}</div>
                                         </a>
                                     </div>
                                 )
