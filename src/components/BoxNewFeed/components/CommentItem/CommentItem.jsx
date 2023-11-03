@@ -91,7 +91,6 @@ function CommentItem({ data, userData, listComment, setListComment }) {
                         </ul>
                         : null
                     }
-
                 </>
             }
         </div>
