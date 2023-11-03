@@ -6,12 +6,16 @@ import images from "~/assets/images/index";
 import PostView from "~/components/Profile/PostView/PostView";
 import IntroView from "~/components/Profile/IntroView/IntroView";
 import FriendView from "~/components/Profile/FriendView/FriendView";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import getParamUrl from "~/utils/getParamUrl";
-import { Post } from "~/services/base";
+import { BASE_URL_MEDIA, Post } from "~/services/base";
 import checkResponse from "~/utils/checkResponse";
 import { useNavigate } from "react-router-dom";
-
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { INPUT_ACCEPT_TYPE_IMAGE } from "~/utils/constant";
+import { useDispatch } from 'react-redux'
+import { updateAccount } from "~/redux/store/authSlide";
 const cx = classNames.bind(styles);
 
 const InCommingView = () => {
@@ -54,13 +58,18 @@ const LIST_NAVBAR = [
 ];
 
 function Profile({ userData }) {
-    
+
     const [content, setContent] = useState(LIST_NAVBAR[0]);
     const [userProfile, setUserProfile] = useState({});
     const [listFriends, setListFriends] = useState([]);
     const [chatId, setChatId] = useState('undefined');
     const navigate = useNavigate();
-
+    const [linkAvatar, setLinkAvatar] = useState(null);
+    const [linkCover, setLinkCover] = useState(null);
+    const refAvatarInput = useRef(null);
+    const refCoverInput = useRef(null);
+    const dispatch = useDispatch();
+    console.log(userData);
     useEffect(() => {
         let profileUsername = getParamUrl();
 
@@ -68,64 +77,68 @@ function Profile({ userData }) {
         getChatId(profileUsername);
     }, [])
 
+
     const getProfileInfo = (profileUsername) => {
-        Post("/action/get-profile", 
-        {
-            profile_username: profileUsername,
-        }, 
-        userData?.access_token)
-        .then((res) => {
-            if(checkResponse(res)) {
-                console.log('react',res)
-                let profileUserData = res?.returnObj?.profile?.[0];
-                let listFriend = res?.returnObj?.friends;
-                setUserProfile( {
-                    ...profileUserData,
-                    listFriend
-                });
-                setListFriends(listFriend);
-            }
-        })
-        .catch((err) => {
-            console.log(err);
-        })
+        Post("/action/get-profile",
+            {
+                profile_username: profileUsername,
+            },
+            userData?.access_token)
+            .then((res) => {
+                if (checkResponse(res)) {
+                    console.log('react', res)
+                    let profileUserData = res?.returnObj?.profile?.[0];
+                    let listFriend = res?.returnObj?.friends;
+                    setUserProfile({
+                        ...profileUserData,
+                        listFriend
+                    });
+                    setListFriends(listFriend);
+                    setLinkAvatar(profileUserData.avatar)
+                    setLinkCover(profileUserData.cover)
+
+                }
+            })
+            .catch((err) => {
+                console.log(err);
+            })
     }
 
     const getChatId = (profileUsername) => {
-        Post("/message/get-chat-id-by-username", 
-        {
-            username: profileUsername,
-        }, 
-        userData?.access_token)
-        .then((res) => {
-            if(checkResponse(res)) {
-                console.log('chatid', res)
-                let chat_id = res?.returnObj;
-                setChatId(chat_id);
-            }
-        })
-        .catch((err) => {
-            console.log(err);
-        })
+        Post("/message/get-chat-id-by-username",
+            {
+                username: profileUsername,
+            },
+            userData?.access_token)
+            .then((res) => {
+                if (checkResponse(res)) {
+                    console.log('chatid', res)
+                    let chat_id = res?.returnObj;
+                    setChatId(chat_id);
+                }
+            })
+            .catch((err) => {
+                console.log(err);
+            })
     }
 
     const handleFriends = (type) => {
-        console.log('x',userProfile.username)
-        Post("/action/handle-relationship", 
-        {
-            action: type,
-            target_username: userProfile.username
-        }, 
-        userData?.access_token)
-        .then((res) => {
-            if(checkResponse(res)) {
-                let type = res?.returnObj?.[0].type_relation ?? null;
-                setUserProfile((prev) => {return {...prev, type_relationship: type}});
-            }
-        })
-        .catch((err) => {
-            console.log(err);
-        })
+        console.log('x', userProfile.username)
+        Post("/action/handle-relationship",
+            {
+                action: type,
+                target_username: userProfile.username
+            },
+            userData?.access_token)
+            .then((res) => {
+                if (checkResponse(res)) {
+                    let type = res?.returnObj?.[0].type_relation ?? null;
+                    setUserProfile((prev) => { return { ...prev, type_relationship: type } });
+                }
+            })
+            .catch((err) => {
+                console.log(err);
+            })
     }
 
     const handleUpdateInfo = (info) => {
@@ -133,16 +146,64 @@ function Profile({ userData }) {
             return {
                 ...prev,
                 ...info
-        }});
+            }
+        });
         setContent(LIST_NAVBAR[0]);
     }
+
+    const handleUpAvatar = async (input) => {
+        const file = input.target.files[0];
+        if (!(INPUT_ACCEPT_TYPE_IMAGE.includes(file.type))) {
+            input.target.value = "";
+            toast.warn("Định dạng file ảnh không hợp lệ");
+            return;
+        }
+        const formData = new FormData();
+        formData.append('media', file);
+        await Post("/action/change-avatar", formData, userData.access_token)
+            .then(res => {
+                if (checkResponse(res)) {
+                    setLinkAvatar(res.returnObj)
+                    dispatch(updateAccount({
+                        avatar: res.returnObj
+                    }))
+                    toast.success("Tải ảnh đại diện thành công");
+                }
+            })
+    }
+
+    const handleUpCover = async (input) => {
+        const file = input.target.files[0];
+        if (!(INPUT_ACCEPT_TYPE_IMAGE.includes(file.type))) {
+            input.target.value = "";
+            toast.warn("Định dạng file ảnh không hợp lệ");
+            return;
+        }
+        const formData = new FormData();
+        formData.append('media', file);
+        await Post("/action/change-cover-bg", formData, userData.access_token)
+            .then(res => {
+                if (checkResponse(res)) {
+                    setLinkCover(res.returnObj)
+                    dispatch(updateAccount({
+                        cover: res.returnObj
+                    }))
+                    toast.success("Tải ảnh bìa thành công");
+                }
+            })
+    }
+
+
 
     const renderButton = () => {
         if (userProfile.username == userData.data_user.username) {
             return (
-                <Button className={cx("update")} icon={images.icon.pen_icon} size={"text_icon"} onClick={console.log} >
-                    Chỉnh sửa trang cá nhân
-                </Button>
+                <>
+                    <Button className={cx("update")} icon={images.icon.pen_icon} size={"text_icon"} onClick={() => refCoverInput.current.click()} >
+                        Chỉnh sửa trang cá nhân
+                    </Button>
+                    <input className="d-none" type="file" ref={refCoverInput} onChange={handleUpCover} />
+                </>
             )
         }
         switch (userProfile.type_relationship) {
@@ -156,8 +217,8 @@ function Profile({ userData }) {
                             Nhắn tin
                         </Button>
                     </>
-                ) 
-            case 'SOURCE_REQUEST': 
+                )
+            case 'SOURCE_REQUEST':
                 return (
                     <>
                         <Button className={cx("relationship")} icon={images.icon.unfriend} size={"text_icon"} onClick={() => handleFriends('CANCEL')} >
@@ -167,8 +228,8 @@ function Profile({ userData }) {
                             Nhắn tin
                         </Button>
                     </>
-                ) 
-            case 'TARGET_REQUEST': 
+                )
+            case 'TARGET_REQUEST':
                 return (
                     <>
                         <Button className={cx("message")} size={"text_icon"} onClick={() => handleFriends('ACCEPT')} >
@@ -178,8 +239,8 @@ function Profile({ userData }) {
                             Xóa lời mời
                         </Button>
                     </>
-                ) 
-            default: 
+                )
+            default:
                 return (
                     <>
                         <Button className={cx("message")} icon={images.icon.add_friend} size={"text_icon"} onClick={() => handleFriends('ADD_FRIEND')} >
@@ -192,26 +253,26 @@ function Profile({ userData }) {
                 )
         }
     }
-console.log('info',userProfile)
     return (
         <div className={cx("wrapper")}>
             <div className={cx("header")}>
                 <div className={cx("cover_container")}>
-                    <div className={cx("cover")} style={{ backgroundImage: 'url("https://scontent.fhan4-1.fna.fbcdn.net/v/t39.30808-6/324025292_1314744665765839_8870951313051136517_n.jpg?stp=dst-jpg_p960x960&_nc_cat=104&ccb=1-7&_nc_sid=52f669&_nc_ohc=cnk052oTQS4AX_0Ybva&_nc_ht=scontent.fhan4-1.fna&oh=00_AfAkn4CKVmgEohzlSV0Dgr_z2GFX4BvrzWs1RvprXYzt2w&oe=65006A57")' }}>
+                    <div className={cx("cover")} style={{ backgroundImage: `url("${BASE_URL_MEDIA + linkCover}")` }}>
                     </div>
                 </div>
                 <div className={cx("info_container")}>
                     <div className={cx("info")}>
                         <div className={cx("avatar_container")}>
-                            <Button className={cx("avatar")} shape="circle" icon={"https://scontent.fhan19-1.fna.fbcdn.net/v/t39.30808-1/362667540_1732772347140444_7909649419937236249_n.jpg?stp=dst-jpg_p320x320&_nc_cat=110&ccb=1-7&_nc_sid=fe8171&_nc_ohc=SsCLa0svyD4AX-2Yktg&_nc_ht=scontent.fhan19-1.fna&oh=00_AfBp2YUjh-LQAJlN-XJOhbJz8hhtLdg7fYdyqNPCv3_RHw&oe=65029827"} full_icon={true} size={"avt"} onClick={console.log} />
-                            <Button className={cx("upload")} shape="circle" icon={images.icon.icon_camera} size={"sm"} onClick={console.log} />
+                            <Button className={cx("avatar")} shape="circle" icon={BASE_URL_MEDIA + linkAvatar} full_icon={true} size={"avt"} />
+                            <Button className={cx("upload")} shape="circle" icon={images.icon.icon_camera} size={"sm"} onClick={() => refAvatarInput.current.click()} />
+                            <input className="d-none" type="file" ref={refAvatarInput} onChange={handleUpAvatar} />
                         </div>
                         <div className={cx("name_container")}>
                             <div className={cx("name")}>{userProfile.fullname}</div>
                             <div className={cx("num_friend")}>{userProfile.number_friend} bạn bè</div>
                         </div>
                         <div className={cx("option_container")}>
-                        {renderButton()}    
+                            {renderButton()}
                         </div>
                     </div>
                 </div>
@@ -232,10 +293,11 @@ console.log('info',userProfile)
             </div>
             <div className={cx("content")}>
                 <div className={cx("content_container")}>
-                    <content.component userData={userData} userProfileData={userProfile} handleUpdateInfo={handleUpdateInfo}/>
-                    
+                    <content.component userData={userData} userProfileData={userProfile} handleUpdateInfo={handleUpdateInfo} />
+
                 </div>
             </div>
+            <ToastContainer />
         </div>
     );
 }

@@ -1,12 +1,14 @@
 import classNames from "classnames/bind"; // import headless sẽ mất hiệu ứng hover tồn tại
 import { Link } from "react-router-dom";
 import styles from "./Button.module.scss";
-import { forwardRef,useId,useImperativeHandle, useRef } from "react";
+import { forwardRef, useId, useImperativeHandle, useRef, useState } from "react";
+import { useEffect } from "react";
 
 const cx = classNames.bind(styles);
-function Button({positionImg,customStyle,id_modified, to, children, icon, full_icon,no_background ,size, onClick, onBlur, onMouseOver, className, active, shape = "default"},ref) {
+function Button({ positionImg, customStyle, id_modified, to, children, icon, full_icon, no_background, size, onClick, onBlur, onMouseOver, className, active, shape = "default" }, ref) {
     const idBtn = useId()
     const btnRef = useRef();
+    const [load, setLoad] = useState();
     const layoutRef = useRef();
     let props = {
         onClick,
@@ -15,49 +17,49 @@ function Button({positionImg,customStyle,id_modified, to, children, icon, full_i
         ref: btnRef
     }
 
-    useImperativeHandle(ref,()=>(
+    useImperativeHandle(ref, () => (
         {
-            getParentButton(){
-                return btnRef.current    
+            getParentButton() {
+                return btnRef.current
             },
-            getLayoutClick(){
-                return layoutRef.current    
+            getLayoutClick() {
+                return layoutRef.current
             }
         }
     ))
-   
+
     let Comp = "button";
-    if(to){
+    if (to) {
         props.to = to;
         props.style = {
             padding: "6px 1px",
         }
         Comp = Link
     }
-    if(full_icon){
+    if (full_icon) {
         props.style = {
             backgroundImage: `url(${icon})`,
             objectFit: "contain",
             backgroundSize: "cover"
         }
     }
-    
+
 
     return (
-            <Comp className={cx("button",{
-                [size]: size ? true : false,
-                [className]: className ? true : false,
+        <Comp className={cx("button", {
+            [size]: size ? true : false,
+            [className]: className ? true : false,
+            active: active,
+            no_background: no_background,
+            [shape]: true
+        })} style={customStyle} {...props}>
+            {!full_icon && icon ? <img className={cx("icon", {
+                full: full_icon,
                 active: active,
-                no_background: no_background,
-                [shape]: true
-            })} style={customStyle} {...props}>
-                {!full_icon && icon ? <img className={cx("icon",{
-                    full: full_icon,
-                    active: active,
-                })} src={icon} /> : null}
-                {children}
-                <div className={cx("layout")} id={idBtn} ref={layoutRef} id_modified={id_modified}></div>
-            </Comp> 
+            })} src={icon} /> : null}
+            {children}
+            <div className={cx("layout")} id={idBtn} ref={layoutRef} id_modified={id_modified}></div>
+        </Comp>
     );
 }
 

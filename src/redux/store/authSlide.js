@@ -20,6 +20,12 @@ const authSlice = createSlice({
       state.data_user = null;
       state.access_token = null;
     },
+    updateAccount: (state,action) =>{
+      state.data_user = {
+        ...state.data_user,
+        ...action.payload
+      }
+    }
   },
   extraReducers: (builder) =>{
     builder.addCase(logIn.fulfilled,(state,action) =>{
@@ -40,6 +46,6 @@ const authSlice = createSlice({
 
 
 
-export const { loginSuccess,logout } = authSlice.actions;
+export const { loginSuccess,logout, updateAccount } = authSlice.actions;
 
 export default authSlice.reducer

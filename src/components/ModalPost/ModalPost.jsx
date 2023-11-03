@@ -18,6 +18,7 @@ import { createPost, updatePost } from "~/redux/actions/postActions";
 import { BASE_URL_MEDIA } from "~/services/base";
 import { ListPostContext } from "~/pages/home/Index";
 import { useContext } from "react";
+import { getLastName } from "~/utils/getLastName";
 
 const cx = classNames.bind(styles);
 
@@ -72,8 +73,10 @@ function ModalPost({ setModalShow, data, setProgress, handlePost }) {
                 url: postAudienceUrl,
                 privacy: postAudienceId
             })
-            setContentEditable(data?.content)
-            contentEditableRef.current.innerText = data?.content;
+            if (data?.content) {
+                setContentEditable(data?.content)
+                contentEditableRef.current.innerText = data?.content;
+            }
             handleUpdateImage(data?.media_info)
         }
     }, [data])
@@ -254,11 +257,11 @@ function ModalPost({ setModalShow, data, setProgress, handlePost }) {
         <div className={cx("body")}>
             <div className={cx("info")}>
                 <div className={cx("avatar")}>
-                    <Button shape="circle" size={"xl"} full_icon={true} icon={images.icon.avatar_demo} />
+                    <Button shape="circle" size={"xl"} full_icon={true} icon={BASE_URL_MEDIA + userData.data_user.avatar} />
                 </div>
                 <div className={cx("wrapper")}>
                     <div className={cx("name_author")}>
-                        <span>Trần Minh Đức</span>
+                        <span>{userData.data_user?.fullname}</span>
                     </div>
                     <div className={cx("privacy_post")}>
                         <div className={cx("icon_left_dropdown")}>
@@ -287,12 +290,13 @@ function ModalPost({ setModalShow, data, setProgress, handlePost }) {
                    ) 
             }}
         </Dropzone> */}
+            {console.log(data, "dsadasdasdadsascascasc")}
             <div className={cx("content__wrapper")}>
                 <div className={cx("content")}
                     ref={contentEditableRef}
                     suppressContentEditableWarning={true}
                     contentEditable="true"
-                    data-placeholder="Đức ơi, bạn đang nghĩ gì thế?"
+                    data-placeholder={`${getLastName(userData.data_user?.fullname)} ơi, bạn đang nghĩ gì thế?`}
                     onInput={handleGetValueContent}
                     onClick={handleGetPosCursorContentEditable}
                     onFocus={() => setShowBoxIcon(false)}

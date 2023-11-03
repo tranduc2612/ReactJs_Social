@@ -8,7 +8,7 @@ import BoxAvatar from "~/components/BoxAvatar/BoxAvatar";
 import { useState, useEffect } from "react";
 import checkResponse from "~/utils/checkResponse";
 import Pusher from "pusher-js";
-import { Get } from "~/services/base";
+import { BASE_URL_MEDIA, Get } from "~/services/base";
 import { useSelector } from 'react-redux'
 
 
@@ -54,7 +54,7 @@ function NavbarRight({ listItem }) {
         {
             id: 4,
             title: "avatar",
-            icon: images.icon.avatar_demo,
+            icon: BASE_URL_MEDIA + userData.data_user?.avatar,
             full_icon: true,
             count_seen: 0,
             box_popper: BoxAvatar

@@ -12,6 +12,7 @@ import Box from "~/components/Box/Box";
 import { formatDate } from "~/utils/format";
 import { AUDIENCE_TYPE } from "~/utils/constant";
 import { useSelector, useDispatch } from 'react-redux'
+import { BASE_URL_MEDIA } from "~/services/base";
 
 const cx = classNames.bind(styles);
 
@@ -30,7 +31,7 @@ function HeaderPost({ handleOpenConfirmDeleteModal, handleOpenEditModal, showMod
         <div className={cx("header")}>
             <div className={cx("header__left")}>
                 <div className={cx("avatar")}>
-                    <Button icon={images.icon.avatar_demo} full_icon={true} shape="circle" />
+                    <Button icon={BASE_URL_MEDIA + data?.avatar} full_icon={true} shape="circle" />
                 </div>
                 <div className={cx("info")}>
                     <div className={cx("name__author")}>
