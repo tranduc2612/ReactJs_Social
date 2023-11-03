@@ -173,7 +173,7 @@ function PostView({ userData, userProfileData, handleUpdateInfo = null }) {
                             {userProfileData?.listFriend && userProfileData?.listFriend.map((friend) => {
                                 return (
                                     <div key={friend.username} className={cx("friend_item", "col-4")}>
-                                        {/* <a onClick={() => navigate(`/profile/${friend.username}`)}> */}
+                                        {/* <a onClick={() => navigate(`/message`)}> */}
                                         <a href={`/profile/${friend.username}`}> 
                                             <img className={cx("avatar")} src={`${BASE_URL_MEDIA}/${friend.avatar}`} alt="" />
                                             <div className={cx("name")}>{friend.fullname}</div>

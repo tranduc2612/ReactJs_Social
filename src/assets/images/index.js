@@ -51,6 +51,12 @@ import phanno from "./icon/tucgian.svg"
 import tools__icon from "./icon/tool-icon.png"
 import unfriend from "./icon/unfriend.png"
 import add_friend from "./icon/add_friend.png"
+import github from "./icon/github.png"
+import insta from "./icon/insta.png"
+import tiktok from "./icon/tiktok.png"
+import twitter from "./icon/twitter.png"
+import tinder from "./icon/tinder.png"
+import thread from "./icon/thread.png"
 
 // ảnh demo sau xóa
 import avatar_demo from "./icon/317950785_3423963351171814_2305823669101113253_n.jpg"
@@ -114,7 +120,13 @@ const images = {
     cake_icon,
     list_icon_5,
     unfriend,
-    add_friend
+    add_friend,
+    github,
+    insta,
+    tiktok,
+    twitter,
+    tinder,
+    thread
   }
 };
 

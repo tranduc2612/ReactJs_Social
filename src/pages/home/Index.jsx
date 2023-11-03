@@ -13,7 +13,8 @@ import { getListPost } from "~/redux/actions/postActions";
 import { Get, Post } from "~/services/base";
 import { createContext } from "react";
 import checkResponse from "~/utils/checkResponse";
-
+import { Link, useNavigate } from "react-router-dom";
+import { BASE_URL_MEDIA } from "~/services/base";
 
 
 const cx = classNames.bind(styles);
@@ -22,27 +23,32 @@ const SideBarLeft = [{
     id: 1,
     title: "Bạn bè",
     position: "0px -304px",
-    img_url: images.icon.list_icon_sidebar
+    img_url: images.icon.list_icon_sidebar,
+    link: '/'
 }, {
     id: 2,
     title: "Messenger",
     position: "0px 0px",
-    img_url: images.icon.list_icon_sidebar_2
+    img_url: images.icon.list_icon_sidebar_2,
+    link: '/messenger'
 }, {
     id: 3,
     title: "Kỷ niệm",
     position: "0 -456px",
-    img_url: images.icon.list_icon_sidebar
+    img_url: images.icon.list_icon_sidebar,
+    link: '/'
 }, {
     id: 4,
     title: "Đã lưu",
     position: "0 -190px",
-    img_url: images.icon.list_icon_sidebar
+    img_url: images.icon.list_icon_sidebar,
+    link: '/'
 }, {
     id: 5,
     title: "Chơi game",
     position: "0px -76px",
-    img_url: images.icon.list_icon_sidebar
+    img_url: images.icon.list_icon_sidebar,
+    link: '/'
 }]
 
 const SideBarLeftAll = [{
@@ -86,6 +92,9 @@ function Home({ userData }) {
     const refListNewFeed = useRef(null)
     const [listSideBar, setListSidebar] = useState(SideBarLeft);
     const [moreSidebar, setMoreSidebar] = useState(false);
+    const [listFriend, setListFriend] = useState([]);
+    const navigate = useNavigate();
+
     useEffect(() => {
         if (moreSidebar) {
             setListSidebar(SideBarLeftAll)
@@ -93,6 +102,25 @@ function Home({ userData }) {
             setListSidebar(SideBarLeft)
         }
     }, [moreSidebar])
+
+    useEffect(() => {
+        getListFriend();
+    }, [])
+
+    const getListFriend = () => {
+        Post("/action/get-list-account", 
+        {}, 
+        userData?.access_token)
+        .then((res) => {
+            if(checkResponse(res)) {
+                let friend = res?.returnObj?.list_friend;
+                setListFriend(friend);
+            }
+        })
+        .catch((err) => {
+            console.log(err);
+        })
+    }
 
     const handleMoreSidebar = () => {
         // đoạn này xử lí thêm bớt thanh sidebar sau xử lí logic sau // fix tạm
@@ -142,14 +170,13 @@ function Home({ userData }) {
         return null;
     }
 
-
     return (<div className={cx("home")}>
         <SideBar className={cx("left__sidebar")}>
             <ul className={cx("left__sidebar-list")}>
-                <SideBarItem avatar={images.icon.avatar_demo} title={userData.data_user?.fullname} />
+                <SideBarItem onClick={() => navigate('/profile/' + userData.data_user?.username)} avatar={BASE_URL_MEDIA + userData.data_user?.avatar} title={userData.data_user?.fullname} />
                 {listSideBar.map(item => {
                     return (
-                        <SideBarItem key={item.id} title={item.title} data={item} />
+                        <SideBarItem onClick={() => navigate(item.link)} key={item.id} title={item.title} data={item} />
                     )
                 })}
                 {
@@ -159,13 +186,13 @@ function Home({ userData }) {
                 }
                 <div className={cx("your__shortcut")}>
                     <h3 className={"pt-4 pb-2 fs-3"} style={{ paddingLeft: "16px", color: "#6f7175" }}>Lối tắt của bạn</h3>
-                    <SideBarItem avatar={images.icon.group_avatar_demo} title={"MUA MÁY TÍNH CŨ"} shape={"square"} />
-                    <SideBarItem avatar={images.icon.group_avatar_demo} title={"Màn Hình Máy Tính  Thanh Lý Cũ Mới Giá Rẻ"} shape={"square"} />
-                    <SideBarItem avatar={images.icon.group_avatar_demo} title={"Màn Hình Máy Tính  Thanh Lý Cũ Mới Giá Rẻ"} shape={"square"} />
-                    <SideBarItem avatar={images.icon.group_avatar_demo} title={"Màn Hình Máy Tính  Thanh Lý Cũ Mới Giá Rẻ"} shape={"square"} />
-                    <SideBarItem avatar={images.icon.group_avatar_demo} title={"Màn Hình Máy Tính  Thanh Lý Cũ Mới Giá Rẻ"} shape={"square"} />
-                    <SideBarItem avatar={images.icon.group_avatar_demo} title={"Màn Hình Máy Tính  Thanh Lý Cũ Mới Giá Rẻ"} shape={"square"} />
-                    <SideBarItem avatar={images.icon.group_avatar_demo} title={"Màn Hình Máy Tính  Thanh Lý Cũ Mới Giá Rẻ"} shape={"square"} />
+                    <SideBarItem avatar={images.icon.insta} title={"Kết nối với Instagram"} shape={"square"} onClick={() => {window.open('https://www.instagram.com/')}}/>
+                    <SideBarItem avatar={images.icon.tiktok} title={"Kết nối với Tiktok"} shape={"square"} onClick={() => {window.open('https://tiktok.com/')}}/>
+                    <SideBarItem avatar={images.icon.twitter} title={"Kết nối với Twitter"} shape={"square"} onClick={() => {window.open('https://twitter.com/')}}/>
+                    <SideBarItem avatar={images.icon.tinder} title={"Kết nối với Tinder"} shape={"square"} onClick={() => {window.open('https://tinder.com/')}}/>
+                    <SideBarItem avatar={images.icon.thread} title={"Kết nối với Thread"} shape={"square"} onClick={() => {window.open('https://thread.com/')}}/>
+                    <SideBarItem avatar={images.icon.github} title={"Có thể bạn đã biết?"} shape={"square"} onClick={() => {window.open('https://github.com/nokiddig/social-network-fb')}}/>
+                    <SideBarItem  />
                     <SideBarItem avatar={images.icon.group_avatar_demo} title={"Màn Hình Máy Tính  Thanh Lý Cũ Mới Giá Rẻ"} shape={"square"} />
                 </div>
             </ul>
@@ -184,43 +211,11 @@ function Home({ userData }) {
         <SideBar className={cx("right__sidebar")}>
             <h3 className={"pt-4 pb-2 fs-3"} style={{ paddingLeft: "16px", color: "#6f7175" }}>Người liên hệ</h3>
             <ul className={cx("left__sidebar-list")}>
-                <SideBarItem active={true} avatar={images.icon.avatar_demo} title={"Trần Minh Đức"} />
-                <SideBarItem active={true} avatar={images.icon.avatar_demo} title={"Trần Minh Đức"} />
-                <SideBarItem active={true} avatar={images.icon.avatar_demo} title={"Trần Minh Đức"} />
-                <SideBarItem active={true} avatar={images.icon.avatar_demo} title={"Trần Minh Đức"} />
-                <SideBarItem active={true} avatar={images.icon.avatar_demo} title={"Trần Minh Đức"} />
-                <SideBarItem active={true} avatar={images.icon.avatar_demo} title={"Trần Minh Đức"} />
-                <SideBarItem active={true} avatar={images.icon.avatar_demo} title={"Trần Minh Đức"} />
-                <SideBarItem active={true} avatar={images.icon.avatar_demo} title={"Trần Minh Đức"} />
-                <SideBarItem active={true} avatar={images.icon.avatar_demo} title={"Trần Minh Đức"} />
-                <SideBarItem active={true} avatar={images.icon.avatar_demo} title={"Trần Minh Đức"} />
-                <SideBarItem active={true} avatar={images.icon.avatar_demo} title={"Trần Minh Đức"} />
-                <SideBarItem active={true} avatar={images.icon.avatar_demo} title={"Trần Minh Đức"} />
-                <SideBarItem active={true} avatar={images.icon.avatar_demo} title={"Trần Minh Đức"} />
-                <SideBarItem active={true} avatar={images.icon.avatar_demo} title={"Trần Minh Đức"} />
-                <SideBarItem active={true} avatar={images.icon.avatar_demo} title={"Trần Minh Đức"} />
-                <SideBarItem active={true} avatar={images.icon.avatar_demo} title={"Trần Minh Đức"} />
-                <SideBarItem active={true} avatar={images.icon.avatar_demo} title={"Trần Minh Đức"} />
-                <SideBarItem active={true} avatar={images.icon.avatar_demo} title={"Trần Minh Đức"} />
-                <SideBarItem active={true} avatar={images.icon.avatar_demo} title={"Trần Minh Đức"} />
-                <SideBarItem active={true} avatar={images.icon.avatar_demo} title={"Trần Minh Đức"} />
-                <SideBarItem active={true} avatar={images.icon.avatar_demo} title={"Trần Minh Đức"} />
-                <SideBarItem active={true} avatar={images.icon.avatar_demo} title={"Trần Minh Đức"} />
-                <SideBarItem active={true} avatar={images.icon.avatar_demo} title={"Trần Minh Đức"} />
-                <SideBarItem active={true} avatar={images.icon.avatar_demo} title={"Trần Minh Đức"} />
-                <SideBarItem active={true} avatar={images.icon.avatar_demo} title={"Trần Minh Đức"} />
-                <SideBarItem active={true} avatar={images.icon.avatar_demo} title={"Trần Minh Đức"} />
-                <SideBarItem active={true} avatar={images.icon.avatar_demo} title={"Trần Minh Đức"} />
-                <SideBarItem active={true} avatar={images.icon.avatar_demo} title={"Trần Minh Đức"} />
-                <SideBarItem active={true} avatar={images.icon.avatar_demo} title={"Trần Minh Đức"} />
-                <SideBarItem active={true} avatar={images.icon.avatar_demo} title={"Trần Minh Đức"} />
-                <SideBarItem active={true} avatar={images.icon.avatar_demo} title={"Trần Minh Đức"} />
-                <SideBarItem active={true} avatar={images.icon.avatar_demo} title={"Trần Minh Đức"} />
-                <SideBarItem active={true} avatar={images.icon.avatar_demo} title={"Trần Minh Đức"} />
-                <SideBarItem active={true} avatar={images.icon.avatar_demo} title={"Trần Minh Đức"} />
-                <SideBarItem active={true} avatar={images.icon.avatar_demo} title={"Trần Minh Đức"} />
-                <SideBarItem active={true} avatar={images.icon.avatar_demo} title={"Trần Minh Đức"} />
-
+                {listFriend.map((friend) => (
+                    <SideBarItem active={true} avatar={BASE_URL_MEDIA + friend.avatar} title={friend.fullname} />
+                ))}
+                
+                {/* <SideBarItem active={true} avatar={images.icon.avatar_demo} title={"Trần Minh Đức"} /> */}
             </ul>
         </SideBar>
     </div>);
