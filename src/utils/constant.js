@@ -507,3 +507,10 @@ export const LIST_YEAR = [
         "value": "2023"
     }
 ]
+
+export const INPUT_ACCEPT_TYPE_IMAGE = [
+  "image/png",
+  "image/jpg",
+  "image/jpeg",
+  "image/jepg",
+];
