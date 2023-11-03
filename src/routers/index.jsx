@@ -7,6 +7,7 @@ import Login from "../pages/login/index";
 import Register from "../pages/register/index";
 import Messenger from "../pages/messenger/Index"
 import Search from "../pages/search/Index";
+import Posts from "~/pages/posts/Index";
 
 const publicRouter = [
   {
@@ -20,6 +21,12 @@ const publicRouter = [
     page: Register,
     layout: null,
     auth: true // nếu mà là false thì sau khi đăng nhập sẽ không được vào được trang này nữa
+  },
+  {
+    path: "/posts/:id",
+    page: Posts,
+    layout: DefaultLayout,
+    auth: true // chi tiết bài viết
   },
 ];
 

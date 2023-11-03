@@ -67,14 +67,6 @@ function ListComment({ idPost, token, content, userData, scrollToBottom, handleC
             {loading && <div className="d-flex justify-content-center mt-3">
                 <Loading />
             </div>}
-
-            {/* <li className={cx("comment__item")}>
-                <CommentItem />
-            </li>
-
-            <li className={cx("comment__item")}>
-                <CommentItem />
-            </li> */}
         </ul>
     </div>);
 }

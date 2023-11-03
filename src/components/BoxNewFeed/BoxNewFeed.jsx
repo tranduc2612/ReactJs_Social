@@ -81,8 +81,9 @@ function BoxNewFeed({ data, shared, userData, handlePost }) {
                 arrMostEmotion.push(react3)
             }
         }
+        setLstMostReactPost(arrMostEmotion)
         return arrMostEmotion
-    }, [])
+    }, [data])
 
     const scrollToBottom = () => {
         refBoxDetail.current.scrollTop = refBoxDetail.current.scrollHeight;
@@ -94,7 +95,13 @@ function BoxNewFeed({ data, shared, userData, handlePost }) {
             setlstImg(imgData)
             return
         }
-        setLstMostReactPost(INIT_LIST_REACT)
+
+        if (data?.current_react_type && REACT_EMOTION[data?.current_react_type]) {
+            const currentReact = REACT_EMOTION[data?.current_react_type];
+            setReact(currentReact)
+        } else {
+            setReact(BASE_STATE_REACT)
+        }
         setlstImg([])
     }, [data])
 
@@ -422,7 +429,7 @@ function BoxNewFeed({ data, shared, userData, handlePost }) {
                         </div>
                         {/* Danh sách bình luận */}
                         <CommentContext.Provider value={{ setCommentCount, commentCount }}>
-                            <ListComment idPost={data?.post_id} token={userData?.access_token} content={contentComment} userData={userData} scrollToBottom={scrollToBottom} />
+                            <ListComment idPost={data?.post_id} token={userData?.access_token} content={contentComment} setContent={setContentComment} userData={userData} scrollToBottom={scrollToBottom} />
                         </CommentContext.Provider>
                     </div>
                 </CustomBox>
