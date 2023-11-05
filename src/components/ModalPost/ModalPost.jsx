@@ -210,7 +210,7 @@ function ModalPost({ setModalShow, data, setProgress, handlePost }) {
                     const res = await handlePost(dataSend)
 
                     if (checkResponse(res)) {
-                        let dataRes = res.returnObj;
+                        let dataRes = res.returnObj[0];
                         if (dataRes?.media_info) {
                             handleUpdateImage(dataRes?.media_info)
                         }

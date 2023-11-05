@@ -1,22 +1,24 @@
-.header__left{
+.header__left {
     margin-left: var(--spacing-header);
     position: relative;
-    .logo{
+
+    .logo {
         cursor: pointer;
     }
 
-    .search{
-        width:240px;
-        &-input{
-            padding:4px;
+    .search {
+        width: 240px;
+
+        &-input {
+            padding: 4px;
         }
     }
 
-    .box__search{
+    .box__search {
         position: absolute;
         left: calc(0px - var(--spacing-header));
         top: 0;
-        width:110%;
+        width: 110%;
         height: 300px;
         background-color: var(--white-color);
         border-radius: 10px;
@@ -24,48 +26,73 @@
         box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
         transition: all 1s linear;
 
-        .search__back{
+        .search__back {
             height: 40px; // sau tối ưu sau
             position: relative;
             display: flex;
-            align-items:center;
+            align-items: center;
             margin-bottom: 20px;
         }
 
-        .list__result{
+        .list__result {
             display: flex;
             flex-direction: column;
             color: #333;
+            height: inherit;
 
-            &-header{
+            &-header {
                 display: flex;
                 justify-content: space-between;
                 align-items: center;
                 margin-bottom: 4px;
 
-                span:first-child{
+                span:first-child {
                     color: #333;
                     font-size: 1.8rem;
                     font-weight: 600;
                 }
 
-                span:last-child{
+                span:last-child {
                     color: blue;
                     font-size: 1.4rem;
                     padding: 10px;
                     border-radius: 5px;
-                    
-                    &:hover{
+
+                    &:hover {
                         background-color: var(--color-hover);
                         cursor: pointer;
                     }
                 }
             }
 
-            &-list{
+            &-list {
                 display: flex;
                 flex-direction: column;
+                height: 200px;
+                overflow-y: scroll;
+
+                &::-webkit-scrollbar {
+                    border-radius: 0;
+                    width: 8px;
+                }
+
+                &::-webkit-scrollbar-thumb {
+                    border-radius: 4px;
+                    background-color: #d9dce4;
+                }
+
+                &::-webkit-scrollbar-track {
+                    border-radius: 0;
+                    background-color: rgba(0, 0, 0, 0);
+                }
             }
         }
     }
+}
+
+.see_more {
+    font-weight: 500;
+    margin: 0;
+    display: inline-flex;
+    align-self: center;
 }

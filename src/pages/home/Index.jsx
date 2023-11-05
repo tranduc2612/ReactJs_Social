@@ -108,18 +108,18 @@ function Home({ userData }) {
     }, [])
 
     const getListFriend = () => {
-        Post("/action/get-list-account", 
-        {}, 
-        userData?.access_token)
-        .then((res) => {
-            if(checkResponse(res)) {
-                let friend = res?.returnObj?.list_friend;
-                setListFriend(friend);
-            }
-        })
-        .catch((err) => {
-            console.log(err);
-        })
+        Post("/action/get-list-account",
+            {},
+            userData?.access_token)
+            .then((res) => {
+                if (checkResponse(res)) {
+                    let friend = res?.returnObj?.list_friend;
+                    setListFriend(friend);
+                }
+            })
+            .catch((err) => {
+                console.log(err);
+            })
     }
 
     const handleMoreSidebar = () => {
@@ -150,7 +150,7 @@ function Home({ userData }) {
                 refListNewFeed.current.setListPost(newList);
             } else if (functionName === "U") {
                 // Sửa bài viết
-                const updatedPost = res.returnObj;
+                const updatedPost = res.returnObj[0];
                 const updatedState = currentListPost.map((post) => {
                     if (post.post_id === updatedPost.post_id) {
                         return updatedPost;
@@ -186,13 +186,13 @@ function Home({ userData }) {
                 }
                 <div className={cx("your__shortcut")}>
                     <h3 className={"pt-4 pb-2 fs-3"} style={{ paddingLeft: "16px", color: "#6f7175" }}>Lối tắt của bạn</h3>
-                    <SideBarItem avatar={images.icon.insta} title={"Kết nối với Instagram"} shape={"square"} onClick={() => {window.open('https://www.instagram.com/')}}/>
-                    <SideBarItem avatar={images.icon.tiktok} title={"Kết nối với Tiktok"} shape={"square"} onClick={() => {window.open('https://tiktok.com/')}}/>
-                    <SideBarItem avatar={images.icon.twitter} title={"Kết nối với Twitter"} shape={"square"} onClick={() => {window.open('https://twitter.com/')}}/>
-                    <SideBarItem avatar={images.icon.tinder} title={"Kết nối với Tinder"} shape={"square"} onClick={() => {window.open('https://tinder.com/')}}/>
-                    <SideBarItem avatar={images.icon.thread} title={"Kết nối với Thread"} shape={"square"} onClick={() => {window.open('https://thread.com/')}}/>
-                    <SideBarItem avatar={images.icon.github} title={"Có thể bạn đã biết?"} shape={"square"} onClick={() => {window.open('https://github.com/nokiddig/social-network-fb')}}/>
-                    <SideBarItem  />
+                    <SideBarItem avatar={images.icon.insta} title={"Kết nối với Instagram"} shape={"square"} onClick={() => { window.open('https://www.instagram.com/') }} />
+                    <SideBarItem avatar={images.icon.tiktok} title={"Kết nối với Tiktok"} shape={"square"} onClick={() => { window.open('https://tiktok.com/') }} />
+                    <SideBarItem avatar={images.icon.twitter} title={"Kết nối với Twitter"} shape={"square"} onClick={() => { window.open('https://twitter.com/') }} />
+                    <SideBarItem avatar={images.icon.tinder} title={"Kết nối với Tinder"} shape={"square"} onClick={() => { window.open('https://tinder.com/') }} />
+                    <SideBarItem avatar={images.icon.thread} title={"Kết nối với Thread"} shape={"square"} onClick={() => { window.open('https://thread.com/') }} />
+                    <SideBarItem avatar={images.icon.github} title={"Có thể bạn đã biết?"} shape={"square"} onClick={() => { window.open('https://github.com/nokiddig/social-network-fb') }} />
+                    <SideBarItem />
                     <SideBarItem avatar={images.icon.group_avatar_demo} title={"Màn Hình Máy Tính  Thanh Lý Cũ Mới Giá Rẻ"} shape={"square"} />
                 </div>
             </ul>
@@ -214,7 +214,7 @@ function Home({ userData }) {
                 {listFriend.map((friend) => (
                     <SideBarItem active={true} avatar={BASE_URL_MEDIA + friend.avatar} title={friend.fullname} />
                 ))}
-                
+
                 {/* <SideBarItem active={true} avatar={images.icon.avatar_demo} title={"Trần Minh Đức"} /> */}
             </ul>
         </SideBar>

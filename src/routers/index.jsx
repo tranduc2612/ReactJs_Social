@@ -47,7 +47,7 @@ const privateRouter = [
     layout: DefaultLayout,
   },
   {
-    path: "/search",
+    path: "/search/:id",
     page: Search,
     layout: DefaultLayout,
   },

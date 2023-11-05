@@ -6,6 +6,9 @@ import ButtonCustom from "~/components/Button/Button";
 import { useRef } from "react";
 import { formatDate } from "~/utils/format";
 import { useState } from "react";
+import { BASE_URL_MEDIA } from "~/services/base";
+import { Link, useNavigate } from "react-router-dom";
+
 const cx = classNames.bind(styles)
 
 // 0px -2310px -> video
@@ -38,6 +41,8 @@ const TYPE_NOTIFI = {
 
 function NotiItem({ data }) {
     const refItem = useRef(null);
+    const navigate = useNavigate();
+
     const [notiIcon, setNotiIcon] = useState(() => {
         const icon = TYPE_NOTIFI[data?.noti_type];
         if (icon) {
@@ -49,13 +54,22 @@ function NotiItem({ data }) {
 
     }
 
-    const handleClick = (e) => {
+    const handleClick = (e, id, type) => {
         e.stopPropagation();
+        if (id && (type === "LIKE_POST" || type === "COMMENT_POST")) {
+            navigate("/posts/" + id)
+        }
+
+        if (id && type === "ACCEPT_FRIEND") {
+            navigate("/profile/" + id)
+        }
     }
 
-    return (<div className={cx("item")} onClick={handleClick}>
+    console.log(data, "asdasdasd")
+
+    return (<div className={cx("item")} onClick={(e) => handleClick(e, data?.link, data?.noti_type)}>
         <div className={cx("head")}>
-            <ButtonCustom shape="circle" size="xxl" full_icon={true} icon={data?.avatar} />
+            <ButtonCustom shape="circle" size="xxl" full_icon={true} icon={BASE_URL_MEDIA + data?.avatar} />
             <i className={cx("sub_icon")} style={{
                 backgroundImage: `url("${images.icon.list_icon}")`,
                 backgroundPosition: `${notiIcon?.icon}`, zIndex: "999"
@@ -72,7 +86,7 @@ function NotiItem({ data }) {
             </div>
             <div className={cx("co_friend")}>
             </div>
-            {data?.type_code === "ADD_FRIEND" ?
+            {data?.noti_type === "ADD_FRIEND" ?
                 <div className={cx("add_friend_btn")}>
                     <Button onClick={handleClick} ref={refItem} attr={"button"} className={cx("custom__btn", "accept")} variant="primary"><span>Xác nhận</span></Button>
                     <ButtonCustom attr={"button"} className={cx("custom__btn", "deny")}><span>Xóa</span></ButtonCustom>

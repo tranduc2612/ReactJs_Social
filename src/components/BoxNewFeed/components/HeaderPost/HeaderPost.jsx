@@ -16,7 +16,7 @@ import { BASE_URL_MEDIA } from "~/services/base";
 
 const cx = classNames.bind(styles);
 
-function HeaderPost({ handleOpenConfirmDeleteModal, handleOpenEditModal, showModalEditPost, showConfirmBoxDelete, data }) {
+function HeaderPost({ handleOpenConfirmDeleteModal, handleOpenEditModal, showModalEditPost, showConfirmBoxDelete, data, readOnly = false }) {
     const [showSetting, setShowSetting] = useState(false);
     const userData = useSelector((state) => state.auth);
     const type_audience = AUDIENCE_TYPE.find(type => type.code === data?.audience_type) && AUDIENCE_TYPE.find(type => type.code === data?.audience_type)?.image;
@@ -46,7 +46,7 @@ function HeaderPost({ handleOpenConfirmDeleteModal, handleOpenEditModal, showMod
                 </div>
             </div>
             {
-                userData.data_user?.username === data?.username ?
+                userData.data_user?.username === data?.username && !readOnly ?
                     <div className={cx("header__right")}>
                         {handleOpenConfirmDeleteModal == null || handleOpenEditModal == null ? null : <>
                             <div className={cx("setting")}>
