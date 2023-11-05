@@ -23,7 +23,7 @@ const BASE_BTN = {
 }
 
 function Chat({ userData }) {
-  
+
     const [switchBox, setSwitchBox] = useState(false);
     const [valueInputChat, setValueInputChat] = useState("");
     const [listChatSessions, setListChatSessions] = useState([]);
@@ -43,24 +43,24 @@ function Chat({ userData }) {
     // Gọi hết mịa chatsession luôn vì chắc ko nhìu chat lắm đâu và scroll thì ko biết làm :) 
     useEffect(() => {
         Get("/message", {}, userData?.access_token)
-        .then((res) => {
-            if(checkResponse(res)) {
-                let listChatSession = res.returnObj;
+            .then((res) => {
+                if (checkResponse(res)) {
+                    let listChatSession = res.returnObj;
 
-                setListChatSessions(listChatSession);
-                
-                const pusher = new Pusher('83b6c124825dc255f114', {
-                    cluster: 'ap1'
-                })
-                const nameChannel = `chatsession.${userData.data_user?.username}`;
-    
-                // Đăng ký kênh bạn muốn lắng nghe
-                const channel = pusher.subscribe(nameChannel);
-    
-                // Lắng nghe sự kiện từ kênh
-                channel.bind("chatsession", handleEvent);
-            }
-        }) 
+                    setListChatSessions(listChatSession);
+
+                    const pusher = new Pusher('83b6c124825dc255f114', {
+                        cluster: 'ap1'
+                    })
+                    const nameChannel = `chatsession.${userData.data_user?.username}`;
+
+                    // Đăng ký kênh bạn muốn lắng nghe
+                    const channel = pusher.subscribe(nameChannel);
+
+                    // Lắng nghe sự kiện từ kênh
+                    channel.bind("chatsession", handleEvent);
+                }
+            })
     }, []);
 
     const handleEvent = (data) => {
@@ -72,11 +72,11 @@ function Chat({ userData }) {
             console.log('appen', dataRes);
             if (dataRes.type == 'U') {
                 handleSortChatSession(dataRes)
-            } 
-            if (dataRes.type == 'C')  {
+            }
+            if (dataRes.type == 'C') {
                 let newChat = {
                     account: [
-                        {fullname: dataRes.fullname},
+                        { fullname: dataRes.fullname },
                     ],
                     chatSession: {
                         chat_id: dataRes.chat_id,
@@ -85,7 +85,7 @@ function Chat({ userData }) {
                         message: 'Hãy gửi lời chào'
                     }
                 }
-                setListChatSessions((prev) => [newChat,...prev]);
+                setListChatSessions((prev) => [newChat, ...prev]);
             }
         }
 
@@ -145,9 +145,9 @@ function Chat({ userData }) {
 
         setListChatSessions((prev) => {
             let newChat = prev.find((item) => item.chatSession.chat_id == dataRes?.chat_id);
-            if(newChat) newChat.message.message = dataRes.new_message;
+            if (newChat) newChat.message.message = dataRes.new_message;
             let newList = prev.filter((item) => item.chatSession.chat_id != dataRes?.chat_id);
-            
+
             return [
                 newChat,
                 ...newList
@@ -157,15 +157,15 @@ function Chat({ userData }) {
 
     const handleSortChatSessionChild = (chatId, content) => {
         let newChat = listChatSessions.find((item) => item.chatSession.chat_id == chatId);
-        if(newChat) newChat.message.message = content;
+        if (newChat) newChat.message.message = content;
         let newList = listChatSessions.filter((item) => item.chatSession.chat_id != chatId);
-        
+
         setListChatSessions([
             newChat,
             ...newList
         ]);
     };
-    
+
     return (
         <div className={cx("chat__page")}>
             <Row className="g-0">
@@ -174,7 +174,7 @@ function Chat({ userData }) {
                         <CustomBox classBody={cx("custom__body")} header={renderHeaderChatSidebar()} footer={renderFooterChatSidebar()}>
                             <div className={cx("list__chat")}>
                                 {listChatSessions?.map((item) => (
-                                    <ChatItemInfo 
+                                    <ChatItemInfo
                                         key={item.chatSession.chat_id}
                                         data={item}
                                         onClick={() => {
@@ -189,14 +189,15 @@ function Chat({ userData }) {
                 </Col>
                 <Col xs={9} style={{ width: 'auto', height: "100%", flex: 100 }}>
                     <div className={cx("body__page")}>
-                        {curentChatId == 'messenger' ? 
-                            (<div className={cx("box__init")}>
-                                <span>Hãy chọn một đoạn chat hoặc bắt đầu cuộc trò chuyện mới</span>
+                        {curentChatId == 'messenger' ?
+                            (<div className={cx("box__init")} style={{
+                                backgroundImage: `url(${images.icon.message_notfound})`
+                            }}>
                             </div>) :
 
-                            <ListChat key={curentChatId} userData={userData} curentChatId={curentChatId} handleSortChatSession = {handleSortChatSessionChild}/>
+                            <ListChat key={curentChatId} userData={userData} curentChatId={curentChatId} handleSortChatSession={handleSortChatSessionChild} />
                         }
-                        
+
                     </div>
                 </Col>
             </Row>
