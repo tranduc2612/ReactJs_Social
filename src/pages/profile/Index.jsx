@@ -254,6 +254,9 @@ function Profile({ userData }) {
                 )
         }
     }
+    if (!userProfile?.username) {
+        return <></>
+    }
     return (
         <div className={cx("wrapper")}>
             <div className={cx("header")}>

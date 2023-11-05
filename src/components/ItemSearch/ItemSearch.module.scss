@@ -1,4 +1,4 @@
-.item{
+.item {
     display: flex;
     align-items: center;
     flex-direction: flex-start;
@@ -8,32 +8,35 @@
     background-color: transparent;
     transition: all 0.3 linear;
 
-    &:hover{
-        background-color:var(--color-hover);
+    &:hover {
+        background-color: var(--color-hover);
     }
 
-    .avatar{
-        img{
-            width:50px;
+    .avatar {
+
+        img {
+            border-radius: 100%;
+            width: 50px;
             height: 50px;
         }
     }
-    
-    .info{
+
+    .info {
         margin-left: 5px;
-        .name{
-            span{
+
+        .name {
+            span {
                 color: #333;
-                font-size:1.6rem;
-                font-weight:bold;
+                font-size: 1.6rem;
+                font-weight: bold;
                 list-style: 1.6rem;
             }
         }
 
-        .relative{
-            span{
+        .relative {
+            span {
                 color: #333;
-                font-size:1.4rem;
+                font-size: 1.4rem;
                 list-style: 1.6rem;
             }
         }

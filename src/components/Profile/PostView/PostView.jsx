@@ -71,7 +71,7 @@ function PostView({ userData, userProfileData, handleUpdateInfo = null }) {
                 refListProfileFeed.current.setListPost(newList);
             } else if (functionName === "U") {
                 // Sửa bài viết
-                const updatedPost = res.returnObj;
+                const updatedPost = res.returnObj[0];
                 const updatedState = currentListPost.map((post) => {
                     if (post.post_id === updatedPost.post_id) {
                         return updatedPost;
@@ -188,9 +188,14 @@ function PostView({ userData, userProfileData, handleUpdateInfo = null }) {
 
             </div>
             <div className={cx("main_content")}>
-                <CreatePost />
+                {
+                    userProfileData?.username &&
+                    <>
+                        <CreatePost />
 
-                <ListNewFeed userData={userData} fetchApiPost={fetchApiPost} ref={refListProfileFeed} handlePost={handlePost} />
+                        <ListNewFeed userData={userData} fetchApiPost={fetchApiPost} ref={refListProfileFeed} handlePost={handlePost} />
+                    </>
+                }
             </div>
 
         </div>

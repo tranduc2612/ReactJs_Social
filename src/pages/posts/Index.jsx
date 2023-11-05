@@ -13,13 +13,14 @@ const cx = classNames.bind(styles);
 
 function Posts({ userData }) {
     const navigate = useNavigate();
+    const idParam = getParamUrl();
     const [postData, setPostData] = useState({});
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        const id = getParamUrl();
+
         Post("/post/get-post-by-id", {
-            post_id: id
+            post_id: idParam
         }, userData?.access_token)
             .then(res => {
                 if (checkResponse(res)) {
@@ -34,7 +35,7 @@ function Posts({ userData }) {
                 setLoading(false);
             })
 
-    }, [])
+    }, [idParam])
 
     const handlePost = async (dataSend) => {
         const res = await Post(

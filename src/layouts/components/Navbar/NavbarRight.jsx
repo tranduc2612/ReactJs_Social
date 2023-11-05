@@ -16,7 +16,7 @@ const cx = classNames.bind(styles);
 
 
 
-function NavbarRight({ listItem }) {
+function NavbarRight({ listItem, handleRedirect }) {
     const userData = useSelector((state) => state.auth);
     const [countNoti, setCountNoti] = useState(0);
     const [lstNoti, setLstNoti] = useState([]);
@@ -158,7 +158,7 @@ function NavbarRight({ listItem }) {
             //     props.
             // }
             return (
-                <Popper key={e.id} item={e} PopperRender={Comp} />
+                <Popper key={e.id} item={e} PopperRender={Comp} handleRedirect={handleRedirect} />
             )
         })}
     </>);

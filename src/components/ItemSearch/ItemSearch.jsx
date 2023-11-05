@@ -3,23 +3,24 @@ import { Link } from "react-router-dom";
 import styles from "./ItemSearch.module.scss"
 import images from "~/assets/images/index"
 import { useEffect, useState } from "react";
+import { BASE_URL_MEDIA } from "~/services/base";
 
 const cx = classNames.bind(styles);
 
-function ItemSearch({nameUser,avatar,relative,url}) {
-    return ( <Link to={url} className={cx("item")}>
+function ItemSearch({ fullname, avatar, number_friend, username, removeBoxSearch }) {
+    return (<Link to={`/profile/${username}`} className={cx("item")} onClick={() => removeBoxSearch()}>
         <div className={cx("avatar")}>
-            <img src={images.logo.img_logo} />
+            <img src={BASE_URL_MEDIA + avatar} />
         </div>
         <div className={cx("info")}>
             <div className={cx("name")}>
-                <span>Trần Minh Đức</span>
+                <span>{fullname}</span>
             </div>
             <div className={cx("relative")}>
-                <span>Bạn bè</span>
+                <span>{number_friend} Bạn bè</span>
             </div>
         </div>
-    </Link> );
+    </Link>);
 }
 
 export default ItemSearch;

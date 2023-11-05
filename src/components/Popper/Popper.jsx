@@ -5,7 +5,7 @@ import Button from "~/components/Button/Button";
 
 const cx = classNames.bind(styles);
 
-function Popper({ item, PopperRender }) {
+function Popper({ item, PopperRender, handleRedirect }) {
     let Comp = "div"
     const refBox = useRef(null);
     const refPopper = useRef(null);
@@ -47,7 +47,7 @@ function Popper({ item, PopperRender }) {
             <Button className={"custom__popper"} ref={refPopper} shape="circle" active={showBox} icon={item.icon} full_icon={item.full_icon} size={"xl"} onClick={handleClick} />
         </div>
         {
-            showBox && <Comp data={item} ref={refBox} />
+            showBox && <Comp data={item} setShowBox={setShowBox} ref={refBox} handleRedirect={handleRedirect} />
         }
     </div>);
 }
