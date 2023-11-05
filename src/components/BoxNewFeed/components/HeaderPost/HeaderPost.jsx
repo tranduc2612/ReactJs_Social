@@ -13,10 +13,11 @@ import { formatDate } from "~/utils/format";
 import { AUDIENCE_TYPE } from "~/utils/constant";
 import { useSelector, useDispatch } from 'react-redux'
 import { BASE_URL_MEDIA } from "~/services/base";
-
+import { Link, useNavigate } from "react-router-dom";
 const cx = classNames.bind(styles);
 
 function HeaderPost({ handleOpenConfirmDeleteModal, handleOpenEditModal, showModalEditPost, showConfirmBoxDelete, data, readOnly = false }) {
+    const navigate = useNavigate();
     const [showSetting, setShowSetting] = useState(false);
     const userData = useSelector((state) => state.auth);
     const type_audience = AUDIENCE_TYPE.find(type => type.code === data?.audience_type) && AUDIENCE_TYPE.find(type => type.code === data?.audience_type)?.image;
@@ -27,20 +28,24 @@ function HeaderPost({ handleOpenConfirmDeleteModal, handleOpenEditModal, showMod
         }
     }, [showModalEditPost, showConfirmBoxDelete])
 
+    const handleRedirectProfile = () => {
+        window.open(`/profile/${data?.username}`, "_self")
+        // navigate(`/profile/${data?.username}`)
+    }
+
     return (<>
         <div className={cx("header")}>
             <div className={cx("header__left")}>
-                <div className={cx("avatar")}>
+                <div className={cx("avatar")} onClick={handleRedirectProfile}>
                     <Button icon={BASE_URL_MEDIA + data?.avatar} full_icon={true} shape="circle" />
                 </div>
                 <div className={cx("info")}>
-                    <div className={cx("name__author")}>
+                    <div className={cx("name__author")} onClick={handleRedirectProfile}>
                         <span>{data?.fullname || "Cần cập nhật thông tin"}</span>
                     </div>
 
                     <div className={cx("time__created")}>
                         <span>{formatDate(data?.created_at)}</span>
-                        {console.log(data)}
                         <span className={cx("privacy")}><img className={cx("privacy_icon")} src={type_audience} /></span>
                     </div>
                 </div>
