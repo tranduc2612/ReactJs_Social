@@ -29,7 +29,7 @@ function Header() {
             id: 2,
             title: "Trò chuyện",
             icon: VideoIcon,
-            isActive: getCurrentUrl() === "/messenger",
+            isActive: getCurrentUrl() === "/messenger" || getCurrentUrl().includes("/messenger/"),
             url: "/messenger"
         },
         {

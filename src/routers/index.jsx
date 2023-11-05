@@ -8,6 +8,7 @@ import Register from "../pages/register/index";
 import Messenger from "../pages/messenger/Index"
 import Search from "../pages/search/Index";
 import Posts from "~/pages/posts/Index";
+import ForgetPassword from "~/pages/forgetpass/Index";
 
 const publicRouter = [
   {
@@ -26,6 +27,12 @@ const publicRouter = [
     path: "/posts/:id",
     page: Posts,
     layout: DefaultLayout,
+    auth: true // chi tiết bài viết
+  },
+  {
+    path: "/forgetpass",
+    page: ForgetPassword,
+    layout: null,
     auth: true // chi tiết bài viết
   },
 ];

@@ -79,7 +79,6 @@ function Login({ userData }) {
                                 validationSchema={schema}
                             >
                                 {({ handleSubmit, handleChange, values, touched, errors }) => (
-
                                     <Form noValidate onSubmit={handleSubmit}>
                                         <div className={cx("input_container")}>
                                             <InputForm
@@ -109,7 +108,7 @@ function Login({ userData }) {
 
                                         <Button className={cx("buttonForm")} type="submit">Đăng nhập</Button>
                                         <div className={cx("forgot_pass")}>
-                                            <a href="">Quên mật khẩu?</a>
+                                            <a href="/forgetpass">Quên mật khẩu?</a>
                                         </div>
                                         <div className={cx("divider")}></div><Button onClick={(e) => { navigate("/register") }} className={cx("buttonForm", "create")}>Tạo tài khoản mới</Button>
 

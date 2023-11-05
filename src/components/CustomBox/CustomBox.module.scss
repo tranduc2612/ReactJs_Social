@@ -1,9 +1,9 @@
-.custom__box{
-    .header{
+.custom__box {
+    .header {
         border-bottom: 1px solid #d4d6d9;
     }
 
-    .body{
+    .body {
         max-height: 490px;
         overflow: overlay;
 
@@ -11,11 +11,12 @@
             border-radius: 0;
             width: 8px;
         }
-        
+
         &::-webkit-scrollbar-thumb {
             border-radius: 4px;
             background-color: #d9dce4;
         }
+
         &::-webkit-scrollbar-track {
             position: absolute;
             border-radius: 0;
@@ -23,7 +24,7 @@
         }
     }
 
-    .footer{
+    .footer {
         border-top: 1px solid #d4d6d9;
     }
 }
