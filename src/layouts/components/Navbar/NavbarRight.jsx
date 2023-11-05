@@ -20,6 +20,7 @@ function NavbarRight({ listItem, handleRedirect }) {
     const userData = useSelector((state) => state.auth);
     const [countNoti, setCountNoti] = useState(0);
     const [lstNoti, setLstNoti] = useState([]);
+    const [lstMsg, setLstMsg] = useState([]);
     const [loading, setLoading] = useState(false);
     const InfoButton = [
         {
@@ -37,7 +38,7 @@ function NavbarRight({ listItem, handleRedirect }) {
             icon: images.icon.messenger_dark_icon,
             full_icon: false,
             count_seen: 0,
-            lstData: [],
+            lstData: lstMsg,
             box_popper: BoxMessenger,
             loading: loading
         },
@@ -145,6 +146,28 @@ function NavbarRight({ listItem, handleRedirect }) {
                 setLoading(false)
             })
 
+    }, []);
+
+    useEffect(() => {
+        Get("/message", {}, userData?.access_token)
+        .then((res) => {
+            if(checkResponse(res)) {
+                let listChatSession = res.returnObj;
+
+                setLstMsg(listChatSession);
+                
+                // const pusher = new Pusher('83b6c124825dc255f114', {
+                //     cluster: 'ap1'
+                // })
+                // const nameChannel = `chatsession.${userData.data_user?.username}`;
+    
+                // // Đăng ký kênh bạn muốn lắng nghe
+                // const channel = pusher.subscribe(nameChannel);
+    
+                // // Lắng nghe sự kiện từ kênh
+                // channel.bind("chatsession", handleEvent);
+            }
+        }) 
     }, []);
     return (<>
         {/* <Popper key={InfoButton[0].id} item={InfoButton[0]} PopperRender={null} />

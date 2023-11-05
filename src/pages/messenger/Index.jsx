@@ -178,7 +178,6 @@ function Chat({ userData }) {
                                         key={item.chatSession.chat_id}
                                         data={item}
                                         onClick={() => {
-                                            console.log('redirecting ...')
                                             setCurentChatId(item.chatSession.chat_id);
                                             navigate(`/messenger/${item.chatSession.chat_id}`)
                                         }}

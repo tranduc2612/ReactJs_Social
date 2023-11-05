@@ -11,14 +11,13 @@ const cx = classNames.bind(styles)
 
 
 function BoxMessenger(props,ref) {
-    
+    const { data, loading } = props;
     const [switchBox,setSwitchBox] = useState(false);
 
     const handleWitchBox = (e) =>{
         setSwitchBox(!switchBox)
     }
     
-
     return ( <div className={cx("wrapper")} ref={ref}>
     <Box>
         <div className={cx("messenger")}>
@@ -41,6 +40,16 @@ function BoxMessenger(props,ref) {
                 </div>
 
                 <ul className={cx("list__chat")}>
+                    {data?.lstData.map((item) => (
+                        <ChatItem 
+                            key={item.chatSession.chat_id}
+                            data={item}
+                            onClick={() => {
+                                window.open(`/messenger/${item.chatSession.chat_id}`, "_self")
+                            }}
+                        />
+                    ))}
+                    {/* <ChatItem />
                     <ChatItem />
                     <ChatItem />
                     <ChatItem />
@@ -64,8 +73,7 @@ function BoxMessenger(props,ref) {
                     <ChatItem />
                     <ChatItem />
                     <ChatItem />
-                    <ChatItem />
-                    <ChatItem />
+                    <ChatItem /> */}
 
                 </ul>
             </div>
