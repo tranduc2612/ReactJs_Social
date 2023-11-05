@@ -7,7 +7,7 @@ import images from "~/assets/images/index";
 import Button from "../Button/Button";
 import { logOut } from "~/redux/actions/authActions";
 import { useDispatch, useSelector } from 'react-redux'
-import { Post } from "~/services/base";
+import { BASE_URL_MEDIA, Post } from "~/services/base";
 import checkResponse from "~/utils/checkResponse";
 import { removeAllKeyAuthentication } from "~/utils/contactWithLocalStorage";
 import { clearPost } from "~/redux/store/postSlide";
@@ -19,6 +19,7 @@ function BoxAvatar(props, ref) {
     const userData = useSelector((state) => state.auth);
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const { setShowBox, handleRedirect } = props
 
 
     const handleLogOut = async () => {
@@ -40,9 +41,9 @@ function BoxAvatar(props, ref) {
             <div className={cx("header")}>
                 <Box className={cx("box__header")}>
                     <div className={cx("header__top")}>
-                        <Button icon={images.icon.avatar_demo} full_icon={true} shape={"circle"} />
+                        <Button icon={BASE_URL_MEDIA + userData.data_user?.avatar} full_icon={true} shape={"circle"} />
                         <div className={cx("name")}>
-                            Trần Minh Đức
+                            {userData.data_user?.fullname}
                         </div>
                     </div>
 
@@ -51,7 +52,10 @@ function BoxAvatar(props, ref) {
                     </div>
 
                     <div className={cx("header__bottom")}>
-                        <Link className={cx("redirect")}>
+                        <Link className={cx("redirect")} onClick={() => {
+                            setShowBox(false)
+                            handleRedirect(3, `profile/${userData.data_user?.username}`)
+                        }} to={`/profile/${userData.data_user?.username}`}>
                             Đi đến trang cá nhân
                         </Link>
                     </div>

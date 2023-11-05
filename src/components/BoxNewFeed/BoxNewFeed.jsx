@@ -36,7 +36,7 @@ const cx = classNames.bind(styles);
 
 export const CommentContext = createContext()
 
-function BoxNewFeed({ data, shared, userData, handlePost }) {
+function BoxNewFeed({ data, shared, userData, handlePost, readOnly = false }) {
     const BASE_STATE_REACT = {
         id: null,
         title: "Thích",
@@ -317,9 +317,9 @@ function BoxNewFeed({ data, shared, userData, handlePost }) {
             <Modal show={showDetailPost} onHide={handleClose} centered size={"lg"}>
                 <CustomBox className={cx("detail__post")} header={renderHeaderDetailPost()} footer={renderFooterDetailPost()} ref={refBoxDetail}>
                     <div className={cx("detail__post-body")}>
-                        <HeaderPost data={data} userData={userData} showModalEditPost={showModalEditPost} showConfirmBoxDelete={showConfirmBoxDelete} handleOpenConfirmDeleteModal={handleOpenConfirmDeleteModal} handleOpenEditModal={handleOpenEditModal} />
+                        <HeaderPost readOnly={readOnly} data={data} userData={userData} showModalEditPost={showModalEditPost} showConfirmBoxDelete={showConfirmBoxDelete} handleOpenConfirmDeleteModal={handleOpenConfirmDeleteModal} handleOpenEditModal={handleOpenEditModal} />
 
-                        {lstImg.length > 0 ?
+                        {lstImg?.length > 0 ?
                             <div className={cx("", {
                                 post__searched: shared
                             })}>
@@ -528,7 +528,7 @@ function BoxNewFeed({ data, shared, userData, handlePost }) {
 
     return (<div className={cx("box__newfeed", "box-custom")}>
         {/* header newfeed post */}
-        <HeaderPost data={data} showModalEditPost={showModalEditPost} showConfirmBoxDelete={showConfirmBoxDelete} handleOpenConfirmDeleteModal={handleOpenConfirmDeleteModal} handleOpenEditModal={handleOpenEditModal} />
+        <HeaderPost data={data} readOnly={readOnly} showModalEditPost={showModalEditPost} showConfirmBoxDelete={showConfirmBoxDelete} handleOpenConfirmDeleteModal={handleOpenConfirmDeleteModal} handleOpenEditModal={handleOpenEditModal} />
 
         {/* noi dung newfeed post */}
         {shared ? <>
@@ -540,7 +540,7 @@ function BoxNewFeed({ data, shared, userData, handlePost }) {
                 </div>
 
                 <div className={cx("post__searched-header")}>
-                    <HeaderPost />
+                    <HeaderPost data={data} readOnly={readOnly} showModalEditPost={showModalEditPost} showConfirmBoxDelete={showConfirmBoxDelete} handleOpenConfirmDeleteModal={handleOpenConfirmDeleteModal} handleOpenEditModal={handleOpenEditModal} />
                 </div>
             </div>
         </> : <>
