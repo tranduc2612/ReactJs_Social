@@ -2,6 +2,7 @@ import classNames from "classnames/bind";
 import styles from "./ChatItemInfo.module.scss";
 import Button from '~/components/Button/Button';
 import images from "~/assets/images/index";
+import { BASE_URL_MEDIA } from "~/services/base";
 
 const cx = classNames.bind(styles)
 
@@ -10,7 +11,7 @@ function ChatItemInfo(props) {
 
     return (<div onClick={onClick} className={cx("item")}>
         <div className={cx("avatar")}>
-            <Button size={"xxl"} icon={data?.acccount?.avatar} full_icon={true} shape={"circle"} />
+            <Button size={"xxl"} icon={BASE_URL_MEDIA + data?.account?.[0].avatar} full_icon={true} shape={"circle"} />
         </div>
         <div className={cx("body")}>
             <div className={cx("name")}>
