@@ -60,7 +60,7 @@ function NotiItem({ data }) {
             navigate("/posts/" + id)
         }
 
-        if (id && type === "ACCEPT_FRIEND") {
+        if (id && (type === "ACCEPT_FRIEND" || type === "ADD_FRIEND")) {
             navigate("/profile/" + id)
         }
     }

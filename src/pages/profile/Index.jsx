@@ -16,6 +16,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { INPUT_ACCEPT_TYPE_IMAGE } from "~/utils/constant";
 import { useDispatch } from 'react-redux'
 import { updateAccount } from "~/redux/store/authSlide";
+import Loading from "~/components/Loading/Loading";
 
 
 const cx = classNames.bind(styles);
@@ -60,10 +61,10 @@ const LIST_NAVBAR = [
 ];
 
 function Profile({ userData }) {
-
     const [content, setContent] = useState(LIST_NAVBAR[0]);
     const [userProfile, setUserProfile] = useState({});
     const [listFriends, setListFriends] = useState([]);
+    const [loading, setLoading] = useState(true);
     const [chatId, setChatId] = useState('undefined');
     const navigate = useNavigate();
     const [linkAvatar, setLinkAvatar] = useState(null);
@@ -71,16 +72,17 @@ function Profile({ userData }) {
     const refAvatarInput = useRef(null);
     const refCoverInput = useRef(null);
     const dispatch = useDispatch();
+    const paramUrlUsername = getParamUrl();
     console.log(userData);
     useEffect(() => {
-        let profileUsername = getParamUrl();
+        getProfileInfo(paramUrlUsername);
+        getChatId(paramUrlUsername);
 
-        getProfileInfo(profileUsername);
-        getChatId(profileUsername);
-    }, [])
+    }, [paramUrlUsername])
 
 
     const getProfileInfo = (profileUsername) => {
+        setLoading(true);
         Post("/action/get-profile",
             {
                 profile_username: profileUsername,
@@ -97,7 +99,7 @@ function Profile({ userData }) {
                     setListFriends(listFriend);
                     setLinkAvatar(profileUserData.avatar)
                     setLinkCover(profileUserData.cover)
-
+                    setLoading(false);
                 }
             })
             .catch((err) => {
@@ -254,54 +256,65 @@ function Profile({ userData }) {
                 )
         }
     }
-    if (!userProfile?.username) {
-        return <></>
-    }
     return (
-        <div className={cx("wrapper")}>
-            <div className={cx("header")}>
-                <div className={cx("cover_container")}>
-                    <div className={cx("cover")} style={{ backgroundImage: `url("${BASE_URL_MEDIA + linkCover}")` }}>
-                    </div>
-                </div>
-                <div className={cx("info_container")}>
-                    <div className={cx("info")}>
-                        <div className={cx("avatar_container")}>
-                            <Button className={cx("avatar")} shape="circle" icon={BASE_URL_MEDIA + linkAvatar} full_icon={true} size={"avt"} />
-                            <Button className={cx("upload")} shape="circle" icon={images.icon.icon_camera} size={"sm"} onClick={() => refAvatarInput.current.click()} />
-                            <input className="d-none" type="file" ref={refAvatarInput} onChange={handleUpAvatar} />
-                        </div>
-                        <div className={cx("name_container")}>
-                            <div className={cx("name")}>{userProfile.fullname}</div>
-                            <div className={cx("num_friend")}>{userProfile.number_friend} bạn bè</div>
-                        </div>
-                        <div className={cx("option_container")}>
-                            {renderButton()}
-                        </div>
-                    </div>
-                </div>
-                <div className={cx("divider")}>
-                </div>
-            </div>
-            <div className={cx("navbar")}>
-                <div className={cx("navbar_container")}>
-                    {LIST_NAVBAR.map((nav) => {
-                        return (
-                            <div key={nav.id} className={cx("navbar_item")} onClick={() => setContent(nav)}>
-                                <span className={cx("", { title_active: nav.id == content.id })}>{nav.title}</span>
-                                <div className={cx("", { underline: nav.id == content.id })}></div>
-                            </div>
-                        )
-                    })}
-                </div>
-            </div>
-            <div className={cx("content")}>
-                <div className={cx("content_container")}>
-                    <content.component userData={userData} userProfileData={userProfile} handleUpdateInfo={handleUpdateInfo} />
 
+        <div className={cx("wrapper")}>
+            {!userProfile?.username && loading ? <>
+                <div style={{
+                    position: "absolute",
+                    top: "50%",
+                    left: "50%",
+                    transform: "translate(-50%,-50%)"
+                }}>
+                    <Loading />
                 </div>
-            </div>
-            <ToastContainer />
+            </> : <>
+
+                <div className={cx("header")}>
+                    <div className={cx("cover_container")}>
+                        <div className={cx("cover")} style={{ backgroundImage: `url("${BASE_URL_MEDIA + linkCover}")` }}>
+                        </div>
+                    </div>
+                    <div className={cx("info_container")}>
+                        <div className={cx("info")}>
+                            <div className={cx("avatar_container")}>
+                                <Button className={cx("avatar")} shape="circle" icon={BASE_URL_MEDIA + linkAvatar} full_icon={true} size={"avt"} />
+                                <Button className={cx("upload")} shape="circle" icon={images.icon.icon_camera} size={"sm"} onClick={() => refAvatarInput.current.click()} />
+                                <input className="d-none" type="file" ref={refAvatarInput} onChange={handleUpAvatar} />
+                            </div>
+                            <div className={cx("name_container")}>
+                                <div className={cx("name")}>{userProfile.fullname}</div>
+                                <div className={cx("num_friend")}>{userProfile.number_friend} bạn bè</div>
+                            </div>
+                            <div className={cx("option_container")}>
+                                {renderButton()}
+                            </div>
+                        </div>
+                    </div>
+                    <div className={cx("divider")}>
+                    </div>
+                </div>
+                <div className={cx("navbar")}>
+                    <div className={cx("navbar_container")}>
+                        {LIST_NAVBAR.map((nav) => {
+                            return (
+                                <div key={nav.id} className={cx("navbar_item")} onClick={() => setContent(nav)}>
+                                    <span className={cx("", { title_active: nav.id == content.id })}>{nav.title}</span>
+                                    <div className={cx("", { underline: nav.id == content.id })}></div>
+                                </div>
+                            )
+                        })}
+                    </div>
+                </div>
+                <div className={cx("content")}>
+                    <div className={cx("content_container")}>
+                        <content.component userData={userData} userProfileData={userProfile} handleUpdateInfo={handleUpdateInfo} />
+
+                    </div>
+                </div>
+                <ToastContainer />
+            </>}
+
         </div>
     );
 }

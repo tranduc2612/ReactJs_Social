@@ -13,7 +13,7 @@ import Loading from "../Loading/Loading";
 
 const cx = classNames.bind(styles);
 
-function ListNewFeed({ userData, fetchApiPost, handlePost }, ref) {
+function ListNewFeed({ userData, fetchApiPost, handlePost, username }, ref) {
     // const lstPost = useSelector((state) => state.post);
     // const dispatch = useDispatch();
     const [loading, setLoading] = useState(false);
@@ -53,7 +53,7 @@ function ListNewFeed({ userData, fetchApiPost, handlePost }, ref) {
                 setLoading(false);
             })
 
-    }, [])
+    }, [username])
 
     useEffect(() => {
         const handleScroll = async () => {

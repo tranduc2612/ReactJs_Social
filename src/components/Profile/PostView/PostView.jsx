@@ -192,8 +192,7 @@ function PostView({ userData, userProfileData, handleUpdateInfo = null }) {
                     userProfileData?.username &&
                     <>
                         <CreatePost />
-
-                        <ListNewFeed userData={userData} fetchApiPost={fetchApiPost} ref={refListProfileFeed} handlePost={handlePost} />
+                        <ListNewFeed key={userProfileData?.username} userData={userData} fetchApiPost={fetchApiPost} ref={refListProfileFeed} handlePost={handlePost} username={userProfileData?.username} />
                     </>
                 }
             </div>
