@@ -125,6 +125,7 @@ function Search() {
     const FriendView = ({ listAccount }) => {
         return (
             <div className={cx("friendview", "row")}>
+         
                 {listAccount.map((friend) => {
                     return (
                         <Box className={cx("box_container")} key={friend?.username}>

@@ -16,6 +16,8 @@ import 'react-toastify/dist/ReactToastify.css';
 import { INPUT_ACCEPT_TYPE_IMAGE } from "~/utils/constant";
 import { useDispatch } from 'react-redux'
 import { updateAccount } from "~/redux/store/authSlide";
+
+
 const cx = classNames.bind(styles);
 
 const InCommingView = () => {
@@ -86,7 +88,6 @@ function Profile({ userData }) {
             userData?.access_token)
             .then((res) => {
                 if (checkResponse(res)) {
-                    console.log('react', res)
                     let profileUserData = res?.returnObj?.profile?.[0];
                     let listFriend = res?.returnObj?.friends;
                     setUserProfile({
@@ -200,7 +201,7 @@ function Profile({ userData }) {
             return (
                 <>
                     <Button className={cx("update")} icon={images.icon.pen_icon} size={"text_icon"} onClick={() => refCoverInput.current.click()} >
-                        Chỉnh sửa trang cá nhân
+                        Thay đổi ảnh bìa
                     </Button>
                     <input className="d-none" type="file" ref={refCoverInput} onChange={handleUpCover} />
                 </>

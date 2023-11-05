@@ -8,7 +8,7 @@ import CustomBox from "~/components/CustomBox/CustomBox";
 import InputEditor from '~/components/InputEditor/InputEditor';
 import MessengerContent from "~/components/MessegerItem/MessageContent/MessegerItem";
 import TimeLine from "~/components/MessegerItem/TimeLine/TimeLine";
-import { Get, Post } from "~/services/base";
+import { Get, Post, BASE_URL_MEDIA } from "~/services/base";
 import checkResponse from "~/utils/checkResponse";
 import styles from "./ListChat.module.scss";
 
@@ -19,7 +19,7 @@ const BASE_BTN = {
     box_group: false
 }
 
-function ListChat({ userData, curentChatId }) {
+function ListChat({ userData, curentChatId, handleSortChatSession }) {
   
     const [valueInputChat, setValueInputChat] = useState("");
     const inputEditRef = useRef(null)
@@ -92,13 +92,13 @@ function ListChat({ userData, curentChatId }) {
         return (
             <div className={cx("header")}>
                 <div className={cx("header__left")}>
-                    <div className={cx("avatar")}>
-                        <Button icon={images.icon.avatar_demo} shape="circle" full_icon={true} />
+                    <div onClick={() => navigate('/profile/' + currentInfo.username)} className={cx("avatar")}>
+                        <Button icon={BASE_URL_MEDIA + currentInfo.avatar} shape="circle" full_icon={true} />
                     </div>
                     <div className={cx("info")}>
                         <span>{currentInfo.fullname}</span>
                         <span>
-                            {currentInfo.is_active ? 'Đang hoạt động' : 'Hoạt động gần đây'}
+                            {!currentInfo.is_active ? 'Đang hoạt động' : 'Hoạt động gần đây'}
                             <div style={{
                                 backgroundImage: "url('https://static.xx.fbcdn.net/rsrc.php/v3/y0/r/Q3LgX05mDcX.png')",
                                 backgroundPosition: "0px -244px",
@@ -151,6 +151,7 @@ function ListChat({ userData, curentChatId }) {
             if(checkResponse(res)) {
                 let mes = res.returnObj
                 setLstMessage((prev) => [...prev, mes])
+                handleSortChatSession(curentChatId, valueInputChat);
             }
 
         }) 
