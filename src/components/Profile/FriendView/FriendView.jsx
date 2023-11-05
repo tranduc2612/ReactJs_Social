@@ -7,6 +7,7 @@ import { useEffect, useRef, useState } from "react";
 import Button from "~/components/Button/Button";
 import { Get, Post, BASE_URL_MEDIA } from "~/services/base";
 import checkResponse from "~/utils/checkResponse";
+import { ToastContainer, toast } from 'react-toastify';
 
 const cx = classNames.bind(styles);
 
@@ -75,6 +76,7 @@ function FriendView({ userData, userProfileData, handleUpdateInfo = null }) {
                 if (checkResponse(res)) {
                     // let type = res?.returnObj?.[0].type_relation ?? null;
                     // setUserProfile((prev) => {return {...prev, type_relationship: type}});
+                    
                     switch (content.id) {
 
                         case 'FRIEND':
@@ -95,6 +97,9 @@ function FriendView({ userData, userProfileData, handleUpdateInfo = null }) {
                             }
                             break;
                     }
+                    // setLoadCall((prev) => prev + 1);
+                    toast.success('Cập nhật danh sách bạn bè thành công');
+                    handleUpdateInfo({});
                 }
             })
             .catch((err) => {

@@ -13,18 +13,31 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { Post } from "~/services/base";
 import checkResponse from "~/utils/checkResponse";
+import { useDispatch, useSelector } from 'react-redux'
+import { removeAllKeyAuthentication } from "~/utils/contactWithLocalStorage";
+import { Link, useNavigate } from "react-router-dom";
+import { logOut } from "~/redux/actions/authActions";
+import { clearPost } from "~/redux/store/postSlide";
 
 const cx = classNames.bind(styles);
 
 function IntroView({ userData, userProfileData, handleUpdateInfo }) {
-    
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     const overView = () => {
         const [isEdit, setIsEdit] = useState(false);
 
         const handleSubmit = (values, formikHelpers) => {
-            console.log('valuesssss',values);
             let birth = new Date(values.year, values.month - 1, values.day);
+            
+            if (birth >= (new Date()) ) {
+                formikHelpers.setFieldError('day', 'Hãy chọn ngày sinh hợp lệ');
+                formikHelpers.setFieldError('month', ' ');
+                formikHelpers.setFieldError('year', ' ');
+                return;
+            }
+
             Post("/action/update-profile", 
             {
                 location: values.location,
@@ -51,10 +64,9 @@ function IntroView({ userData, userProfileData, handleUpdateInfo }) {
             })
         }
 
-        // const schema = yup.object().shape({
-        //     email: yup.string().required(),
-        //     password: yup.string().required(),
-        // });
+        const schema = yup.object().shape({
+            phone: yup.string().matches(/^\d{9,}$/, 'Số điện thoại không đúng định dạng'),
+        });
         
         return (
         <div className={cx("overview")}>
@@ -63,19 +75,23 @@ function IntroView({ userData, userProfileData, handleUpdateInfo }) {
                     
                     <Formik
                         initialValues={{
-                            ...userProfileData,
+                            about_me: userProfileData.about_me,
+                            location: userProfileData.location,
+                            phone: userProfileData.phone,
+                            email: userProfileData.email,
                             day: userProfileData == null ? '' : new Date(userProfileData?.day_of_birth).getDate(),
                             month: userProfileData == null ? '' : new Date(userProfileData?.day_of_birth).getMonth() + 1,
                             year: userProfileData == null ? '' : new Date(userProfileData?.day_of_birth).getFullYear(),
+                            gender: userProfileData?.gender
                         }}
                         onSubmit={(values, formikHelpers) => handleSubmit(values, formikHelpers)}
-                        // validationSchema = {schema}
+                        validationSchema = {schema}
                     >
                         {({ handleSubmit, handleChange, values, touched, errors }) => (
                             <Form noValidate onSubmit={handleSubmit}>
                                 {/* Button edit */}
                                 <div className={cx("btn_topright")}>
-                                    <Button type="submit" className={cx("message")} icon={images.icon.pen_icon} size={"text_icon"} >
+                                    <Button type="button" className={cx("message")} icon={images.icon.pen_icon} size={"text_icon"} >
                                         Lưu thay đổi
                                     </Button>
                                 </div>
@@ -166,6 +182,7 @@ function IntroView({ userData, userProfileData, handleUpdateInfo }) {
                                             component = "Check"
                                             id = "female"
                                             label = "Nữ"
+                                            value = '0'
                                             // checked = {values.gender == '0'}
                                             feedback="You must agree before submitting."
                                             feedbackType="invalid"
@@ -179,6 +196,7 @@ function IntroView({ userData, userProfileData, handleUpdateInfo }) {
                                             component = "Check"
                                             id = "male"
                                             label = "Nam"
+                                            value = '1'
                                             // checked = {values.gender == '1'}
                                         />
                                     </div>
@@ -188,6 +206,7 @@ function IntroView({ userData, userProfileData, handleUpdateInfo }) {
                                         inline
                                         id = "none"
                                         name = "gender"
+                                        value = '2'
                                         component = "Check"
                                         label = "Tùy chỉnh"
                                         // checked = {values.gender == '2'}
@@ -310,10 +329,50 @@ function IntroView({ userData, userProfileData, handleUpdateInfo }) {
     }
 
     const settingView =() => {
-        const handleSubmit = (values, formikHelpers) => {
-            console.log(values);
-
+        const handleLogOut = async () => {
+            removeAllKeyAuthentication()
+            try {
+                const data = await Post("/logout", {}, userData?.access_token);
+                if (checkResponse(data)) {
+                    dispatch(logOut())
+                    dispatch(clearPost())
+                    navigate("/login")
+                }
+            } catch (error) {
+                console.error(error);
+            }
         }
+
+        const handleSubmit = (values, formikHelpers) => {
+            Post("/action/change-password",
+            {
+                current_password: values.old_pass,
+                new_password: values.new_pass,
+            },
+            userData?.access_token)
+            .then((res) => {
+                if (checkResponse(res)) {
+                    console.log('ress', res)
+                    toast.success('Đổi mật khẩu thành công');
+                    setTimeout ( handleLogOut, 2000 );
+                } 
+                else {
+                    formikHelpers.setFieldError('old_pass', res.msg);
+                }
+            })
+            .catch((err) => {
+                console.log(err);
+                toast.error('Đã xảy ra lỗi');
+            })
+        }
+
+        const schema = yup.object().shape({
+            old_pass: yup.string().required('Hãy nhập mật khẩu cũ'),
+            new_pass: yup.string().required('Hãy nhập mật khẩu mới')
+                         .matches(/^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/, 'Mật khẩu mới phải bao gồm ít nhất một kí tự số, kí tự viết hoa, kí tự đặc biệt và có độ dài ít nhất 8 kí tự'),
+            re_pass: yup.string().required('Hãy nhập lại mật khẩu mới')
+                        .oneOf([yup.ref('new_pass'), null], 'Mật khẩu mới không khớp'),
+        });
 
         return (
             <div className={cx("setting")}>
@@ -324,13 +383,13 @@ function IntroView({ userData, userProfileData, handleUpdateInfo }) {
                         re_pass: ""
                     }} 
                     onSubmit={(values, formikHelpers) => handleSubmit(values, formikHelpers)}
-                    // validationSchema = {schema}
+                    validationSchema = {schema}
                 >
                     {({ handleSubmit, handleChange, values, touched, errors }) => (
                         <Form noValidate onSubmit={handleSubmit}>
                             {/* Button edit */}
                             <div className={cx("btn_topright")}>
-                                <Button type="submit" className={cx("message")} icon={images.icon.pen_icon} size={"text_icon"} >
+                                <Button type="button" className={cx("message")} icon={images.icon.pen_icon} size={"text_icon"} >
                                     Lưu thay đổi
                                 </Button>
                             </div>

@@ -7,8 +7,13 @@ import Form from 'react-bootstrap/Form';
 import * as yup from 'yup';
 import images from "~/assets/images/index";
 import InputForm from "~/components/InputForm/InputForm";
+import 'react-toastify/dist/ReactToastify.css';
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
+import { LIST_DAY, LIST_MONTH, LIST_YEAR } from "~/utils/constant";
+import { Post } from "~/services/base";
+import checkResponse from "~/utils/checkResponse";
+import { ToastContainer, toast } from 'react-toastify';
 
 const cx = classNames.bind(styles);
 
@@ -21,18 +26,62 @@ function Register({userData}) {
         }
     },[userData])
 
+    const handleSubmit = (values, formikHelpers) => {
+        let birth = new Date(values.year, values.month - 1, values.day);
+        
+        if (birth >= (new Date()) ) {
+            formikHelpers.setFieldError('day', 'Ngày sinh không hợp lệ');
+            formikHelpers.setFieldError('month', ' ');
+            formikHelpers.setFieldError('year', ' ');
+            return;
+        }
+        console.log('x',values)
+        Post("/register", 
+        {
+            fullname: values.fullname,
+            email: values.email,
+            password: values.password,
+            username: values.username,
+            gender: values.gender ?? "1",
+            day_of_birth: birth
+        }, 
+        null)
+        .then((res) => {
+            if(checkResponse(res)) {
+                toast.success('Đăng ký thành công');
+                setTimeout (navigate('/login'), 2000 );
+            }
+            else if (res.status == 400) {
+                formikHelpers.setFieldError('email', res.msg);
+            }
+            else {
+                toast.error('Đăng kí tài khoản thất bại');
+            }
+        })
+        .catch((err) => {
+            console.log(err);
+            toast.error('Cập nhật thất bại');
+        })
+    }
+
     const initialValues = {
+        fullname: '',
         email: '',
         password: '',
+        username: ''
     }
     const schema = yup.object().shape({
-        email: yup.string().required(),
-        password: yup.string().required(),
+        email: yup.string().required('Hãy nhập Email của bạn').email('Email không hợp lệ'),
+        password: yup.string().required('Hãy nhập mật khẩu')
+                     .matches(/^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/, 'Mật khẩu phải bao gồm ít nhất một kí tự số, kí tự viết hoa, kí tự đặc biệt và có độ dài ít nhất 8 kí tự'),
+        username: yup.string().required('Hãy nhập tên tài khoản').matches(/^[a-zA-Z0-9_-]+$/, 'Tên tài khoản không được chứa kí tự đặc biệt và dấu cách'),
+        fullname: yup.string().required('Hãy nhập tên hiển thị').matches(/^[a-zàảãáạăằẳẵắặâầẩẫấậbcdđeèẻẽéẹêềểễếệfghiìỉĩíịjklmnoòỏõóọôồổỗốộơờởỡớợpqrstuùủũúụưừửữứựvwxyỳỷỹýỵz0-9_·•,;:?!()/ -]+$/i, 'Tên hiển thị không được chứa kí tự đặc biệt'),
     });
 
     if(userData.data_user && userData.access_token){
         return
     }
+    
     return (
         <div className={cx("wrapper")}>
             <Box className={cx("box_form")}>
@@ -49,44 +98,29 @@ function Register({userData}) {
                         {({ handleSubmit, handleChange, values, touched, errors }) => (
                         
                         <Form noValidate onSubmit={handleSubmit}>
-                            {/* <div className="row">
-                                <div className="col lg-6">
-                                    <InputForm 
-                                        type="text"
-                                        name = "email"
-                                        value = {values.email}
-                                        onChange = {handleChange}
-                                        component = "Control"
-                                        isInvalid={touched.email && !!errors.email}
-                                        errorMsg = {errors.email}
-                                        placeholder = "Email hoặc số điện thoại"
-                                        size = "small"
-                                    />
-                                </div>
-                                <div className="col lg-6">
-                                    <InputForm 
-                                        type="text"
-                                        name = "email"
-                                        value = {values.email}
-                                        onChange = {handleChange}
-                                        component = "Control"
-                                        isInvalid={touched.email && !!errors.email}
-                                        errorMsg = {errors.email}
-                                        placeholder = "Email hoặc số điện thoại"
-                                        size = "small"
-                                    />
-                                </div>
-                            </div> */}
                             <div className={cx("input_container")}>
                                 <InputForm 
                                     type="text"
-                                    name = "name"
-                                    value = {values.name}
+                                    name = "fullname"
+                                    value = {values.fullname}
                                     onChange = {handleChange}
                                     component = "Control"
-                                    isInvalid={touched.name && !!errors.name}
-                                    errorMsg = {errors.name}
+                                    isInvalid={touched.fullname && !!errors.fullname}
+                                    errorMsg = {errors.fullname}
                                     placeholder = "Họ tên"
+                                    size="small"
+                                />
+                            </div>
+                            <div className={cx("input_container")}>
+                                <InputForm 
+                                    type="text"
+                                    name = "username"
+                                    value = {values.username}
+                                    onChange = {handleChange}
+                                    component = "Control"
+                                    isInvalid={touched.username && !!errors.username}
+                                    errorMsg = {errors.username}
+                                    placeholder = "Tên tài khoản"
                                     size="small"
                                 />
                             </div>
@@ -99,7 +133,7 @@ function Register({userData}) {
                                     component = "Control"
                                     isInvalid={touched.email && !!errors.email}
                                     errorMsg = {errors.email}
-                                    placeholder = "Số di động hoặc email"
+                                    placeholder = "Email"
                                     size="small"
                                 />
                             </div>
@@ -129,9 +163,9 @@ function Register({userData}) {
                                         errorMsg = {errors.day}
                                         size="small"
                                     >
-                                        <option value="1">1</option>
-                                        <option value="2">2</option>
-                                        <option value="3">3</option>
+                                        {LIST_DAY.map((item) => (
+                                            <option key={item.value} value={item.value}>{item.label}</option>
+                                        ))}
                                     </InputForm>
                                 </div>
                                 <div className="col lg-4">
@@ -144,9 +178,9 @@ function Register({userData}) {
                                         errorMsg = {errors.month}
                                         size="small"
                                     >
-                                        <option value="1">Tháng 1</option>
-                                        <option value="2">Tháng 2</option>
-                                        <option value="3">Tháng 3</option>
+                                        {LIST_MONTH.map((item) => (
+                                            <option key={item.value} value={item.value}>{item.label}</option>
+                                        ))}
                                     </InputForm>
                                 </div>
                                 <div className="col lg-4">
@@ -159,9 +193,9 @@ function Register({userData}) {
                                         errorMsg = {errors.year}
                                         size="small"
                                     >
-                                        <option value="1">2021</option>
-                                        <option value="2">2022</option>
-                                        <option value="3">2023</option>
+                                        {LIST_YEAR.map((item) => (
+                                            <option key={item.value} value={item.value}>{item.label}</option>
+                                        ))}
                                     </InputForm>
                                 </div>
                             </div>
@@ -176,6 +210,7 @@ function Register({userData}) {
                                         component = "Check"
                                         id = "female"
                                         label = "Nữ"
+                                        value = "0"
                                         feedback="You must agree before submitting."
                                         feedbackType="invalid"
                                     />
@@ -187,6 +222,7 @@ function Register({userData}) {
                                         name = "gender"
                                         component = "Check"
                                         id = "male"
+                                        value = "1"
                                         label = "Nam"
                                     />
                                 </div>
@@ -196,8 +232,9 @@ function Register({userData}) {
                                         inline
                                         id = "none"
                                         name = "gender"
+                                        value = "2"
                                         component = "Check"
-                                        label = "Tùy chỉnh"
+                                        label = "Khác"
                                     />
                                 </div>
                             </div>

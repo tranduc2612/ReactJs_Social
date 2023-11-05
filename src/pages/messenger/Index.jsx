@@ -190,11 +190,10 @@ function Chat({ userData }) {
                 </Col>
                 <Col xs={9} style={{ width: 'auto', height: "100%", flex: 100 }}>
                     <div className={cx("body__page")}>
-                        {
-                        curentChatId == 'message' ? 
-                            <div className={cx("box__init")}>
+                        {curentChatId == 'messenger' ? 
+                            (<div className={cx("box__init")}>
                                 <span>Hãy chọn một đoạn chat hoặc bắt đầu cuộc trò chuyện mới</span>
-                            </div> :
+                            </div>) :
 
                             <ListChat key={curentChatId} userData={userData} curentChatId={curentChatId} handleSortChatSession = {handleSortChatSessionChild}/>
                         }
