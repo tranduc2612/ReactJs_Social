@@ -244,6 +244,9 @@ function Register({userData}) {
                             </div>
                             <div className={cx("info")}>
                                 Bằng cách nhấp vào Đăng ký, bạn đồng ý với Điều khoản, Chính sách quyền riêng tư và Chính sách cookie của chúng tôi. Bạn có thể nhận được thông báo của chúng tôi qua SMS và hủy nhận bất kỳ lúc nào.
+                                <div className={cx("forgot_pass")}>
+                                    <a href="/login">Bạn đã có tài khoản? Đăng nhập</a>
+                                </div>
                             </div>
                             <div className="d-flex justify-content-center">
                                 <Button className={cx("buttonForm")} type="submit">Đăng ký</Button> 

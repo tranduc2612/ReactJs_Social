@@ -23,8 +23,8 @@ function Login({ userData }) {
         password: '',
     }
     const schema = yup.object().shape({
-        login: yup.string().required(),
-        password: yup.string().required(),
+        login: yup.string().required('Hãy nhập tên tài khoản hoặc email'),
+        password: yup.string().required('Hãy nhập mật khẩu'),
     });
 
     const handleSubmit = (values, formikHelpers) => {
