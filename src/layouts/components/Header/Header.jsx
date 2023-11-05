@@ -27,10 +27,10 @@ function Header() {
         },
         {
             id: 2,
-            title: "Khám phá",
+            title: "Trò chuyện",
             icon: VideoIcon,
-            isActive: getCurrentUrl() === "/",
-            url: "/"
+            isActive: getCurrentUrl() === "/messenger",
+            url: "/messenger"
         },
         {
             id: 3,
@@ -57,7 +57,7 @@ function Header() {
     const handleRedirect = (nav_id, url) => {
         const newLstNav = listNav.map(item => {
             // kiểm tra navitem nào đang hoạt động thì tắt
-            if (item.isActive) {
+            if (item.isActive && nav_id !== item.id) {
                 return {
                     ...item,
                     isActive: false
