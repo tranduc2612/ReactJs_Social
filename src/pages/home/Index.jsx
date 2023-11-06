@@ -212,7 +212,7 @@ function Home({ userData }) {
             <h3 className={"pt-4 pb-2 fs-3"} style={{ paddingLeft: "16px", color: "#6f7175" }}>Người liên hệ</h3>
             <ul className={cx("left__sidebar-list")}>
                 {listFriend.map((friend) => (
-                    <SideBarItem active={true} avatar={BASE_URL_MEDIA + friend.avatar} title={friend.fullname} />
+                    <SideBarItem onClick={'/profile/' + friend.username} key={friend.username} active={true} avatar={BASE_URL_MEDIA + friend.avatar} title={friend.fullname} />
                 ))}
 
                 {/* <SideBarItem active={true} avatar={images.icon.avatar_demo} title={"Trần Minh Đức"} /> */}
