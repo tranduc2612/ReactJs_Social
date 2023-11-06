@@ -1,0 +1,10 @@
+.posts {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    top: calc(var(--height-header) + 30px);
+
+    .body {
+        flex: 0.5;
+    }
+}
