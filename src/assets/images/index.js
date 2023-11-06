@@ -59,6 +59,7 @@ import tinder from "./icon/tinder.png"
 import thread from "./icon/thread.png"
 import sad_empty from "./icon/sad_empty.png"
 import box_empty from "./icon/box.png"
+import message_notfound from "./icon/message_notfound.png"
 
 // ảnh demo sau xóa
 import avatar_demo from "./icon/317950785_3423963351171814_2305823669101113253_n.jpg"
@@ -130,7 +131,8 @@ const images = {
     tinder,
     thread,
     box_empty,
-    sad_empty
+    sad_empty,
+    message_notfound
   }
 };
 
