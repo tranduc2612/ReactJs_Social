@@ -473,7 +473,8 @@ function IntroView({ userData, userProfileData, handleUpdateInfo }) {
                         <h2>Giới thiệu</h2>
                     </div>
                     {
-                        LIST_SIDEBAR.map((sidebar) => {
+                        LIST_SIDEBAR.map((sidebar, index) => {
+                            if (userData.data_user.username != userProfileData.username && index > 0) return <div key={index}></div>
                             return (
                                 <div key={sidebar.id} className={cx("item", sidebar.id == content.id ? "active" : "")} onClick={() => setContent(sidebar)}>
                                     <div className={cx("item_content")}>{sidebar.title}</div>

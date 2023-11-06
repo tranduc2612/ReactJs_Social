@@ -155,14 +155,15 @@ function FriendView({ userData, userProfileData, handleUpdateInfo = null }) {
                 <div className={cx("friendview", "row")}>
                     {content?.listAcc?.map((friend) => {
                         return (
-                            <div key={friend.username} className={cx("friend_item", "col-6")}>
+                            <div  key={friend.username} className={cx("friend_item", "col-6")}>
                                 <div className={cx("friend_box")}>
-                                    <div className={cx("info_container")}>
+                                    <div style={{cursor: 'pointer'}} onClick={() => window.open('/profile/' + friend.username, '_self')} className={cx("info_container")}>
                                         <img className={cx("avatar")} src={BASE_URL_MEDIA + friend.avatar} alt="" />
                                         <div className={cx("name")}>{friend.fullname}</div>
                                     </div>
                                     <div className={cx("button_container")}>
-                                        <content.action onClick={handleFriends} targetUsername={friend.username} />
+                                        {(userData.data_user.username != userProfileData.username) ? null :
+                                        <content.action onClick={handleFriends} targetUsername={friend.username} />}
                                     </div>
                                 </div>
                             </div>
