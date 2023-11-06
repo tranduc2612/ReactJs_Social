@@ -36,7 +36,7 @@ const cx = classNames.bind(styles);
 
 export const CommentContext = createContext()
 
-function BoxNewFeed({ data, shared, userData, handlePost, readOnly = false }) {
+function BoxNewFeed({ data, shared, userData, handlePost, readOnly = false, adminMode = false }) {
     const BASE_STATE_REACT = {
         id: null,
         title: "Thích",
@@ -574,63 +574,66 @@ function BoxNewFeed({ data, shared, userData, handlePost, readOnly = false }) {
             </div>
         </div>
 
+        {
+            !adminMode ? <>
+                {/* tool để tương tác với bài viết */}
+                <div className={cx("tools__contact")}>
+                    <div className={cx("react")}
+                        onClick={handleReact}
+                        id-default={REACT_EMOTION.LIKE.id}
+                    >
+                        <div className={cx("tools__wrapper")} id-default={REACT_EMOTION.LIKE.id}>
+                            {renderReactEmotion()}
+                        </div>
+                        <span style={{ color: react.color, padding: "6px 4px" }} className={cx("tools__contact-text", {
+                            active: react.id ? true : false
+                        })} id-default={REACT_EMOTION.LIKE.id}>{react.title}</span>
+                        <BoxReact ref={refBoxReact} className={cx("box__react")} />
+                    </div>
 
-        {/* tool để tương tác với bài viết */}
-        <div className={cx("tools__contact")}>
-            <div className={cx("react")}
-                onClick={handleReact}
-                id-default={REACT_EMOTION.LIKE.id}
-            >
-                <div className={cx("tools__wrapper")} id-default={REACT_EMOTION.LIKE.id}>
-                    {renderReactEmotion()}
-                </div>
-                <span style={{ color: react.color, padding: "6px 4px" }} className={cx("tools__contact-text", {
-                    active: react.id ? true : false
-                })} id-default={REACT_EMOTION.LIKE.id}>{react.title}</span>
-                <BoxReact ref={refBoxReact} className={cx("box__react")} />
-            </div>
-
-            <div className={cx("comment")} onClick={handleShow}>
-                <div className={cx("tools__wrapper")}>
-                    <div style={{
-                        backgroundImage: `url('${images.icon.tools__icon}')`,
-                        backgroundPosition: "-22px -132px",
-                        backgroundSize: "190px 190px",
-                        width: "18px",
-                        height: "18px",
-                        backgroundRepeat: "no-repeat",
-                        display: "inline-block",
-                        verticalAlign: "-0.25em"
-                    }} >
+                    <div className={cx("comment")} onClick={handleShow}>
+                        <div className={cx("tools__wrapper")}>
+                            <div style={{
+                                backgroundImage: `url('${images.icon.tools__icon}')`,
+                                backgroundPosition: "-22px -132px",
+                                backgroundSize: "190px 190px",
+                                width: "18px",
+                                height: "18px",
+                                backgroundRepeat: "no-repeat",
+                                display: "inline-block",
+                                verticalAlign: "-0.25em"
+                            }} >
+                            </div>
+                        </div>
+                        <span style={{ padding: "6px 4px" }}>Bình luận</span>
+                    </div>
+                    <div className={cx("send")}>
+                        <div className={cx("tools__wrapper")}>
+                            <div style={{
+                                backgroundImage: `url('${images.icon.tools__icon}')`,
+                                backgroundPosition: "-82px -132px",
+                                backgroundSize: "190px 190px",
+                                width: "18px",
+                                height: "18px",
+                                backgroundRepeat: "no-repeat",
+                                display: "inline-block",
+                                verticalAlign: "-0.25em"
+                            }} >
+                            </div>
+                        </div>
+                        <span style={{ padding: "6px 4px" }}>Chia sẻ</span>
                     </div>
                 </div>
-                <span style={{ padding: "6px 4px" }}>Bình luận</span>
-            </div>
-            <div className={cx("send")}>
-                <div className={cx("tools__wrapper")}>
-                    <div style={{
-                        backgroundImage: `url('${images.icon.tools__icon}')`,
-                        backgroundPosition: "-82px -132px",
-                        backgroundSize: "190px 190px",
-                        width: "18px",
-                        height: "18px",
-                        backgroundRepeat: "no-repeat",
-                        display: "inline-block",
-                        verticalAlign: "-0.25em"
-                    }} >
-                    </div>
-                </div>
-                <span style={{ padding: "6px 4px" }}>Chia sẻ</span>
-            </div>
-        </div>
 
-        {/* Các modal */}
+                {/* Các modal */}
 
-        {renderModalDetailPost()}
+                {renderModalDetailPost()}
 
-        {renderModalEditPost()}
+                {renderModalEditPost()}
 
-        <ModalConfirm handlePost={handlePost} title={"bài viết"} progress={progress} setProgress={setProgress} showConfirm={showConfirmBoxDelete} setShowConfirm={setShowConfirmBoxDelete} idPost={idModifiedPost} />
+                <ModalConfirm handlePost={handlePost} title={"bài viết"} progress={progress} setProgress={setProgress} showConfirm={showConfirmBoxDelete} setShowConfirm={setShowConfirmBoxDelete} idPost={idModifiedPost} />
+            </> : <></>
+        }
 
         <LoadingBar
             color='#1b74e4'

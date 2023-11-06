@@ -86,12 +86,12 @@ function NotiItem({ data }) {
             </div>
             <div className={cx("co_friend")}>
             </div>
-            {data?.noti_type === "ADD_FRIEND" ?
+            {/* {data?.noti_type === "ADD_FRIEND" ?
                 <div className={cx("add_friend_btn")}>
                     <Button onClick={handleClick} ref={refItem} attr={"button"} className={cx("custom__btn", "accept")} variant="primary"><span>Xác nhận</span></Button>
                     <ButtonCustom attr={"button"} className={cx("custom__btn", "deny")}><span>Xóa</span></ButtonCustom>
                 </div>
-                : null}
+                : null} */}
         </div>
     </div>);
 }
