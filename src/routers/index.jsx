@@ -9,6 +9,7 @@ import Messenger from "../pages/messenger/Index"
 import Search from "../pages/search/Index";
 import Posts from "~/pages/posts/Index";
 import ForgetPassword from "~/pages/forgetpass/Index";
+import PostsAdmin from "~/pages/postadmin/index";
 
 const publicRouter = [
   {
@@ -27,6 +28,12 @@ const publicRouter = [
     path: "/posts/:id",
     page: Posts,
     layout: DefaultLayout,
+    auth: true // chi tiết bài viết
+  },
+  {
+    path: "/posts-admin/:id",
+    page: PostsAdmin,
+    layout: null,
     auth: true // chi tiết bài viết
   },
   {
