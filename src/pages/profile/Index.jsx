@@ -76,7 +76,7 @@ function Profile({ userData }) {
     console.log(userData);
     useEffect(() => {
         getProfileInfo(paramUrlUsername);
-        getChatId(paramUrlUsername);
+        // getChatId(paramUrlUsername);
 
     }, [paramUrlUsername])
 
@@ -90,6 +90,10 @@ function Profile({ userData }) {
             userData?.access_token)
             .then((res) => {
                 if (checkResponse(res)) {
+                    if (res?.returnObj?.profile?.[0]?.type_relationship == 'BLOCK') {
+                        window.open('/notfound', '_self');
+                    }
+
                     let profileUserData = res?.returnObj?.profile?.[0];
                     let listFriend = res?.returnObj?.friends;
                     setUserProfile({
@@ -107,7 +111,9 @@ function Profile({ userData }) {
             })
     }
 
-    const getChatId = (profileUsername) => {
+    const getChatId = () => {
+        let profileUsername = getParamUrl();
+        
         Post("/message/get-chat-id-by-username",
             {
                 username: profileUsername,
@@ -117,7 +123,7 @@ function Profile({ userData }) {
                 if (checkResponse(res)) {
                     console.log('chatid', res)
                     let chat_id = res?.returnObj;
-                    setChatId(chat_id);
+                    navigate(`/messenger/${chat_id}`)
                 }
             })
             .catch((err) => {
@@ -213,10 +219,10 @@ function Profile({ userData }) {
             case 'FRIEND':
                 return (
                     <>
-                        <Button className={cx("message")} icon={images.icon.unfriend} size={"text_icon"} onClick={console.log} >
+                        <Button className={cx("message")} icon={images.icon.unfriend} size={"text_icon"} onClick={() => handleFriends('BLOCK')} >
                             Chặn
                         </Button>
-                        <Button className={cx("relationship")} icon={images.icon.messager} size={"text_icon"} onClick={() => navigate(`/messenger/${chatId}`)} >
+                        <Button className={cx("relationship")} icon={images.icon.messager} size={"text_icon"} onClick={() => getChatId()} >
                             Nhắn tin
                         </Button>
                     </>
@@ -227,7 +233,7 @@ function Profile({ userData }) {
                         <Button className={cx("relationship")} icon={images.icon.unfriend} size={"text_icon"} onClick={() => handleFriends('CANCEL')} >
                             Hủy lời mời
                         </Button>
-                        <Button className={cx("message")} icon={images.icon.messager} size={"text_icon"} onClick={() => navigate(`/messenger/${chatId}`)} >
+                        <Button className={cx("message")} icon={images.icon.messager} size={"text_icon"} onClick={() => getChatId()} >
                             Nhắn tin
                         </Button>
                     </>
@@ -240,7 +246,7 @@ function Profile({ userData }) {
                         </Button>
                         <Button className={cx("relationship")} size={"text_icon"} onClick={() => handleFriends('CANCEL')} >
                             Xóa lời mời
-                        </Button>
+                        </Button> 
                     </>
                 )
             default:
@@ -249,7 +255,7 @@ function Profile({ userData }) {
                         <Button className={cx("message")} icon={images.icon.add_friend} size={"text_icon"} onClick={() => handleFriends('ADD_FRIEND')} >
                             Thêm bạn bè
                         </Button>
-                        <Button className={cx("relationship")} icon={images.icon.messager} size={"text_icon"} onClick={() => navigate(`/messenger/${chatId}`)} >
+                        <Button className={cx("relationship")} icon={images.icon.messager} size={"text_icon"} onClick={() => getChatId()} >
                             Nhắn tin
                         </Button>
                     </>
@@ -279,8 +285,11 @@ function Profile({ userData }) {
                         <div className={cx("info")}>
                             <div className={cx("avatar_container")}>
                                 <Button className={cx("avatar")} shape="circle" icon={BASE_URL_MEDIA + linkAvatar} full_icon={true} size={"avt"} />
-                                <Button className={cx("upload")} shape="circle" icon={images.icon.icon_camera} size={"sm"} onClick={() => refAvatarInput.current.click()} />
-                                <input className="d-none" type="file" ref={refAvatarInput} onChange={handleUpAvatar} />
+                                {userProfile?.username != userData.data_user?.username ? null :
+                                    <>
+                                        <Button className={cx("upload")} shape="circle" icon={images.icon.icon_camera} size={"sm"} onClick={() => refAvatarInput.current.click()} />
+                                        <input className="d-none" type="file" ref={refAvatarInput} onChange={handleUpAvatar} />
+                                    </>}
                             </div>
                             <div className={cx("name_container")}>
                                 <div className={cx("name")}>{userProfile.fullname}</div>

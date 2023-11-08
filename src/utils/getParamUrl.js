@@ -1,5 +1,7 @@
+import getCurrentUrl from "./getCurrentUrl";
+
 export default function getParamUrl(){
-    const url = window.location.href;
+    const url = getCurrentUrl();
     const id = url.split('/').pop();
-    return id;
+    return decodeURI(id);
 }

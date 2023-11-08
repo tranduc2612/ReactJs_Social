@@ -14,9 +14,8 @@ export const logIn = createAsyncThunk(
         setValueToLocalStorage("access_token",response.authentication.access_token);
         setValueToLocalStorage("token_type",response.authentication.token_type);
         setValueToLocalStorage("user_data",response.data);
-        return data
       }
-      return null;
+      return data;
     }catch(ex){
       console.log(ex)
     }

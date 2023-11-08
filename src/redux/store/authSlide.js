@@ -29,7 +29,7 @@ const authSlice = createSlice({
   },
   extraReducers: (builder) =>{
     builder.addCase(logIn.fulfilled,(state,action) =>{
-      if(action.payload){
+      if(action.payload?.success){
         state.data_user = action.payload?.returnObj.data;
         state.access_token = action.payload?.returnObj.authentication.access_token;
       }else{

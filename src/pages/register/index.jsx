@@ -49,7 +49,7 @@ function Register({userData}) {
         .then((res) => {
             if(checkResponse(res)) {
                 toast.success('Đăng ký thành công');
-                setTimeout (navigate('/login'), 2000 );
+                setTimeout (() => navigate('/login'), 2500 );
             }
             else if (res.status == 400) {
                 formikHelpers.setFieldError('email', res.msg);
@@ -256,6 +256,7 @@ function Register({userData}) {
                     </Formik>
                 </div>
             </Box>
+            <ToastContainer />
         </div>
     );
 }

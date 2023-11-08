@@ -121,7 +121,7 @@ function Search() {
                 }
             })
     }, [currentParram])
-
+console.log('cur',currentParram);
     const FriendView = ({ listAccount }) => {
         return (
             <div className={cx("friendview", "row")}>

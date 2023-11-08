@@ -124,7 +124,7 @@ function HeaderPost({ handleOpenConfirmDeleteModal, handleOpenEditModal, handleR
                                     <Box className={cx("box__setting")} style={{ width: "300px" }}>
                                         <ul className={cx("list__setting")}>
                                             <li className={cx("item__setting")}>
-                                                <img class="x1b0d499 xep6ejk" src={images.icon.warning_post} alt="" height="20" width="20" />
+                                                <img className="x1b0d499 xep6ejk" src={images.icon.warning_post} alt="" height="20" width="20" />
                                                 <span className={cx("setting__title")} onClick={handleReport}>
                                                     Báo cáo bài viết
                                                 </span>

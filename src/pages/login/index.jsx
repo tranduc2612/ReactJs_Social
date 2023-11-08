@@ -27,8 +27,19 @@ function Login({ userData }) {
         password: yup.string().required('Hãy nhập mật khẩu'),
     });
 
-    const handleSubmit = (values, formikHelpers) => {
-        dispatch(logIn(values))
+    const handleSubmit = async (values, formikHelpers) => {
+        let res = await dispatch(logIn(values))
+        if (res.payload.status == 401) {
+            formikHelpers.setFieldError('password', res.payload.msg);
+        }
+        if (res.payload.status == 402) {
+            formikHelpers.setFieldError('login', res.payload.msg);
+        }
+        if (res.payload.status == 403) {
+            formikHelpers.setFieldError('login', ' ');
+            formikHelpers.setFieldError('password', res.payload.msg);
+        }
+        
     }
 
     const accountItem = () => (
@@ -57,7 +68,7 @@ function Login({ userData }) {
                         Nhấp vào ảnh của bạn hoặc thêm tài khoản.
                     </div>
                     <div className="account">
-                        {accountItem()}
+                        {/* {accountItem()} */}
 
                         {/* add account box */}
                         <div className={cx("account__item")}>

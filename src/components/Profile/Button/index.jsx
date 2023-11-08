@@ -23,7 +23,7 @@ export const CurrentAccountBtn = ({onClickAcp = console.log, onClickCancel = con
 export const FriendBtn = ({onClickAcp = console.log, onClickCancel = console.log}) => {
     return (
         <>
-            <Button className={cx("message")} icon={images.icon.unfriend} size={"text_icon"} onClick={console.log} >
+            <Button className={cx("message")} icon={images.icon.unfriend} size={"text_icon"} onClick={() => handleFriends('BLOCK')} >
                 Chặn
             </Button>
             <Button className={cx("relationship")} icon={images.icon.messager} size={"text_icon"} onClick={() => navigate(`/messenger/${chatId}`)} >
