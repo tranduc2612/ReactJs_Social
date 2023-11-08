@@ -12,11 +12,13 @@ import Box from "~/components/Box/Box";
 import { formatDate } from "~/utils/format";
 import { AUDIENCE_TYPE } from "~/utils/constant";
 import { useSelector, useDispatch } from 'react-redux'
-import { BASE_URL_MEDIA } from "~/services/base";
+import { BASE_URL_MEDIA, Post } from "~/services/base";
 import { Link, useNavigate } from "react-router-dom";
+import checkResponse from "~/utils/checkResponse";
+
 const cx = classNames.bind(styles);
 
-function HeaderPost({ handleOpenConfirmDeleteModal, handleOpenEditModal, showModalEditPost, showConfirmBoxDelete, data, readOnly = false }) {
+function HeaderPost({ handleOpenConfirmDeleteModal, handleOpenEditModal, handleReport, showModalEditPost, showConfirmBoxDelete, data, readOnly = false }) {
     const navigate = useNavigate();
     const [showSetting, setShowSetting] = useState(false);
     const userData = useSelector((state) => state.auth);
@@ -27,6 +29,7 @@ function HeaderPost({ handleOpenConfirmDeleteModal, handleOpenEditModal, showMod
             setShowSetting(false)
         }
     }, [showModalEditPost, showConfirmBoxDelete])
+
 
     const handleRedirectProfile = () => {
         window.open(`/profile/${data?.username}`, "_self")
@@ -108,13 +111,42 @@ function HeaderPost({ handleOpenConfirmDeleteModal, handleOpenEditModal, showMod
                             </div>
                         </>}
                     </div>
-                    : null
+                    : <div className={cx("setting")}>
+                        <Tippy
+                            interactive
+                            visible={showSetting}
+                            placement="bottom"
+                            delay={[100, 50]}
+                            arrow="true"
+                            onClickOutside={() => setShowSetting(false)}
+                            render={attrs => (
+                                <div tabIndex="-1" {...attrs}>
+                                    <Box className={cx("box__setting")} style={{ width: "300px" }}>
+                                        <ul className={cx("list__setting")}>
+                                            <li className={cx("item__setting")}>
+                                                <img class="x1b0d499 xep6ejk" src={images.icon.warning_post} alt="" height="20" width="20" />
+                                                <span className={cx("setting__title")} onClick={handleReport}>
+                                                    Báo cáo bài viết
+                                                </span>
+                                            </li>
+
+                                        </ul>
+                                    </Box>
+                                </div>
+                            )}>
+                            <div>
+                                <Button icon={images.icon.three_dot_icon} size={"sm"} shape="circle" onClick={() => setShowSetting(!showSetting)} />
+                            </div>
+                        </Tippy>
+                    </div>
             }
         </div>
 
         <div className={cx("title")}>
             <span>{data?.content}</span>
         </div>
+
+
 
     </>);
 }

@@ -20,7 +20,7 @@ const BASE_BTN = {
 }
 
 function ListChat({ userData, curentChatId, handleSortChatSession }) {
-  
+
     const [valueInputChat, setValueInputChat] = useState("");
     const inputEditRef = useRef(null)
     const refBoxChat = useRef(null)
@@ -41,28 +41,28 @@ function ListChat({ userData, curentChatId, handleSortChatSession }) {
         if (curentChatId == 'message') return;
 
         Get(`/message/get-chatsession/${curentChatId}`, {}, userData?.access_token)
-        .then((res) => {
-            if(checkResponse(res)) {
-                setLstMessage(res.returnObj.messages);
-                setCurrentInfo(res.returnObj.accounts[0]);
-            }
+            .then((res) => {
+                if (checkResponse(res)) {
+                    setLstMessage(res.returnObj.messages);
+                    setCurrentInfo(res.returnObj.accounts[0]);
+                }
 
-            const pusher = new Pusher('83b6c124825dc255f114', {
-                cluster: 'ap1'
+                const pusher = new Pusher('83b6c124825dc255f114', {
+                    cluster: 'ap1'
+                })
+                const nameChannel = `chat.${curentChatId}.${userData.data_user?.username}`;
+
+                // Đăng ký kênh bạn muốn lắng nghe
+                const channel = pusher.subscribe(nameChannel);
+
+                console.log('curr', curentChatId, userData.data_user?.username);
+                // Lắng nghe sự kiện từ kênh
+                channel.bind("messageNotification", handleEvent);
+
+                chanelRef.current = {
+                    channel, nameChannel
+                };
             })
-            const nameChannel = `chat.${curentChatId}.${userData.data_user?.username}`;
-
-            // Đăng ký kênh bạn muốn lắng nghe
-            const channel = pusher.subscribe(nameChannel);
-
-            console.log('curr', curentChatId, userData.data_user?.username);
-            // Lắng nghe sự kiện từ kênh
-            channel.bind("messageNotification", handleEvent);
-
-            chanelRef.current = {
-                channel, nameChannel
-            };
-        }) 
 
         const handleEvent = (data) => {
             const jsonRes = data?.data;
@@ -112,7 +112,7 @@ function ListChat({ userData, curentChatId, handleSortChatSession }) {
                             </div>
                         </span>
                     </div>
-                    
+
                 </div>
 
                 <div className={cx("header__right")}>
@@ -141,20 +141,20 @@ function ListChat({ userData, curentChatId, handleSortChatSession }) {
         // window.alert(`Tin nhắn gửi là: ${valueInputChat}`);
         inputEditRef.current.resetInputValue("");
 
-        Post(`/message/add-message`, 
-        {
-            message: valueInputChat,
-            chat_id: curentChatId
-        }, 
-        userData?.access_token)
-        .then((res) => {
-            if(checkResponse(res)) {
-                let mes = res.returnObj
-                setLstMessage((prev) => [...prev, mes])
-                handleSortChatSession(curentChatId, valueInputChat);
-            }
+        Post(`/message/add-message`,
+            {
+                message: valueInputChat,
+                chat_id: curentChatId
+            },
+            userData?.access_token)
+            .then((res) => {
+                if (checkResponse(res)) {
+                    let mes = res.returnObj
+                    setLstMessage((prev) => [...prev, mes])
+                    handleSortChatSession(curentChatId, valueInputChat);
+                }
 
-        }) 
+            })
 
         setValueInputChat("")
     }
@@ -178,45 +178,48 @@ function ListChat({ userData, curentChatId, handleSortChatSession }) {
     }
 
     return (
-        <CustomBox classBody={cx("custom__body")} className={cx("box__chat")} header={renderHeaderBoxChat()} footer={renderFooterBoxChat()} ref={refBoxChat}>
-            <div className={cx("list__message")}>
-                {/* <MessengerContent />
-                <MessengerContent type="partner" />
-                <MessengerContent />
-                <MessengerContent type="partner" />
-                <MessengerContent />
-                <MessengerContent />
-                <MessengerContent /> */}
-                {lstMessage.map((mess, index) => {
-                    {/* có 1 cái cờ để bt là đâu là tin cuối cùng đã được xem */ }
-                    // let flag = false;
-                    // if (mess === 7) {
-                    //     flag = true;
-                    // }
-                    let checkShowTime = true;
-                    if (index <= 0) {
-                        checkShowTime = false;
-                    } else {
-                        let currTime = new Date(mess.created_at);
-                        let lastTime = new Date(lstMessage[index - 1].created_at);
-                        lastTime.setMinutes(lastTime.getMinutes() + 10);    
-                        if (currTime < lastTime) checkShowTime = false;
-                    }
-                    return (
-                        <div key={index}>
-                            {checkShowTime ? <TimeLine time={mess.created_at}/> : <></>}
-                            <MessengerContent 
-                                key={mess} 
-                                // flag={true} 
-                                content={mess.message}
-                                type={mess.username != userData.data_user?.username ? "partner" : null} />
-                        </div>
-                    )
-                })}
+        <div className={cx("list__chat")}>
+            <CustomBox classBody={cx("custom__body")} className={cx("box__chat")} header={renderHeaderBoxChat()} footer={renderFooterBoxChat()} ref={refBoxChat}>
 
-            </div>
-        </CustomBox>
-                       
+                <div className={cx("list__message")}>
+                    {/* <MessengerContent />
+    <MessengerContent type="partner" />
+    <MessengerContent />
+    <MessengerContent type="partner" />
+    <MessengerContent />
+    <MessengerContent />
+    <MessengerContent /> */}
+                    {lstMessage.map((mess, index) => {
+                        {/* có 1 cái cờ để bt là đâu là tin cuối cùng đã được xem */ }
+                        // let flag = false;
+                        // if (mess === 7) {
+                        //     flag = true;
+                        // }
+                        let checkShowTime = true;
+                        if (index <= 0) {
+                            checkShowTime = false;
+                        } else {
+                            let currTime = new Date(mess.created_at);
+                            let lastTime = new Date(lstMessage[index - 1].created_at);
+                            lastTime.setMinutes(lastTime.getMinutes() + 10);
+                            if (currTime < lastTime) checkShowTime = false;
+                        }
+                        return (
+                            <div key={index}>
+                                {checkShowTime ? <TimeLine time={mess.created_at} /> : <></>}
+                                <MessengerContent
+                                    key={mess}
+                                    // flag={true} 
+                                    content={mess.message}
+                                    type={mess.username != userData.data_user?.username ? "partner" : null} />
+                            </div>
+                        )
+                    })}
+
+                </div>
+            </CustomBox>
+        </div>
+
     );
 }
 
