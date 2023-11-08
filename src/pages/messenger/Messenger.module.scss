@@ -65,7 +65,8 @@
         }
 
         .custom__body {
-            height: 71vh;
+            min-height: 71vh;
+            max-height: 71vh;
 
             .list__chat {
                 padding: 8px;
