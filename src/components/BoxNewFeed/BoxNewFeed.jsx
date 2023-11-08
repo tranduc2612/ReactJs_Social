@@ -242,11 +242,11 @@ function BoxNewFeed({ data, shared, userData, handlePost, readOnly = false, admi
         Post("/action/report-post", {
             post_id: data?.post_id
         }, userData.access_token)
-            .then(() => {
+            .then((res) => {
                 if (checkResponse(res)) {
                     toast.success(res.msg)
                 } else {
-                    toast.error(res.msg)
+                    toast.warn(res.msg)
                 }
             })
             .catch((err) => {
