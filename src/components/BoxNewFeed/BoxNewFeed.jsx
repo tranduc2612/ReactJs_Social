@@ -27,6 +27,9 @@ import LoadingBar from 'react-top-loading-bar';
 import { useEffect } from "react";
 import checkResponse from "~/utils/checkResponse";
 import { createContext } from "react";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 const cx = classNames.bind(styles);
 
 // like color: rgb(32, 120, 244);
@@ -235,6 +238,22 @@ function BoxNewFeed({ data, shared, userData, handlePost, readOnly = false, admi
         setShowModalEditPost(false);
     }
 
+    const handleReport = () => {
+        Post("/action/report-post", {
+            post_id: data?.post_id
+        }, userData.access_token)
+            .then(() => {
+                if (checkResponse(res)) {
+                    toast.success(res.msg)
+                } else {
+                    toast.error(res.msg)
+                }
+            })
+            .catch((err) => {
+                toast.error("Lỗi server !")
+            })
+    }
+
     const renderReactEmotion = () => {
         if (react.id === null) {
             return (
@@ -317,7 +336,7 @@ function BoxNewFeed({ data, shared, userData, handlePost, readOnly = false, admi
             <Modal show={showDetailPost} onHide={handleClose} centered size={"lg"}>
                 <CustomBox className={cx("detail__post")} header={renderHeaderDetailPost()} footer={renderFooterDetailPost()} ref={refBoxDetail}>
                     <div className={cx("detail__post-body")}>
-                        <HeaderPost readOnly={readOnly} data={data} userData={userData} showModalEditPost={showModalEditPost} showConfirmBoxDelete={showConfirmBoxDelete} handleOpenConfirmDeleteModal={handleOpenConfirmDeleteModal} handleOpenEditModal={handleOpenEditModal} />
+                        <HeaderPost readOnly={readOnly} data={data} userData={userData} showModalEditPost={showModalEditPost} showConfirmBoxDelete={showConfirmBoxDelete} handleOpenConfirmDeleteModal={handleOpenConfirmDeleteModal} handleOpenEditModal={handleOpenEditModal} handleReport={handleReport} />
 
                         {lstImg?.length > 0 ?
                             <div className={cx("", {
@@ -528,7 +547,7 @@ function BoxNewFeed({ data, shared, userData, handlePost, readOnly = false, admi
 
     return (<div className={cx("box__newfeed", "box-custom")}>
         {/* header newfeed post */}
-        <HeaderPost data={data} readOnly={readOnly} showModalEditPost={showModalEditPost} showConfirmBoxDelete={showConfirmBoxDelete} handleOpenConfirmDeleteModal={handleOpenConfirmDeleteModal} handleOpenEditModal={handleOpenEditModal} />
+        <HeaderPost data={data} handleReport={handleReport} readOnly={readOnly} showModalEditPost={showModalEditPost} showConfirmBoxDelete={showConfirmBoxDelete} handleOpenConfirmDeleteModal={handleOpenConfirmDeleteModal} handleOpenEditModal={handleOpenEditModal} />
 
         {/* noi dung newfeed post */}
         {shared ? <>
@@ -540,7 +559,7 @@ function BoxNewFeed({ data, shared, userData, handlePost, readOnly = false, admi
                 </div>
 
                 <div className={cx("post__searched-header")}>
-                    <HeaderPost data={data} readOnly={readOnly} showModalEditPost={showModalEditPost} showConfirmBoxDelete={showConfirmBoxDelete} handleOpenConfirmDeleteModal={handleOpenConfirmDeleteModal} handleOpenEditModal={handleOpenEditModal} />
+                    <HeaderPost data={data} readOnly={readOnly} showModalEditPost={showModalEditPost} showConfirmBoxDelete={showConfirmBoxDelete} handleOpenConfirmDeleteModal={handleOpenConfirmDeleteModal} handleOpenEditModal={handleOpenEditModal} handleReport={handleReport} />
                 </div>
             </div>
         </> : <>
