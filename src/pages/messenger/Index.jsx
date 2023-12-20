@@ -145,7 +145,7 @@ function Chat({ userData }) {
 
         setListChatSessions((prev) => {
             let newChat = prev.find((item) => item.chatSession.chat_id == dataRes?.chat_id);
-            if (newChat) newChat.message.message = dataRes.new_message;
+            if (newChat && newChat?.message) newChat.message.message = dataRes?.new_message;
             let newList = prev.filter((item) => item.chatSession.chat_id != dataRes?.chat_id);
 
             return [
@@ -157,7 +157,7 @@ function Chat({ userData }) {
 
     const handleSortChatSessionChild = (chatId, content) => {
         let newChat = listChatSessions.find((item) => item.chatSession.chat_id == chatId);
-        if (newChat) newChat.message.message = content;
+        if (newChat && newChat?.message) newChat.message.message = content;
         let newList = listChatSessions.filter((item) => item.chatSession.chat_id != chatId);
 
         setListChatSessions([
